@@ -1,0 +1,18 @@
+﻿<div class="text-left">
+    @foreach (var playerEquipment in playerInventory)
+    {
+        <h3>@playerEquipment.Name</h3>
+        <ul>
+            <li>@playerEquipment.GoldCost Gold</li>
+            <li>@playerEquipment.Description</li>
+            <ol>
+                Effects:
+                @foreach (var effect in playerEquipment.Effects)
+                {
+                    <li>@effect.Type.ToString()</li>
+                    <li>@effect.Value</li>
+                }
+            </ol>
+        </ul>
+    }
+</div>

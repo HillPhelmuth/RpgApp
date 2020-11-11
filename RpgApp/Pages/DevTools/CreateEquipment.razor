@@ -1,0 +1,84 @@
+﻿<MatH2 Class="text-center">Create Equipment</MatH2>
+<MatH6>Select a category of weapons or armor, and then find and double-click the specific item to import and populate form. The item will be added to our database on successful form submission.</MatH6>
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+       
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+            <MatSlideToggle TValue="bool" ValueChanged="@(e=>ToggleCategory(e))"></MatSlideToggle><span>@toggleLabel</span>
+            @if (SelectedCategoryList != null)
+            {
+                <MatH4>Double-click to select</MatH4>
+                <MatTable PageSize="5" TableItem="GeneralApiData" Items="SelectedCategoryList" AllowSelection="true" OnRowDbClick="GetSelectedItem">
+                    <MatTableHeader>
+                        <th>Item Name</th>
+                        <th>Api Url </th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.Name</td>
+                        <td>@context.Url</td>
+                    </MatTableRow>
+                </MatTable>
+
+            }
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8 mat-elevation-z5" style="padding-left: 2rem; padding-top:1rem">
+
+            @if (isArmor || isWeapon)
+            {
+                <MatH4 Class="text-center">Equipment form</MatH4><hr />
+                <MatButton OnClick="ClearForm">Clear Form</MatButton>
+                <EditForm Model="CreateItemForm" OnValidSubmit="SubmitItemForm">
+                    <DataAnnotationsValidator />
+                    <div class="mat-layout-grid-inner">
+                        <div class="mat-layout-grid-cell">
+                            <p>Name:</p>
+                            <MatTextField @bind-Value="CreateItemForm.Name"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            <p>Rarity:</p>
+                            <MatSelectItem Items="CreateItemForm.RarityItems" @bind-Value="CreateItemForm.Rarity"></MatSelectItem>
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            <p>Attack/Defense Value:</p>
+                            <MatTextField @bind-Value="CreateItemForm.Value"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                            <p>Description:</p>
+                            <MatTextField TextArea="true" Style="width: 80%; margin: auto" @bind-Value="CreateItemForm.Description"></MatTextField>
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            <p>Equip location:</p>
+                            <MatSelect @bind-Value="CreateItemForm.EquipLocation">
+                                <MatOptionString></MatOptionString>
+                                <MatOptionString Value="@("OneHand")">One Hand</MatOptionString>
+                                <MatOptionString Value="@("TwoHand")">Two Handed</MatOptionString>
+                                <MatOptionString Value="@("Body")">Body</MatOptionString>
+                            </MatSelect>
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            <p>Gold Cost:</p>
+                            <MatNumericUpDownField Minimum="1" @bind-Value="CreateItemForm.GoldCost"></MatNumericUpDownField>
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            <p>Allowed classes:</p>
+                            <MatSelect @bind-Value="CreateItemForm.AllowedClassesData">
+                                <MatOptionString></MatOptionString>
+                                <MatOptionString Value="@("Warrior")">Warrior</MatOptionString>
+                                <MatOptionString Value="@("Mage")">Mage</MatOptionString>
+                                <MatOptionString Value="@("Ranger")">Ranger</MatOptionString>
+                                <MatOptionString Value="@("Warrior,Ranger")">Warrior,Ranger</MatOptionString>
+                                <MatOptionString Value="@("Mage,Ranger")">Mage,Ranger</MatOptionString>
+                                <MatOptionString Value="@("Warrior,Mage,Ranger")">Warrior, Mage, Ranger</MatOptionString>
+                            </MatSelect>
+                        </div>
+                        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12 text-center">
+                            <div style="font-size: 1.5em"><ValidationSummary /></div>
+                            <MatButton Type="submit" Outlined="true">Submit Weapon/Armor</MatButton>
+                        </div>
+                    </div>
+                    <MatH5 Class="text-center">@submitSucess</MatH5>
+                </EditForm>
+            }
+        </div>
+    </div>
+</div>

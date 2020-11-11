@@ -1,0 +1,261 @@
+﻿{
+  "Equipment": [
+    {
+      "id": 1,
+      "name": "Leather armor",
+      "rarity": "VeryCommon",
+      "description": "Light, simple armor. Great for characters to stay mobile.",
+      "equipLocation": "Body",
+      "areaEffect": false,
+      "goldCost": 15,
+      "classTypes": [
+        "Ranger",
+        "Warrior",
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Defend",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": 0,
+      "name": "Dagger",
+      "rarity": "VeryCommon",
+      "description": "Just a tiny sword, really",
+      "equipLocation": "OneHand",
+      "areaEffect": false,
+      "goldCost": 10,
+      "classTypes": [
+        "Warrior",
+        "Ranger",
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Short sword",
+      "rarity": "VeryCommon",
+      "description": "Basic, one-handed sword",
+      "equipLocation": "OneHand",
+      "areaEffect": false,
+      "goldCost": 15,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "1D6"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Short bow",
+      "rarity": "VeryCommon",
+      "description": "Small simple bow",
+      "equipLocation": "TwoHand",
+      "areaEffect": false,
+      "goldCost": 15,
+      "classTypes": [
+        "Ranger"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "2D4"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Wand of wild sparks",
+      "rarity": "VeryCommon",
+      "description": "Simple wand. Though dangerous, these are popular amongst young mage apprentices.",
+      "equipLocation": "OneHand",
+      "areaEffect": true,
+      "goldCost": 25,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Minor Boots of Mobility",
+      "rarity": "Moderate",
+      "description": "These magic boots were finally banned from the Imperial Olympics by the Emperor himself after watching his son humiliated in multiple events by a rather fat farm-hand. The friendly farmer was, of course, beheaded.",
+      "equipLocation": "Feet",
+      "goldCost": 175,
+      "classTypes": [
+        "Ranger",
+        "Warrior",
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "value": "1",
+          "attribute": "Speed"
+        },
+        {
+          "type": "ModifySelf",
+          "value": "1",
+          "attribute": "Agility"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Mail armor",
+      "rarity": "VeryCommon",
+      "description": "Sturdier armor that offers more defense, but requires training to use.",
+      "equipLocation": "Body",
+      "areaEffect": false,
+      "goldCost": 40,
+      "classTypes": [
+        "Ranger",
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Defend",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Plate armor",
+      "rarity": "VeryCommon",
+      "description": "The heaviest basic armor there is. Offers great protection, but only strong Warriors will be able to handle its heft.",
+      "equipLocation": "Body",
+      "areaEffect": false,
+      "goldCost": 300,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Defend",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Long sword",
+      "rarity": "VeryCommon",
+      "description": "Basic, one-handed sword",
+      "equipLocation": "OneHand",
+      "areaEffect": false,
+      "goldCost": 40,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "1D8"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Greatsword",
+      "rarity": "VeryCommon",
+      "description": "Very heavy blade. Offers great impact, but must be weilded in two hands.",
+      "equipLocation": "TwoHand",
+      "areaEffect": false,
+      "goldCost": 100,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "2D6"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Basic shield",
+      "rarity": "VeryCommon",
+      "description": "Basic shield that offers protection, provided you have a hand free to use it.",
+      "equipLocation": "OffHand",
+      "areaEffect": false,
+      "goldCost": 20,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Defend",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Starter spellbook",
+      "rarity": "VeryCommon",
+      "description": "Starting spellbook for mages. Used to cast basic spells.",
+      "equipLocation": "OffHand",
+      "areaEffect": false,
+      "goldCost": 30,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "value": "5",
+          "attribute": "Intelligence"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Minor potion of healing",
+      "rarity": "VeryCommon",
+      "description": "Do not leave home without a few of these salves in your pocket",
+      "allowMultiple": true,
+      "goldCost": 20,
+      "quantity": 0,
+      "effect": {
+        "type": "ModifySelf",
+        "value": "2D6",
+        "attribute": "Health"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Stoneskin potion",
+      "rarity": "Moderate",
+      "description": "The thick, gray liquid in this vial hardens your skin, increasing your toughness",
+      "allowMultiple": true,
+      "goldCost": 60,
+      "quantity": 0,
+      "effect": {
+        "type": "ModifySelf",
+        "value": "1D4",
+        "attribute": "Toughness"
+      }
+    }
+  ]
+}

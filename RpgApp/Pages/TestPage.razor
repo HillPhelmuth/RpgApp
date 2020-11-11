@@ -1,0 +1,97 @@
+﻿@page "/testPage"
+
+@inherits TestPageModel
+
+<div class="mat-layout-grid" style="max-width: 100%; margin-left: auto; margin-right:auto">
+    <div class="mat-layout-grid-inner">
+
+        @if (isBeginCombat)
+        {
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <MatH3>Actions</MatH3>
+                <div style="font-size: .9rem; line-height: 1.2rem; overflow: scroll; height: auto; max-height: 400px">
+                    @foreach (var message in messages)
+                    {
+                        @((MarkupString)message)
+                    }
+                </div>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="isPlayerDefeated">
+                    <MatH3 Class="text-center">You</MatH3>
+                    <MatCard>
+                        <div style="height:auto">
+                            <MatHeadline4 class="demo-mat-card-clean-margin">
+                                Player : @CurrentPlayer.Name
+                            </MatHeadline4>
+                            <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                Type: @CurrentPlayer.ClassType.ToString()
+                            </MatSubtitle2>
+                        </div>
+                        <MatCardContent>
+                            <MatCardMedia Style="height:auto; min-height:100px">
+                                <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="isPlayerHit" OnAnimationEnd="OnPlayerHit">
+                                    <div class="@cssString"></div>
+                                </Animation>
+                            </MatCardMedia>
+                            <MatBody2 Style="height:auto">
+                                <MatH5>HP: @CurrentPlayer.Health / @CurrentPlayer.MaxHealth</MatH5>
+                                <MatH5>AP: @CurrentPlayer.AbilityPoints / @CurrentPlayer.MaxAbilityPoints</MatH5>
+                            </MatBody2>
+                        </MatCardContent>
+                        <MatCardActions>
+                            <MatCardActionButtons>
+
+                                <MatButton OnClick="OpenMenu">Skill</MatButton>
+                                @if (isSkillMenu)
+                                {
+                                    <MatList SingleSelection="true">
+                                        @foreach (var skill in AllSkillsTemp)
+                                        {
+                                            <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
+                                        }
+                                    </MatList>
+                                }
+                                <MatButton Disabled="true" OnClick="Flee">Flee</MatButton>
+                            </MatCardActionButtons>
+                            <MatCardActionIcons>
+                            </MatCardActionIcons>
+                        </MatCardActions>
+                    </MatCard>
+                </Animation>
+            </div>
+           
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="isMonsterDead">
+                    <MatH3>Monster</MatH3>
+                    <MatCard>
+                        <div>
+                            <MatHeadline4>
+                                Monster : @Monster.Name
+                            </MatHeadline4>
+                            <MatSubtitle2>
+                                @Monster.Description
+                            </MatSubtitle2>
+                        </div>
+                        <MatCardContent>
+                            <MatCardMedia Style="height: auto; min-height: 100px">
+                                <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="isMonsterHit" OnAnimationEnd="OnMonsterHit">
+                                    <div class="monster-img"></div>
+                                </Animation>
+                            </MatCardMedia>
+                            <MatBody2 Style="height:auto">
+                                <MatH5>HP: @Monster.Health / @Monster.MaxHealth</MatH5>
+                                <MatH5>Difficulty: @Monster.DifficultyLevel Damage: @Monster.DamageDice</MatH5>
+                            </MatBody2>
+                        </MatCardContent>
+                        <MatCardActions>
+                            <MatCardActionButtons>
+                                 <MatButton OnClick="Attack" Raised="true">Attack This Monster</MatButton>
+                            </MatCardActionButtons>
+                        </MatCardActions>
+                    </MatCard>
+                </Animation>
+            </div>
+        }
+    </div>
+</div>

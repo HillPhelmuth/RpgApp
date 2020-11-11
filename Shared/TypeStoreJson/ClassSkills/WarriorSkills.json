@@ -1,0 +1,118 @@
+{
+  "warriorSkills": [
+    {
+      "name": "Enrage",
+      "description": "A technique passed down by warriors since the beginning of time: get mad.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "attribute": "Strength",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Overpower",
+      "description": "A powerful attack that grows more powerful the more Strength the user has.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "2D6",
+          "modifier": "2x Strength"
+        }
+      ]
+    },
+    {
+      "name": "Devastate",
+      "description": "An even more powerful attack that grows much more powerful the more Strength the user has.",
+      "goldCost": 90,
+      "abilityCost": 6,
+      "allowedClasses": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "4D6",
+          "modifier": "3x Strength"
+        }
+      ]
+    },
+    {
+      "name": "Cleave",
+      "description": "Pool your strength and strike through one target and into another.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "allowedClasses": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "2D8",
+          "areaEffect": 2
+          //The area effect must strike adjacent enemies
+        }
+      ]
+    },
+    {
+      "name": "Whirlwind",
+      "description": "Strike out at each of your enemies.",
+      "goldCost": 90,
+      "abilityCost": 6,
+      "allowedClasses": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "3D6",
+          "areaEffect": 4
+        }
+      ]
+    },
+    {
+      "name": "Courage",
+      "description": "Steel yourself, bolstering your defenses.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "allowedClasses": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "attribute": "Toughness",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Rally",
+      "description": "Encourage your party, bolstering everyone's defenses.",
+      "goldCost": 90,
+      "abilityCost": 6,
+      "allowedClasses": [
+        "Warrior"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "attribute": "Toughness",
+          "value": "1D4",
+          "areaEffect": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+﻿@*<div>
+    <button class="btn btn-secondary" @onclick="Reset">Create New</button>
+    <br />
+    <button @onclick="@(() => IsCombatReady = true)"><img style="width:8em; height:8em" src="/gameIcons/Sword.jpg" /></button>
+    (Click to begin combat)
+</div>
+@if (IsCombatReady)
+{
+    @if (AllPlayers.Count > 1)
+    {
+        <TestPage />
+    }
+    else
+    {
+        <p>Add additional Characters to begin</p>
+    }
+}*@

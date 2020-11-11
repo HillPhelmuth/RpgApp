@@ -1,0 +1,79 @@
+﻿<MatH3>Test Select Player</MatH3>
+<MatTextField HelperText="use 'admin' for testing" Label="UserName" HelperTextPersistent="true" @bind-Value="userInput"></MatTextField><MatButton OnClick="GetUserPlayers">Get</MatButton>
+@if (isPlayerQuery)
+{
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                <MatH6>Double click to select</MatH6>
+                <MatTable TableItem="Player" Items="UserPlayers" Class="mat-elevation-z5" OnRowDbClick="SelectPlayer" AllowSelection="true">
+                    <MatTableHeader>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Level</th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.ID</td>
+                        <td>@context.Name</td>
+                        <td>@context.ClassType.ToString()</td>
+                        <td>@context.Level</td>
+                    </MatTableRow>
+                </MatTable>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                @if (selectedPlayer != null)
+                {
+                    <MatH3>Current Player</MatH3>
+                    <MatH4>@selectedPlayer.Name</MatH4>
+                    <MatH5>@selectedPlayer.ClassType.ToString()</MatH5>
+                }
+            </div>
+        </div>
+    </div>
+}
+<MatH3 Class="text-center">Test Get Equip/Skills with manual query filter</MatH3>
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatH4>Equipment</MatH4>
+            <MatH6>filter by @equipGold gp</MatH6>
+            <MatSlider TValue="int" Step="5" EnableStep="true" ValueMin="0" ValueMax="100" ValueChanged="@GetEquipFilterByGp"></MatSlider><hr />
+            @if (isEquipQuery)
+            {
+                <MatTable TableItem="Equipment" Items="EquipmentQueryResult" Class="mat-elevation-z5">
+                    <MatTableHeader>
+                        <th>Name</th>
+                        <th>Gold Cost</th>
+                        <th>Description</th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.Name</td>
+                        <td>@context.GoldCost</td>
+                        <td>@context.Description</td>
+                    </MatTableRow>
+                </MatTable>
+            }
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatH4>Skills</MatH4>
+            <MatH6>filter by @skillGold gp</MatH6>
+            <MatSlider TValue="int" Step="5" EnableStep="true" ValueMin="0" ValueMax="100" ValueChanged="@GetSkillFilterByGp"></MatSlider><hr />
+            @if (isSkillQuery)
+            {
+                <MatTable TableItem="Skill" Items="SkillQueryResult" Class="mat-elevation-z5">
+                    <MatTableHeader>
+                        <th>Name</th>
+                        <th>Gold Cost</th>
+                        <th>Description</th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.Name</td>
+                        <td>@context.GoldCost</td>
+                        <td>@context.Description</td>
+                    </MatTableRow>
+                </MatTable>
+            }
+        </div>
+    </div>
+</div>

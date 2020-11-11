@@ -1,0 +1,22 @@
+﻿<div class="gridpiece @cssLocation">
+    @if (isOccupied)
+    {
+        <img src="/crossed-swords-48.png" alt="Dude" />
+    }
+    else if (Row == 0 && Col == 0)
+    {
+        <img src="/home-48.png" alt="Home" />
+    }
+    else if (Row == 6 && Col == 9)
+    {
+        <img src="/dungeon-54.png" alt="Dungeon" />
+    }
+    else if (Row == 11 && Col == 11)
+    {
+        <img src="/city-54.png" alt="City" />
+    }
+    else
+    {
+        <p style="margin:auto">@Col, @Row </p>
+    }
+</div>

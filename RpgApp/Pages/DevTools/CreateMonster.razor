@@ -1,0 +1,88 @@
+﻿<MatH2 Class="text-center">Monster Generator</MatH2>
+<div style="margin-left: 15%; margin-right: 15%">
+    <MatH6>Double click a Monster from the table to pre-populate a form with monster-specific information from the API. Each field will map to a property in our Monster class. Add and/or adjust the info and submit. It will create and add a new Monster to our Database. I've manipulated some numbers to fit the slightly different scale of our app compared to D and D, and included additional information from the API to inform any entry or adjustment decision.</MatH6>
+</div>
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+            @if (AllMonsters != null)
+            {
+                <MatH4>Double-click to select</MatH4>
+                <MatTable PageSize="5" TableItem="GeneralApiData" Items="AllMonsters" AllowSelection="true" OnRowDbClick="GetMonsterDetails">
+                    <MatTableHeader>
+                        <th>Monster Name</th>
+                        <th>Api Url </th>
+                    </MatTableHeader>
+                    <MatTableRow>
+                        <td>@context.Name</td>
+                        <td>@context.Url</td>
+                    </MatTableRow>
+                </MatTable>
+
+            }
+
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8 mat-elevation-z5" style="padding-left: 2em;
+        padding-top: 1rem">
+            <MatH4 Class="text-center">Monster form</MatH4><hr />
+            <MatButton OnClick="ClearForm">Clear Form</MatButton>
+            <EditForm Model="MonsterForm" OnValidSubmit="SubmitMonsterForm">
+                <DataAnnotationsValidator />
+
+                <div class="mat-layout-grid-inner">
+                    <div class="mat-layout-grid-cell">
+                        <p>Name:</p>
+                        <MatTextField @bind-Value="MonsterForm.Name"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>DifficultyLevel:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.DifficultyLevel"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <MatH5>Other Data</MatH5>
+                        <MatH6>Type: @MonsterData.Type, SubType: @MonsterData.Subtype</MatH6>
+                        <MatH6>Size: @MonsterData.Size, ArmorClass: @MonsterData.ArmorClass</MatH6>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
+                        <p>Description:</p>
+                        <MatTextField TextArea="true" Style="width: 100%" @bind-Value="MonsterForm.Description"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+                        <p>Damage Dice:</p>
+                        <MatTextField HelperText="must be in format '1D6'" HelperTextPersistent="true" PlaceHolder="1D6" 
+                                      @bind-Value="MonsterForm.DamageDice"></MatTextField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>Agility:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.Agility"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>Strength:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.Strength"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>Speed:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.Speed"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>Intelligence:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.Intelligence"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>Toughness:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.Toughness"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell">
+                        <p>MaxHealth:</p>
+                        <MatNumericUpDownField @bind-Value="MonsterForm.MaxHealth"></MatNumericUpDownField>
+                    </div>
+                    <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12 text-center">
+                        <div style="font-size: 1.5em"><ValidationSummary /></div>
+                        <MatButton Type="submit" Outlined="true">Submit Monster</MatButton>
+                    </div>
+                </div>
+                <MatH5>@submitSucess</MatH5>
+            </EditForm>
+        </div>
+    </div>
+</div>

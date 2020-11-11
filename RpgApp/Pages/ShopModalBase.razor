@@ -1,0 +1,18 @@
+﻿@*<div class="text-left">
+    @foreach (var shopEquip in shopEquipment)
+    {
+        <h3>@shopEquip.Name</h3>
+        <ul>
+            <li>@shopEquip.GoldCost Gold</li>
+            <li>@shopEquip.Description</li>
+            <ol>
+                Effects:
+                @foreach (var effect in shopEquip.Effects)
+                {
+                    <li>@effect.Type.ToString()</li>
+                    <li>@effect.Value</li>
+                }
+            </ol>
+        </ul>
+    }
+</div>*@

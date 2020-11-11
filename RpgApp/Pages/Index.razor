@@ -1,18 +1,50 @@
 ﻿@page "/"
-@using RpgApp.Shared
+@using TurnBasedRpg.StateManager
+@inject AppStateManager AppStateManager
+<MatTabGroup @bind-ActiveIndex="indexTab">
+   
+        <MatTab Label="Generate Character">
+            <GamePlayPrimary />
+        </MatTab>
+        <MatTab Label="Data Query Testing">
+            <TestQueries />
+        </MatTab>
+        <MatTab Label="MyLayout">
+            <LayoutMyCss />
+        </MatTab>
+        <MatTab Label="Home page Tab">
+            
+        </MatTab>
+        <MatTab Label="Test Page">
+            @if (AppStateManager.CurrentPlayer == null)
+            {
+                <MatH3 Style="color:red">Error!</MatH3>
+                <MatH5>Visit Query tester page and Select a default player before returning</MatH5>
+            }
+            else
+            {
+                <TestPage />
+            }
 
-<h1>Hello, world!</h1>
+        </MatTab>
+        <MatTab Label="D&D API Dev Tools">
+            <CheatCreate/>
+        </MatTab>
+</MatTabGroup>
+@code
+{
+    protected int indexTab = 0;
 
-Welcome to your new app.
-<p>@testString</p>
-
-@code{
-
-    string testString;
     protected override Task OnInitializedAsync()
     {
-        testString = Class1.TestCompileShared;
+        AppStateManager.OnTabChange += UpdateTab;
         return base.OnInitializedAsync();
     }
 
+    protected async void UpdateTab()
+    {
+        indexTab = AppStateManager.IndexTab;
+        await InvokeAsync(StateHasChanged);
+    }
+    
 }

@@ -1,0 +1,20 @@
+﻿<div class="text-left">
+    <h3>Class: @CurrentPlayer.ClassType.ToString()</h3>
+    Attributes
+    <ul>
+        <li>Agility: @CurrentPlayer.Agility</li>
+        <li>Intelligence: @CurrentPlayer.Intelligence</li>
+        <li>Speed: @CurrentPlayer.Speed</li>
+        <li>Strength: @CurrentPlayer.Strength</li>
+        <li>Toughness: @CurrentPlayer.Toughness</li>
+    </ul>
+    Stats
+    <ul>
+        <li>XP: @CurrentPlayer.Experience</li>
+        <li>Level: @CurrentPlayer.Level</li>
+        <li>Health: @CurrentPlayer.Health</li>
+    </ul>
+</div>
+<div class="text-center">
+    <button class="btn btn-primary" @onclick="@BeginWindow">Begin adventure</button>
+</div>

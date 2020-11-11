@@ -1,0 +1,116 @@
+{
+  "Spells": [
+    {
+      "name": "Magic missile",
+      "description": "Basic spell learned by all beginner mages.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "attribute": "Health",
+          "value": "1D6"
+        }
+      ]
+    },
+    {
+      "name": "Slow",
+      "description": "Slows a single enemy's movements.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Modify",
+          "attribute": "Speed",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Enfeeble",
+      "description": "Weakens a single enemy.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Modify",
+          "attribute": "Strength",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Idiocy",
+      "description": "Reduces a single enemy's mental capacities.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Modify",
+          "attribute": "Intelligence",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Vertigo",
+      "description": "Impedes a single enemy's coordination.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Modify",
+          "attribute": "Agility",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Vulnerability",
+      "description": "Makes a single enemy more vulnerable to damage.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "Modify",
+          "attribute": "Toughness",
+          "value": "1D4"
+        }
+      ]
+    },
+    {
+      "name": "Basic heal",
+      "description": "Most basic type of healing spell. Able to instantly make you best friends with a Warrior.",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Mage"
+      ],
+      "effects": [
+        {
+          "type": "ModifySelf",
+          "attribute": "Health",
+          "value": "1D6"
+        }
+      ]
+    }
+  ]
+}

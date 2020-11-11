@@ -1,0 +1,32 @@
+﻿{
+  "Items": [
+    {
+      "id": 6,
+      "name": "Minor potion of healing",
+      "rarity": "VeryCommon",
+      "description": "Do not leave home without a few of these salves in your pocket",
+      "allowMultiple": true,
+      "goldCost": 20,
+      "quantity": 0,
+      "effect": {
+        "type": "ModifySelf",
+        "value": "2D6",
+        "attribute": "Health"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Stoneskin potion",
+      "rarity": "Moderate",
+      "description": "The thick, gray liquid in this vial hardens your skin, increasing your toughness",
+      "allowMultiple": true,
+      "goldCost": 60,
+      "quantity": 0,
+      "effect": {
+        "type": "ModifySelf",
+        "value": "1D4",
+        "attribute": "Toughness"
+      }
+    }
+  ]
+}
