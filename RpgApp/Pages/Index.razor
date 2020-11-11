@@ -1,0 +1,18 @@
+﻿@page "/"
+@using RpgApp.Shared
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+<p>@testString</p>
+
+@code{
+
+    string testString;
+    protected override Task OnInitializedAsync()
+    {
+        testString = Class1.TestCompileShared;
+        return base.OnInitializedAsync();
+    }
+
+}

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "RpgApp\Client.csproj", "{37FFDF80-5809-4812-8E8B-C45ACF64B77E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{6703DCF7-88C0-4B3D-AFED-F0A11C127021}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37FFDF80-5809-4812-8E8B-C45ACF64B77E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37FFDF80-5809-4812-8E8B-C45ACF64B77E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37FFDF80-5809-4812-8E8B-C45ACF64B77E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37FFDF80-5809-4812-8E8B-C45ACF64B77E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6703DCF7-88C0-4B3D-AFED-F0A11C127021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6703DCF7-88C0-4B3D-AFED-F0A11C127021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6703DCF7-88C0-4B3D-AFED-F0A11C127021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6703DCF7-88C0-4B3D-AFED-F0A11C127021}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35D11085-9DF2-4266-A985-7D4941C2818B}
+	EndGlobalSection
+EndGlobal
