@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using TurnBasedRpg.Services.ExtensionMethods;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
+using RpgApp.Shared.Services.ExtensionMethods;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
-namespace TurnBasedRpg.Services
+namespace RpgApp.Shared.Services
 {
     public class CombatService
     {

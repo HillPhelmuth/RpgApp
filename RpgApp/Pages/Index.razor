@@ -1,6 +1,7 @@
 ﻿@page "/"
-@using TurnBasedRpg.StateManager
-@inject AppStateManager AppStateManager
+@using RpgApp.Shared.StateManager
+@using System.ComponentModel
+@*@inject AppStateManager AppState*@
 <MatTabGroup @bind-ActiveIndex="indexTab">
    
         <MatTab Label="Generate Character">
@@ -16,7 +17,7 @@
             
         </MatTab>
         <MatTab Label="Test Page">
-            @if (AppStateManager.CurrentPlayer == null)
+            @if (AppState.CurrentPlayer == null)
             {
                 <MatH3 Style="color:red">Error!</MatH3>
                 <MatH5>Visit Query tester page and Select a default player before returning</MatH5>
@@ -28,22 +29,24 @@
 
         </MatTab>
         <MatTab Label="D&D API Dev Tools">
-            <CheatCreate/>
+            @*<CheatCreate/>*@ <MatH3>Moving to it's own project</MatH3>
         </MatTab>
 </MatTabGroup>
 @code
 {
     protected int indexTab = 0;
-
+    [CascadingParameter(Name = "AppState")]
+    public AppStateManager AppState { get; set; }
     protected override Task OnInitializedAsync()
     {
-        AppStateManager.OnTabChange += UpdateTab;
+        AppState.PropertyChanged += UpdateTab;
         return base.OnInitializedAsync();
     }
 
-    protected async void UpdateTab()
+    protected async void UpdateTab(object sender, PropertyChangedEventArgs e)
     {
-        indexTab = AppStateManager.IndexTab;
+        if (e.PropertyName != "IndexTab") return;
+        indexTab = AppState.IndexTab;
         await InvokeAsync(StateHasChanged);
     }
     

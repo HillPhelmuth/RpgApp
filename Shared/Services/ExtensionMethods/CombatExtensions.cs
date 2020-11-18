@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
-namespace TurnBasedRpg.Services.ExtensionMethods
+namespace RpgApp.Shared.Services.ExtensionMethods
 {
     public static class CombatExtensions
     {

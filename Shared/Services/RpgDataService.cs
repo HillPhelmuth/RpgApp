@@ -1,32 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.EntityFrameworkCore;
-using TurnBasedRpg.Data;
-using TurnBasedRpg.Types;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Services
+namespace RpgApp.Shared.Services
 {
     public class RpgDataService
     {
         private readonly RpgDbContext _context;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
-        public RpgDataService(RpgDbContext context, AuthenticationStateProvider authenticationStateProvider)
+       
+        public RpgDataService(RpgDbContext context)
         {
             _context = context;
-            _authenticationStateProvider = authenticationStateProvider;
+            
         }
-        private string UserId
-        {
-            get
-            {
-                var authState = _authenticationStateProvider.GetAuthenticationStateAsync();
-                return authState.Result.User.Identity.Name;
-            }
-        }
+       
         // ToDo Replace userId param when Auth is set-up and just user UserId property above
         public async Task<List<Player>> GetUserPlayers(string userId)
         {

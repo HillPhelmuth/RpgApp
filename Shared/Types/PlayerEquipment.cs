@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     /// <summary>
     /// This class represents the Many to Many data relationship between Equipment and Player tables and exists

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TurnBasedRpg.Types.PlayerExtensions
+namespace RpgApp.Shared.Types.PlayerExtensions
 {
     public static class ExtensionMethods
     {
@@ -50,8 +50,8 @@ namespace TurnBasedRpg.Types.PlayerExtensions
 
         public static void AddToInventory(this Player player, Equipment item)
         {
-            player.Inventory ??= new List<PlayerEquipment>();
-            player.Inventory.Add(new PlayerEquipment {Equipment = item});
+            player.Inventory ??= new List<Equipment>();
+            player.Inventory.Add(item);
         }
     }
 }

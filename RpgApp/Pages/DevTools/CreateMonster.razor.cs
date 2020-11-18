@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TurnBasedRpg.CheatDevTools;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.Types;
+using RpgApp.Shared;
+using RpgApp.Shared.CheatDevTools;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Pages.DevTools
+namespace RpgApp.Client.Pages.DevTools
 {
     public partial class CreateMonster
     {
         [Inject]
         public DnDApiService DnDApi { get; set; }
+        //[Inject]
+        //public RpgDataService RpgDataService { get; set; }
         [Inject]
-        public RpgDataService RpgDataService { get; set; }
+        private HttpClient Http { get; set; }
         private List<GeneralApiData> AllMonsters { get; set; }
         private MonsterData MonsterData { get; set; } = new MonsterData();
         private CreateMonsterForm MonsterForm { get; set; } = new CreateMonsterForm();
@@ -64,8 +68,8 @@ namespace TurnBasedRpg.Pages.DevTools
                 DamageDice = MonsterForm.DamageDice
 
             };
-            var isSuccess = await RpgDataService.AddMonster(monster);
-            submitSucess = isSuccess ? "Monster successfully added to Db" : "Nope! a monster with this Name and Difficulty already exists in the Database";
+            var isSuccess = await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/AddMonster", monster); /*RpgDataService.AddMonster(monster);*/
+            submitSucess = isSuccess.IsSuccessStatusCode ? "Monster successfully added to Db" : "Nope! a monster with this Name and Difficulty already exists in the Database";
         }
 
         private void ClearForm()

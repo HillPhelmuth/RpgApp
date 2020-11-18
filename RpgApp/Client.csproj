@@ -7,6 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\DevTools\**" />
+    <Content Remove="Pages\DevTools\**" />
+    <EmbeddedResource Remove="Pages\DevTools\**" />
+    <None Remove="Pages\DevTools\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Modals\ShopModalBase.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Modals\ShopModalBase.razor" />
+    <Content Remove="Pages\_Host.cshtml" />
+    <Content Remove="Shared\LoginDisplay.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Shared\MainLayout.razor" />
     <None Include="Shared\NavMenu.razor" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
@@ -22,7 +39,7 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
     <PackageReference Include="BlazorAnimation" Version="2.0.0" />
     <PackageReference Include="LiquidTechnologies.Blazor.ModalDialog" Version="0.9.7" />
-    <PackageReference Include="MatBlazor" Version="2.8.0-develop-021" />
+    <PackageReference Include="MatBlazor" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>

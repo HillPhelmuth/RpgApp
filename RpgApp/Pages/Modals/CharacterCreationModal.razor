@@ -1,0 +1,13 @@
+﻿@using RpgApp.Shared.Types.Enums
+<div class="text-center" style="margin-left: auto; margin-right: auto">
+    Character Name:<br />
+    <input @bind="name" placeholder="Character Name" /><br />
+    Character Class:<br />
+    <select @bind="CharClass">
+        <option>choose...</option>
+        <option value="@ClassType.Warrior">Warrior</option>
+        <option value="@ClassType.Mage">Mage</option>
+        <option value="@ClassType.Ranger">Ranger</option>
+    </select><br />
+    <button class="btn btn-primary" @onclick="@(() => CreateNewPlayer(CharClass))">Create</button>
+</div>

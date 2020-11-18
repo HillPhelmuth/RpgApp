@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using TurnBasedRpg.Types;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.StateManager
+namespace RpgApp.Shared.StateManager
 {
     /// <summary>
     /// This with simplify the process of keeping all of our page components in sync.
@@ -11,43 +13,69 @@ namespace TurnBasedRpg.StateManager
     /// and trigger the Notification method so our components will automatically update with the
     /// changes. (this will make more sense as we go).
     /// </summary>
-    public class AppStateManager
+    public class AppStateManager : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public Player CurrentPlayer { get; set; }
-        public (int,int) PlayerLocation { get; set; }
-        public int IndexTab { get; private set; }
-        // Event for model state changes
-        public event Func<Task> OnChange;
-        public Action OnMove;
-        public Action OnTabChange;
 
-        public void UpdateTabChanged(int tab)
+        private (int, int) _playerLocation;
+        public (int x, int y) PlayerLocation
         {
-            IndexTab = tab;
+            get => _playerLocation;
+            set
+            {
+                _playerLocation = value;
+                OnPropertyChanged();
+            }
         }
-        public void UpdatePlayerLocation((int row, int col) location)
+
+        private int _indexTab;
+        public int IndexTab
         {
-            PlayerLocation = location;
-            NotifyPlayerMoved();
+            get => _indexTab;
+            set
+            {
+                _indexTab = value;
+                OnPropertyChanged();
+            }
         }
-        public async Task UpdateCurrentPlayer(Player player)
+
+        private Dictionary<int, Monster> _monsters;
+        public Dictionary<int, Monster> Monsters
+        {
+            get => _monsters;
+            set
+            {
+                _monsters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _userId;
+        public string UserId
+        {
+            get => _userId;
+            set
+            {
+                _userId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void UpdateCurrentPlayer(Player player)
         {
             CurrentPlayer = player;
-            await NotifyStateChanged();
+            OnPropertyChanged(nameof(CurrentPlayer));
         }
 
-        public async Task AddItemToInventory(Equipment equipment)
+        public void AddItemToInventory(Equipment equipment)
         {
-            CurrentPlayer?.Inventory?.Add(new PlayerEquipment {Equipment = equipment});
-            await NotifyStateChanged();
+            CurrentPlayer?.AddToInventory(equipment);
+            OnPropertyChanged(nameof(CurrentPlayer));
         }
-        // Task to notify components when model states change
-        private async Task NotifyStateChanged()
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (OnChange != null) await OnChange.Invoke();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private void NotifyPlayerMoved() => OnMove?.Invoke();
-        private void NotifyUpdateTab() => OnTabChange?.Invoke();
     }
 }

@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RpgApp.Server</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DnDApi\**" />
+    <Content Remove="DnDApi\**" />
+    <EmbeddedResource Remove="DnDApi\**" />
+    <None Remove="DnDApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="TypeStoreJson\ClassSkills\MageSkills.json" />
+    <Content Remove="TypeStoreJson\ClassSkills\RangerSkills.json" />
+    <Content Remove="TypeStoreJson\ClassSkills\WarriorSkills.json" />
+    <Content Remove="TypeStoreJson\InventoryLists.json" />
+    <Content Remove="TypeStoreJson\Inventory\EquipmentList.json" />
+    <Content Remove="TypeStoreJson\Inventory\ItemList.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RpgApp\Client.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\Error.cshtml" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\MageSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\RangerSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\WarriorSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\InventoryLists.json" />
+    <EmbeddedResource Include="TypeStoreJson\Inventory\EquipmentList.json" />
+    <EmbeddedResource Include="TypeStoreJson\Inventory\ItemList.json" />
+  </ItemGroup>
+</Project>

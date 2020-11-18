@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.Types.Enums;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     public class CreateCharacter
     {

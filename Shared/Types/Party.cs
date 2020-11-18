@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TurnBasedRpg.Types.Enums;
+﻿using System.Collections.Generic;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     public class Party
     {

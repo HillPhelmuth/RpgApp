@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using TurnBasedRpg.Types.Enums;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.CheatDevTools
+namespace RpgApp.Shared.CheatDevTools
 {
     public class CreateItemForm
     {

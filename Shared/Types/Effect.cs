@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using TurnBasedRpg.Types.Enums;
+﻿using Newtonsoft.Json;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     public class Effect
     {

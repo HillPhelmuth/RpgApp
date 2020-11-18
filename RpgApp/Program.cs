@@ -1,8 +1,11 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using RpgApp.Shared.CheatDevTools;
+using RpgApp.Shared.StateManager;
 
 namespace RpgApp.Client
 {
@@ -14,7 +17,8 @@ namespace RpgApp.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            builder.Services.AddModalDialog();
+            builder.Services.AddSingleton<AppStateManager>();
             await builder.Build().RunAsync();
         }
     }

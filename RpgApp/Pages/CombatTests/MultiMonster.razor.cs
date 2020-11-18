@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Newtonsoft.Json;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
+using RpgApp.Shared;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.StateManager;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
-namespace TurnBasedRpg.Pages.CombatTests
+namespace RpgApp.Client.Pages.CombatTests
 {
     public partial class MultiMonster
     {
         [Inject]
         public CombatService CombatService { get; set; }
         [Inject]
-        public RpgDataService RpgData { get; set; }
+        public HttpClient HttpClient { get; set; }
         [Inject]
         public IModalDialogService ModalDialogService { get; set; }
-        [Inject]
-        public AppStateManager AppStateManager { get; set; }
+        [CascadingParameter(Name = "AppState")]
+        public AppStateManager AppState { get; set; }
         public Player CurrentPlayer { get; set; }
 
         private CombatPlayer _combatPlayer;
@@ -64,7 +67,7 @@ namespace TurnBasedRpg.Pages.CombatTests
         private Dictionary<Player, string> CssDictionary { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            await UpdateState();
+            CurrentPlayer = AppState.CurrentPlayer;
             // Temporary for testing
 
             _combatPlayer = CurrentPlayer.ConvertToCombatMode();
@@ -76,8 +79,10 @@ namespace TurnBasedRpg.Pages.CombatTests
                 _ => ""
             };
             
-            Expression<Func<Monster, bool>> monsterExpression = monster => monster.DifficultyLevel == 1;
-            var monsters = await RpgData.GetMonstersAsync(monsterExpression);
+            var max = 1;
+            var monsters = await HttpClient.GetFromJsonAsync<List<Monster>>($"{AppConstants.ApiUrl}/GetEquipment/{max}");
+            //var monsterJson = await apiResponse.Content.ReadAsStringAsync();
+            //var monsters = JsonSerializer.Deserialize<List<Monster>>(monsterJson);
 
             AllMonsters = new Dictionary<int, Monster>();
             for (int i = 1; i <= MonsterCount; i++)
@@ -85,10 +90,11 @@ namespace TurnBasedRpg.Pages.CombatTests
                 AllMonsters.Add(i, monsters[i-1]);
             }
            
-            AllSkillsTemp = _combatPlayer.Skills.Select(x => x.Skill).ToList();
-            _combatPlayer.EquipArmor(await RpgData.GetEquipmentById(1));
+            AllSkillsTemp = _combatPlayer.Skills;
+            var armor = await HttpClient.GetFromJsonAsync<Equipment>($"{AppConstants.ApiUrl}/GetEquipmentById/1");
+            _combatPlayer.EquipArmor(armor);
             await BeginCombat();
-            AppStateManager.OnChange += UpdateState;
+            AppState.PropertyChanged += UpdateState;
             CombatService.OnCombatEnded += HandleCombatEnded;
             CombatService.OnNewMessage += HandleNewMessage;
             CombatService.OnPlayerHit += HandlePlayerHit;
@@ -97,8 +103,7 @@ namespace TurnBasedRpg.Pages.CombatTests
         private async Task BeginCombat()
         {
             isBeginCombat = true;
-            var weapons = _combatPlayer?.Inventory?.Select(x => x.Equipment) ??
-                          new List<Equipment> { new Equipment {EquipLocation = "TwoHands" }};
+            var weapons = _combatPlayer?.Inventory ?? new List<Equipment> { new Equipment {EquipLocation = "TwoHands" }};
             var weapon = weapons.FirstOrDefault(x => x.Effects.Any(e => e.Type == EffectType.Attack));
             _combatPlayer.EquipWeapon(weapon);
             await CombatService.BeginCombat(ref _combatPlayer, ref AllMonsters);
@@ -128,11 +133,11 @@ namespace TurnBasedRpg.Pages.CombatTests
             //Not Implemented
             await CombatService.PlayerFlee();
         }
-        private Task UpdateState()
+        private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
-            // get and assign values from AppStateManager to Shared Properties
-            CurrentPlayer = AppStateManager.CurrentPlayer;
-            return InvokeAsync(StateHasChanged);
+            AllMonsters = AppState.Monsters;
+            CurrentPlayer = AppState.CurrentPlayer;
+            InvokeAsync(StateHasChanged);
         }
         #region Event Handlers
 
@@ -147,7 +152,7 @@ namespace TurnBasedRpg.Pages.CombatTests
             string alertMessage = isPlayerDefeated ? "You get nothing and start over"
                 : $"You've received {totalGold}gp and earned {totalExp}xp";
 
-            await AppStateManager.UpdateCurrentPlayer(CurrentPlayer);
+            AppState.UpdateCurrentPlayer(CurrentPlayer);
             Console.WriteLine($"CurrentPlayer Stats: {_combatPlayer}");
            // await ModalDialogService.ShowMessageBoxAsync(alertTitle, alertMessage);
             if (isPlayerDefeated)
@@ -190,7 +195,7 @@ namespace TurnBasedRpg.Pages.CombatTests
 
         public void Dispose()
         {
-            AppStateManager.OnChange -= UpdateState;
+            AppState.PropertyChanged -= UpdateState;
             CombatService.OnCombatEnded -= HandleCombatEnded;
             CombatService.OnPlayerHit -= HandlePlayerHit;
             CombatService.OnNewMessage -= HandleNewMessage;

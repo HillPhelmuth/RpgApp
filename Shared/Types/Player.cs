@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
-using TurnBasedRpg.Types.Enums;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     public class Player : LivingEntity
     {
@@ -20,13 +19,13 @@ namespace TurnBasedRpg.Types
         public int Gold { get; set; }
         public ClassType ClassType { get; set; }
         [JsonIgnore]
-        public List<PlayerSkill> Skills { get; set; }
-        [NotMapped] 
-        public List<Skill> SkillList => Skills.Select(x => x.Skill).ToList();
+        public List<Skill> Skills { get; set; }
+        //[NotMapped] 
+        //public List<Skill> SkillList => Skills.Select(x => x.Skill).ToList();
         [JsonIgnore]
-        public List<PlayerEquipment> Inventory { get; set; }
-        [NotMapped]
-        public List<Equipment> InventoryList => Inventory.Select(x => x.Equipment).ToList();
+        public List<Equipment> Inventory { get; set; }
+        //[NotMapped]
+        //public List<Equipment> InventoryList => Inventory.Select(x => x.Equipment).ToList();
 
         public int? WeaponHandId { get; protected set; }
         public int? OffHandId { get; protected set; }
@@ -78,7 +77,7 @@ namespace TurnBasedRpg.Types
 
         public void AddToInventory(Equipment item)
         {
-            this.Inventory.Add(new PlayerEquipment {Equipment = item});
+            this.Inventory.Add(item);
         }
 
         #endregion

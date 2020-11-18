@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TurnBasedRpg.Services
+namespace RpgApp.Shared.Services
 {
     public class DiceRoller
     {

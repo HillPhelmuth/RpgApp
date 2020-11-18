@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TurnBasedRpg.Data;
-using TurnBasedRpg.Types;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Services
+namespace RpgApp.Shared.Services
 {
     public class InventoryService
     {

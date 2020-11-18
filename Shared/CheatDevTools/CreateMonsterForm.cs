@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using TurnBasedRpg.Types;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace TurnBasedRpg.CheatDevTools
+namespace RpgApp.Shared.CheatDevTools
 {
     public class CreateMonsterForm
     {

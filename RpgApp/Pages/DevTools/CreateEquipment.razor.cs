@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TurnBasedRpg.CheatDevTools;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
+using RpgApp.Shared;
+using RpgApp.Shared.CheatDevTools;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Pages.DevTools
+namespace RpgApp.Client.Pages.DevTools
 {
     public partial class CreateEquipment
     {
         [Inject]
         public DnDApiService DnDApi { get; set; }
+        //[Inject]
+        //public RpgDataService RpgDataService { get; set; }
         [Inject]
-        public RpgDataService RpgDataService { get; set; }
+        private HttpClient Http { get; set; }
         private List<GeneralApiData> WeaponCategories { get; set; }
         private GeneralApiData WeaponCategory { get; set; }
         private List<GeneralApiData> ArmorCategories { get; set; }
@@ -128,8 +132,9 @@ namespace TurnBasedRpg.Pages.DevTools
                 EquipLocation = CreateItemForm.EquipLocation,
                 Effects = new List<Effect> {new Effect { Type  = CreateItemForm.Type, Value = CreateItemForm.Value}}
             };
-            var isSuccess = await RpgDataService.AddNewEquipment(newEquipment);
-            submitSucess = isSuccess ? "Item successfully added to Db" : "Nope! an Item with this Name already exists in the Database";
+            var isSuccess = await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/AddNewEquipment", newEquipment);
+
+            submitSucess = isSuccess.IsSuccessStatusCode ? "Item successfully added to Db" : "Nope! an Item with this Name already exists in the Database";
         }
 
         private void ClearForm()

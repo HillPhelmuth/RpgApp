@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.ComponentModel;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types;
-using Blazor.ModalDialog;
-using Blazor.ModalDialog.Components;
-using TurnBasedRpg.Pages.CombatTests;
-using TurnBasedRpg.Services;
+using RpgApp.Client.Pages.CombatTests;
+using RpgApp.Client.Pages.Modals;
+using RpgApp.Shared;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.StateManager;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Pages.Layouts
+namespace RpgApp.Client.Pages.Layouts
 {
     public partial class LayoutMyCss:IDisposable
     {
-        [Inject]
-        public AppStateManager AppStateManager { get; set; }
+        [CascadingParameter(Name = "AppState")]
+        public AppStateManager AppState { get; set; }
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
         [Inject]
         public IModalDialogService ModalService { get; set; }
         [Inject]
-        public RpgDataService RpgData { get; set; }
+        public HttpClient Http { get; set; }
         [Parameter] 
         public (int x, int y) PlayerLoc { get; set; } = (0, 0);
         protected Player CurrentPlayer { get; set; }
@@ -36,8 +37,8 @@ namespace TurnBasedRpg.Pages.Layouts
         private Random random = new Random();
         protected override Task OnInitializedAsync()
         {
-            CurrentPlayer = AppStateManager.CurrentPlayer;
-            AppStateManager.OnChange += UpdateState;
+            CurrentPlayer = AppState.CurrentPlayer;
+            AppState.PropertyChanged += UpdateState;
             return base.OnInitializedAsync();
         }
 
@@ -80,7 +81,8 @@ namespace TurnBasedRpg.Pages.Layouts
             }
 
             PlayerLoc = playerLocation;
-            AppStateManager.UpdatePlayerLocation(PlayerLoc);
+            AppState.PlayerLocation = PlayerLoc;
+            //AppState.UpdatePlayerLocation(PlayerLoc);
             StateHasChanged();
         }
 
@@ -134,23 +136,17 @@ namespace TurnBasedRpg.Pages.Layouts
                     options, parameters);
             if (result.Success)
             {
-                //await ModalService.ShowMessageBoxAsync("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
                 moveUpdates.Add("Victory!");
                 moveUpdates.Add("It's time get back to the road to continue your fucking quest you goddamn slacker");
-                //if (innerResult == MessageBoxDialogResult.Cancel && innerResult == MessageBoxDialogResult.OK)
-                //    return;
-                //var currentPlayer = result.ReturnParameters.Get<Player>("CurrentPlayer");
-                //var messages = result.ReturnParameters.Get<List<string>>("Messages");
-                //while (messages.Count > 5) messages.RemoveAt(0);
-                //moveUpdates.AddRange(messages);
-                //await AppStateManager.UpdateCurrentPlayer(currentPlayer);
             }
             else
             {
                 CurrentPlayer.Health = CurrentPlayer.MaxHealth;
                 PlayerLoc = (0, 0);
             }
-            await RpgData.UpdateOrAddPlayer(CurrentPlayer);
+
+            await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
+           
         }
 
         private void ToggleCss()
@@ -158,22 +154,19 @@ namespace TurnBasedRpg.Pages.Layouts
             gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
         }
 
-        private Task UpdateState()
+        private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
-            CurrentPlayer = AppStateManager.CurrentPlayer;
+            if (e.PropertyName != "CurrentPlayer") return;
+            CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
-            return Task.CompletedTask;
+            //return Task.CompletedTask;
         }
         public async Task ShowMenu()
         {
-            ModalDialogResult result = await ModalService.ShowDialogAsync<MenuModal>("Menu");
+            var result = await ModalService.ShowDialogAsync<MenuModal>("Menu");
             StateHasChanged();
         }
 
-        public void Dispose()
-        {
-            AppStateManager.OnChange -= UpdateState;
-        }
-
+        public void Dispose() => AppState.PropertyChanged -= UpdateState;
     }
 }

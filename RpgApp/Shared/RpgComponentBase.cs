@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.SignalR;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.StateManager;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Shared
+namespace RpgApp.Client.Shared
 {
     public class RpgComponentBase : ComponentBase
     {
         #region SharedComponentProperties
 
         [Inject]
-        public AppStateManager AppStateManager { get; set; }
-        [Inject]
-        public DiceRoller DiceRoller { get; set; }
+        public AppStateManager AppState { get; set; }
+        //[Inject]
+        //public DiceRoller DiceRoller { get; set; }
         public Player CurrentPlayer { get; set; }
         
 
@@ -25,11 +22,11 @@ namespace TurnBasedRpg.Shared
 
         #region SharedComponentMethods
         // Task that's triggered when NotifyStateHasChanged() is called in the AppStateManager
-        protected Task UpdateState()
+        protected void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             // get and assign values from AppStateManager to Shared Properties
-            CurrentPlayer = AppStateManager.CurrentPlayer;
-            return InvokeAsync(StateHasChanged);
+            CurrentPlayer = AppState.CurrentPlayer;
+            InvokeAsync(StateHasChanged);
         }
 
         #endregion

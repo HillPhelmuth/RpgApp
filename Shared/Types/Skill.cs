@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
-using MatBlazor;
 using Newtonsoft.Json;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
     public class WarriorSkillList
     {
@@ -44,13 +41,13 @@ namespace TurnBasedRpg.Types
         public List<string> AllowedClasses //All this is required to send and receive lists from sql db
         {
             get => AllowedClassesData?.Split(',').ToList();
-            set => AllowedClassesData = string.Join(',', value);
+            set => AllowedClassesData = string.Join(',', value ?? new List<string>());
         }
         [JsonIgnore]
         public string AllowedClassesData { get; set; }
         
         [JsonProperty("effects")]
         public List<Effect> Effects { get; set; }
-        public List<PlayerSkill> PlayerSkills { get; set; }
+        //public List<PlayerSkill> PlayerSkills { get; set; }
     }
 }

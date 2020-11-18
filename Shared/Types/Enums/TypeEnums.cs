@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TurnBasedRpg.Types.Enums
+﻿namespace RpgApp.Shared.Types.Enums
 {
     public enum ClassType
     {

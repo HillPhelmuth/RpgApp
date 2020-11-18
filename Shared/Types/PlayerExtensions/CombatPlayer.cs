@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Newtonsoft.Json;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types.Enums;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Types.PlayerExtensions
+namespace RpgApp.Shared.Types.PlayerExtensions
 {
     public class CombatPlayer : Player
     {
@@ -15,7 +12,7 @@ namespace TurnBasedRpg.Types.PlayerExtensions
         
         private int GetArmorValue()
         {
-            var inventory = Inventory.Select(x => x.Equipment);
+            var inventory = Inventory;
             var armor = inventory.FirstOrDefault(x => x.Id == BodyId);
             
             var armorValue = armor?.Effects.Where(x => x.Type == EffectType.Defend).Select(x => x.Value).FirstOrDefault();
@@ -25,7 +22,7 @@ namespace TurnBasedRpg.Types.PlayerExtensions
         
         private string GetDamageDice()
         {
-            var inventory = Inventory.Select(x => x.Equipment);
+            var inventory = Inventory;
             var weapon = inventory.FirstOrDefault(x => x.Id == WeaponHandId);
             return weapon?.Effects.Where(x => x.Type == EffectType.Attack).Select(x => x.Value)
                 .FirstOrDefault();

@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
-using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Newtonsoft.Json;
-using TurnBasedRpg.Shared;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
-using CombatService = TurnBasedRpg.Services.CombatService;
+//using Newtonsoft.Json;
+using RpgApp.Client.Shared;
+using RpgApp.Shared;
+using RpgApp.Shared.Services;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
+using CombatService = RpgApp.Shared.Services.CombatService;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace TurnBasedRpg.Pages
+namespace RpgApp.Client.Pages
 {
     public class TestPageModel : RpgComponentBase, IDisposable
     {
         [Inject]
         public CombatService CombatService { get; set; }
         [Inject]
-        public RpgDataService RpgData { get; set; }
+        private HttpClient Http { get; set; }
         [Inject]
         public IModalDialogService ModalDialogService { get; set; }
        
@@ -49,7 +51,7 @@ namespace TurnBasedRpg.Pages
         protected Dictionary<Player, string> CssDictionary { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            await UpdateState();
+            //await UpdateState();
             // Temporary for testing
             
             _combatPlayer = CurrentPlayer.ConvertToCombatMode();
@@ -63,12 +65,16 @@ namespace TurnBasedRpg.Pages
             var dice = new DiceRoller();
             Difficulty = dice.RollD6();
             Expression<Func<Monster, bool>> monsterExpression = monster => monster.DifficultyLevel == Difficulty || monster.DifficultyLevel >= 1;
-            Monster = await RpgData.GetSingleMonsterAsync(monsterExpression);
+            var apiResponse = await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/GetSingleMonster", monsterExpression);
+            var monsterJson = await apiResponse.Content.ReadAsStringAsync();
+            Monster = JsonSerializer.Deserialize<Monster>(monsterJson);
+            //Monster = await RpgData.GetSingleMonsterAsync(monsterExpression);
             _monster = Monster;
-            AllSkillsTemp = _combatPlayer.Skills.Select(x => x.Skill).ToList();
-            _combatPlayer.EquipArmor(await RpgData.GetEquipmentById(1));
+            AllSkillsTemp = _combatPlayer.Skills;
+            var armor = await Http.GetFromJsonAsync<Equipment>($"{AppConstants.ApiUrl}/GetEquipmentById/1");
+            _combatPlayer.EquipArmor(armor);
             await BeginCombat();
-            AppStateManager.OnChange += UpdateState;
+            AppState.PropertyChanged += UpdateState;
             CombatService.OnCombatEnded += AlertCombatEnded;
             CombatService.OnNewMessage += HandleNewMessage;
             //CombatService.OnPlayerHit += HandlePlayerHit;
@@ -79,7 +85,7 @@ namespace TurnBasedRpg.Pages
         protected async Task BeginCombat()
         {
             isBeginCombat = true;
-            var weapons = _combatPlayer?.Inventory?.Select(x => x.Equipment) ?? new List<Equipment>
+            var weapons = _combatPlayer?.Inventory ?? new List<Equipment>
             {new Equipment
             {
                 EquipLocation = "TwoHands",
@@ -130,8 +136,8 @@ namespace TurnBasedRpg.Pages
                 {"CurrentPlayer", CurrentPlayer }
             };
             await Task.Delay(2100);
-            var jsonSetting = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-            Console.WriteLine($"CurrentPlayer Stats: {JsonConvert.SerializeObject(CurrentPlayer, Formatting.Indented, jsonSetting)}");
+            //var jsonSetting = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+            //Console.WriteLine($"CurrentPlayer Stats: {JsonConvert.SerializeObject(CurrentPlayer, Formatting.Indented, jsonSetting)}");
             if (isPlayerDead)
             {
                 ModalDialogService.Close(false);
@@ -166,7 +172,7 @@ namespace TurnBasedRpg.Pages
 
         public void Dispose()
         {
-            AppStateManager.OnChange -= UpdateState;
+            AppState.PropertyChanged -= UpdateState;
             CombatService.OnCombatEnded -= AlertCombatEnded;
             //CombatService.OnPlayerHit -= HandlePlayerHit;
             CombatService.OnNewMessage -= HandleNewMessage;

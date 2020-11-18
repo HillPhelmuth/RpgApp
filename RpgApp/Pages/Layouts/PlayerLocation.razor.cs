@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
-using TurnBasedRpg.StateManager;
+using RpgApp.Shared.StateManager;
 
-namespace TurnBasedRpg.Pages.Layouts
+namespace RpgApp.Client.Pages.Layouts
 {
-    public partial class PlayerLocation
+    public partial class PlayerLocation :IDisposable
     {
-        [Inject]
-        public AppStateManager AppStateManager { get; set; }
+        [CascadingParameter(Name = "AppState")]
+        public AppStateManager AppState { get; set; }
         [Inject]
         protected IModalDialogService ModalDialogService { get; set; }
         [Parameter]
@@ -30,24 +29,22 @@ namespace TurnBasedRpg.Pages.Layouts
         protected override Task OnInitializedAsync()
         {
             
-            AppStateManager.OnMove += UpdateLocation;
+            AppState.PropertyChanged += UpdateLocation;
             return base.OnInitializedAsync();
         }
 
-        private async void UpdateLocation()
+        private async void UpdateLocation(object sender, PropertyChangedEventArgs e)
         {
-            PlayerLoc = AppStateManager.PlayerLocation;
+            if (e.PropertyName != "PlayerLocation") return;
 
-            var sw = new Stopwatch();
-            sw.Start();
+            PlayerLoc = AppState.PlayerLocation;
+          
             (int row, int col) = PlayerLoc;
 
             if (row == Row && col == Col)
             {
                 cssLocation = "located";
                 isOccupied = true;
-                sw.Stop();
-                Console.WriteLine($"Update Location took {sw.ElapsedMilliseconds}ms");
                 await PlayerLocChanged.InvokeAsync(PlayerLoc);
             }
             else
@@ -64,6 +61,11 @@ namespace TurnBasedRpg.Pages.Layouts
             var result = await ModalDialogService.ShowDialogAsync<StyleTester>("this");
             if (result.Success)
                 ModalDialogService.Close(true);
+        }
+
+        public void Dispose()
+        {
+            AppState.PropertyChanged -= UpdateLocation;
         }
     }
 }

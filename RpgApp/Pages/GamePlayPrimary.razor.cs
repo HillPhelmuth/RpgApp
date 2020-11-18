@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using TurnBasedRpg.Services;
-using TurnBasedRpg.Shared;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
 using Blazor.ModalDialog;
+using Microsoft.AspNetCore.Components;
+using RpgApp.Client.Pages.Modals;
+using RpgApp.Client.Shared;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
 
-namespace TurnBasedRpg.Pages
+namespace RpgApp.Client.Pages
 {
     public class GamePlayPrimaryModel : RpgComponentBase, IDisposable
     {
@@ -32,18 +30,19 @@ namespace TurnBasedRpg.Pages
 
         #region Methods
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
             altDisplay = string.IsNullOrEmpty(TabDemoParameter) ? "Navigation style presentation" : TabDemoParameter;
-            await UpdateState();
+            //await UpdateState();
             // Listens for OnChange event from AppStateManager and triggers UpdateState each time
-            AppStateManager.OnChange += UpdateState;
+            AppState.PropertyChanged += UpdateState;
+            return base.OnInitializedAsync();
         }
         public async Task CreateNewPlayer(ClassType classType)
         {
             var create = new CreateCharacter();
             CurrentPlayer = await create.CreateNewCharacter(classType);
-            await AppStateManager.UpdateCurrentPlayer(CurrentPlayer);
+            AppState.UpdateCurrentPlayer(CurrentPlayer);
             CurrentPlayer.Name = name;
             IsPlayerCreated = true;
             StateHasChanged();
@@ -56,7 +55,7 @@ namespace TurnBasedRpg.Pages
         }
 
         // UnSubscribes from the OnChange event when component is not currently in use
-        public void Dispose() => AppStateManager.OnChange -= UpdateState;
+        public void Dispose() => AppState.PropertyChanged -= UpdateState;
         #endregion
 
     }
