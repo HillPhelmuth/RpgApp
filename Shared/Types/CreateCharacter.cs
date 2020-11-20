@@ -15,7 +15,7 @@ namespace RpgApp.Shared.Types
             switch (type)
             {
                 case ClassType.Mage:
-                   
+
                     newPlayer.Strength = 10 - diceRoller.RollD4();
                     newPlayer.Intelligence = 10 + diceRoller.RollD8();
                     newPlayer.Toughness = 10;
@@ -32,7 +32,7 @@ namespace RpgApp.Shared.Types
                     newPlayer.MaxAbilityPoints = newPlayer.Strength * 2;
                     break;
                 case ClassType.Ranger:
-                    newPlayer.Strength = 10 ;
+                    newPlayer.Strength = 10;
                     newPlayer.Intelligence = 10;
                     newPlayer.Toughness = 10 - diceRoller.RollD4();
                     newPlayer.Agility = 10 + diceRoller.RollD4();

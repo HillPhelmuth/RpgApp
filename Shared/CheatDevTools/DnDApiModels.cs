@@ -40,7 +40,7 @@ namespace RpgApp.Shared.CheatDevTools
         public int HitPoints { get; set; }
         [JsonProperty("size")]
         public string Size { get; set; }
-       
+
         [JsonProperty("type")]
         public string Type { get; set; }
 
@@ -55,7 +55,7 @@ namespace RpgApp.Shared.CheatDevTools
 
         [JsonProperty("hit_dice")]
         public string HitDice { get; set; }
-        
+
         [JsonProperty("strength")]
         public int Strength { get; set; }
 
@@ -91,10 +91,10 @@ namespace RpgApp.Shared.CheatDevTools
         [JsonProperty("category_range")]
         public string CategoryRange { get; set; }
 
-        
+
         [JsonProperty("damage")]
         public Damage Damage { get; set; }
-        
+
         [JsonProperty("weight")]
         public long Weight { get; set; }
 
@@ -104,7 +104,7 @@ namespace RpgApp.Shared.CheatDevTools
         [JsonProperty("damage_dice")]
         public string DamageDice { get; set; }
 
-       
+
     }
 
     public class ArmorData
@@ -126,7 +126,7 @@ namespace RpgApp.Shared.CheatDevTools
         [JsonProperty("weight")]
         public long Weight { get; set; }
 
-        
+
     }
     public partial class ArmorClass
     {

@@ -36,10 +36,10 @@ namespace RpgApp.Server
             services.AddDbContext<RpgDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RpgDbConnection"))); // gets the connection string from appsettings.json
             services.AddSingleton<AppStateManager>();
-            services.AddScoped<CombatService>();
+            //services.AddScoped<CombatService>();
             services.AddTransient<CreateCharacter>();
             services.AddTransient<RpgDataService>();
-            
+
             //services.AddScoped<InventoryService>();
             //services.AddScoped<DnDApiService>();
         }

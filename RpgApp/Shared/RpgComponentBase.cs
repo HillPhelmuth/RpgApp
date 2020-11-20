@@ -16,7 +16,7 @@ namespace RpgApp.Client.Shared
         //[Inject]
         //public DiceRoller DiceRoller { get; set; }
         public Player CurrentPlayer { get; set; }
-        
+
 
         #endregion
 

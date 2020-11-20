@@ -18,7 +18,7 @@ namespace RpgApp.Shared.Services.ExtensionMethods
             }
             var diceRoller = new DiceRoller();
             var damageDiceValues = dice.ToUpper().Split('D');
-            
+
             for (int i = 0; i < Convert.ToInt32(damageDiceValues[0]); i++)
             {
                 damage += damageDiceValues[1] switch
@@ -43,7 +43,7 @@ namespace RpgApp.Shared.Services.ExtensionMethods
             PropertyInfo prop = type.GetProperty(attribute);
             var modifier = value.ToDiceValue();
             var currentVal = prop?.GetValue(combatPlayer) ?? 0;
-            var propertyValue = combatPlayer is CombatPlayer ? (int) currentVal + modifier : (int)currentVal - modifier;
+            var propertyValue = combatPlayer is CombatPlayer ? (int)currentVal + modifier : (int)currentVal - modifier;
             prop?.SetValue(combatPlayer, propertyValue, null);
         }
 
@@ -51,9 +51,9 @@ namespace RpgApp.Shared.Services.ExtensionMethods
         {
             return player.ClassType switch
             {
-                ClassType.Warrior => Math.Ceiling((decimal) player.Strength / 2),
-                ClassType.Mage => Math.Ceiling((decimal) player.Intelligence / 2),
-                ClassType.Ranger => Math.Ceiling((decimal) player.Agility / 2),
+                ClassType.Warrior => Math.Ceiling((decimal)player.Strength / 2),
+                ClassType.Mage => Math.Ceiling((decimal)player.Intelligence / 2),
+                ClassType.Ranger => Math.Ceiling((decimal)player.Agility / 2),
                 _ => 0
             };
         }

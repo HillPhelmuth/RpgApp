@@ -19,14 +19,14 @@ namespace RpgApp.Shared.CheatDevTools
         [Required]
         public string EquipLocation { get; set; }
 
-       
+
         public bool? AreaEffect { get; set; }
 
         [Required]
         public int GoldCost { get; set; }
         [Required]
         public EffectType Type { get; set; }
-        
+
         public int? Area { get; set; }
 
         [Required]
@@ -37,7 +37,7 @@ namespace RpgApp.Shared.CheatDevTools
 
         public string Attribute { get; set; }
 
-        
+
         public int? Duration { get; set; }
     }
 }

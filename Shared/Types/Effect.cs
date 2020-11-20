@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿//using Newtonsoft.Json;
+
+using System.Text.Json.Serialization;
+//using Newtonsoft.Json;
 using RpgApp.Shared.Types.Enums;
 
 namespace RpgApp.Shared.Types
@@ -7,22 +10,22 @@ namespace RpgApp.Shared.Types
     {
         [JsonIgnore]
         public int ID { get; set; }
-        
-        [JsonProperty("type")]
+
+        [JsonPropertyName("type")]
         public EffectType Type { get; set; }
 
-        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("areaEffect")]
         public int? Area { get; set; }
 
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public string Value { get; set; }
 
-        [JsonProperty("attribute", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("attribute")]
         public string Attribute { get; set; }
 
-        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("duration")]
         public int? Duration { get; set; }
-        
+
 
     }
 }

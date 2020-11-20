@@ -1,42 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+//using Newtonsoft.Json;
 
 namespace RpgApp.Shared.Types
 {
     public class WarriorSkillList
     {
-        [JsonProperty("warriorSkills")]
+        [JsonPropertyName("warriorSkills")]
         public List<Skill> WarriorSkills { get; set; }
     }
     public class RangerSkillList
     {
-        [JsonProperty("rangerSkills")]
+        [JsonPropertyName("rangerSkills")]
         public List<Skill> RangerSkills { get; set; }
     }
     public class MageSkillList
     {
-        [JsonProperty("Spells")]
+        [JsonPropertyName("Spells")]
         public List<Skill> MageSkills { get; set; }
     }
     public class Skill
     {
         [JsonIgnore]
         public int ID { get; set; }
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("goldCost")]
+        [JsonPropertyName("goldCost")]
         public int GoldCost { get; set; }
 
-        [JsonProperty("abilityCost")]
+        [JsonPropertyName("abilityCost")]
         public int AbilityCost { get; set; }
-        
-        [JsonProperty("classTypes")]
+
+        [JsonPropertyName("classTypes")]
         [NotMapped]
         public List<string> AllowedClasses //All this is required to send and receive lists from sql db
         {
@@ -45,9 +47,10 @@ namespace RpgApp.Shared.Types
         }
         [JsonIgnore]
         public string AllowedClassesData { get; set; }
-        
-        [JsonProperty("effects")]
+
+        [JsonPropertyName("effects")]
         public List<Effect> Effects { get; set; }
-        //public List<PlayerSkill> PlayerSkills { get; set; }
+        [JsonIgnore]
+        public ICollection<Player> Players { get; set; }
     }
 }

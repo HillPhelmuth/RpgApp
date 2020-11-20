@@ -12,20 +12,20 @@ namespace RpgApp.Server.Services
     public class RpgDataService
     {
         private readonly RpgDbContext _context;
-       
+
         public RpgDataService(RpgDbContext context)
         {
             _context = context;
-            
+
         }
-       
-       
+
+
         public async Task<List<Player>> GetUserPlayers(string userId)
         {
             var players = new List<Player>();
             var playersFromDb = await _context.Players.Where(x => x.UserId == userId).Include(x => x.Inventory).ThenInclude(z => z.Effects).Include(x => x.Skills).ThenInclude(z => z.Effects).ToListAsync();
-           players.AddRange(playersFromDb);
-           return players;
+            players.AddRange(playersFromDb);
+            return players;
         }
         // Programmatically set the .Where linq expression. See TestQueries.razor.cs for example
         // We can set up component specific query methods where they're required instead of adding a bunch
@@ -87,7 +87,7 @@ namespace RpgApp.Server.Services
                 Console.WriteLine($"{equipment.Name} Already exists in DB");
                 return false;
             }
-                
+
             await _context.Equipment.AddAsync(equipment);
             await _context.SaveChangesAsync();
             return true;
@@ -96,7 +96,7 @@ namespace RpgApp.Server.Services
         public async Task<bool> AddNewSkill(Skill skill)
         {
             var isMatch = await _context.Skills.AnyAsync(s =>
-                s.Name == skill.Name || s.ID == skill.ID );
+                s.Name == skill.Name || s.ID == skill.ID);
             if (isMatch)
                 return false;
             await _context.Skills.AddAsync(skill);

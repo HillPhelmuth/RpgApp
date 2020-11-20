@@ -26,7 +26,7 @@ namespace RpgApp.Client.Pages.Modals
         {
             CurrentPlayer = AppState.CurrentPlayer;
             StateHasChanged();
-            
+
         }
         public void BeginWindow()
         {

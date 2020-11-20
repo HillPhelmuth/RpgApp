@@ -5,6 +5,7 @@ using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using RpgApp.Shared.CheatDevTools;
+using RpgApp.Shared.Services;
 using RpgApp.Shared.StateManager;
 
 namespace RpgApp.Client
@@ -18,6 +19,7 @@ namespace RpgApp.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddModalDialog();
+            builder.Services.AddScoped<CombatService>();
             builder.Services.AddSingleton<AppStateManager>();
             await builder.Build().RunAsync();
         }

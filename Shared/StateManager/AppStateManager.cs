@@ -39,14 +39,14 @@ namespace RpgApp.Shared.StateManager
                 OnPropertyChanged();
             }
         }
-
-        private Dictionary<int, Monster> _monsters;
-        public Dictionary<int, Monster> Monsters
+        
+        private Dictionary<string, Monster> _combatMonsters;
+        public Dictionary<string, Monster> CombatMonsters
         {
-            get => _monsters;
+            get => _combatMonsters;
             set
             {
-                _monsters = value;
+                _combatMonsters = value;
                 OnPropertyChanged();
             }
         }
@@ -62,6 +62,41 @@ namespace RpgApp.Shared.StateManager
             }
         }
 
+        private List<Monster> _allMonsters;
+
+        public List<Monster> AllMonsters
+        {
+            get => _allMonsters;
+            set
+            {
+                _allMonsters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<Skill> _allSkills;
+
+        public List<Skill> AllSkills
+        {
+            get => _allSkills;
+            set
+            {
+                _allSkills = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<Equipment> _allEquipment;
+
+        public List<Equipment> AllEquipment
+        {
+            get => _allEquipment;
+            set
+            {
+                _allEquipment = value;
+                OnPropertyChanged();
+            }
+        }
         public void UpdateCurrentPlayer(Player player)
         {
             CurrentPlayer = player;

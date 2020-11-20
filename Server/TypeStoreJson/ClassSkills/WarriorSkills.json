@@ -61,7 +61,6 @@
           "type": "Attack",
           "value": "2D8",
           "areaEffect": 2
-          //The area effect must strike adjacent enemies
         }
       ]
     },

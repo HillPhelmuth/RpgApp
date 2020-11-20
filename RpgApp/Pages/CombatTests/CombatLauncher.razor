@@ -1,0 +1,13 @@
+﻿
+@if (!isCombatReady)
+{
+    <div class="text-center">
+        @((MarkupString)videoSrc)
+    </div>
+    @*<iframe src="@videoSrc" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="@videoLink">via GIPHY</a></p>*@
+}
+else
+{
+    <MultiMonster OnCombatEnded="HandleCombatEnded" MonsterCount="MonsterCount" />
+}
+

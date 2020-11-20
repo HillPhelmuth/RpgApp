@@ -39,7 +39,7 @@ namespace RpgApp.Shared.Types
         public static implicit operator string(Player player)
         {
             var jsonSetting = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-           return JsonConvert.SerializeObject(player, Formatting.Indented, jsonSetting);
+            return JsonConvert.SerializeObject(player, Formatting.Indented, jsonSetting);
         }
         public void EquipWeapon(Equipment item)
         {
@@ -61,15 +61,16 @@ namespace RpgApp.Shared.Types
         public void EquipOffHand(Equipment item)
         {
             string stringClass = ClassAsString();
-            if (!item.EquipLocation.Contains("OffHand")) return;
+            if (item.EquipLocation == null || !item.EquipLocation.Contains("OffHand")) return;
             if (item.AllowedClasses.All(x => x != stringClass))
                 return;
             OffHandId = item.Id;
         }
         public void EquipArmor(Equipment item)
         {
+            if (item == null) return;
             var stringClass = ClassAsString();
-            if (!item.EquipLocation.Contains("Body")) return;
+            if (item.EquipLocation?.Contains("Body") == false) return;
             if (item.AllowedClasses.All(x => x != stringClass))
                 return;
             BodyId = item.Id;
@@ -77,7 +78,7 @@ namespace RpgApp.Shared.Types
 
         public void AddToInventory(Equipment item)
         {
-            this.Inventory.Add(item);
+            Inventory.Add(item);
         }
 
         #endregion

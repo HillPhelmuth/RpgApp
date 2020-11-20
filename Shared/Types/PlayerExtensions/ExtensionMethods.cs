@@ -41,8 +41,8 @@ namespace RpgApp.Shared.Types.PlayerExtensions
                 Skills = player.Skills,
                 Initiative = 0
             };
-            if (player.WeaponHandId != null) 
-                combatPlayer.EquipWeapon((int) player.WeaponHandId);
+            if (player.WeaponHandId != null)
+                combatPlayer.EquipWeapon((int)player.WeaponHandId);
             if (player.BodyId != null)
                 combatPlayer.EquipArmor((int)player.BodyId);
             return combatPlayer;

@@ -24,12 +24,12 @@ namespace RpgApp.Client.Pages.Modals
             Expression<Func<Equipment, bool>> equipFilter = equipment => equipment.GoldCost <= 30;
             var apiResponse = await HttpClient.PostAsJsonAsync($"{AppConstants.ApiUrl}/GetEquipment", equipFilter);
             var equipmentJson = await apiResponse.Content.ReadAsStringAsync();
-            playerInventory = JsonSerializer.Deserialize<List<Equipment>>(equipmentJson) ?? new List<Equipment>(); 
+            playerInventory = JsonSerializer.Deserialize<List<Equipment>>(equipmentJson) ?? new List<Equipment>();
             foreach (var item in playerInventory.Where(item => item.Effects == null))
             {
-                item.Effects = new List<Effect> {new Effect() {Type = EffectType.Status, Value = "none"}};
+                item.Effects = new List<Effect> { new Effect() { Type = EffectType.Status, Value = "none" } };
             }
-            
+
         }
     }
 }

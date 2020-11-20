@@ -18,7 +18,7 @@ using RpgApp.Shared.Types.PlayerExtensions;
 
 namespace RpgApp.Client.Pages.CombatTests
 {
-    public partial class MultiMonster
+    public partial class MultiMonster : IDisposable
     {
         [Inject]
         public CombatService CombatService { get; set; }
@@ -31,13 +31,14 @@ namespace RpgApp.Client.Pages.CombatTests
         public Player CurrentPlayer { get; set; }
 
         private CombatPlayer _combatPlayer;
-        [Parameter]
-        public Monster Monster { get; set; } = new Monster();
+        
         [Parameter]
         public int Difficulty { get; set; }
+        [Parameter]
+        public EventCallback<bool> OnCombatEnded { get; set; }
 
         private int _monsterCount = 1;
-        [Parameter] 
+        [Parameter]
         public int MonsterCount
         {
             get => _monsterCount;
@@ -50,9 +51,13 @@ namespace RpgApp.Client.Pages.CombatTests
                 else
                     _monsterCount = value;
 
-            } }
+            }
+        }
 
-        public Dictionary<int, Monster> AllMonsters = new Dictionary<int, Monster>();
+        public Dictionary<string, Monster> AllMonsters = new Dictionary<string, Monster>(3)
+        {
+            {"Monster 1", new Monster{isDead = true}},{"Monster 2",new Monster{isDead = true}},{"Monster 3",new Monster{isDead = true}}
+        };
         private List<Skill> AllSkillsTemp = new List<Skill>();
         private bool isBeginCombat;
         private bool isMonsterDead;
@@ -78,20 +83,22 @@ namespace RpgApp.Client.Pages.CombatTests
                 ClassType.Ranger => "ranger-img",
                 _ => ""
             };
-            
-            var max = 1;
-            var monsters = await HttpClient.GetFromJsonAsync<List<Monster>>($"{AppConstants.ApiUrl}/GetEquipment/{max}");
-            //var monsterJson = await apiResponse.Content.ReadAsStringAsync();
-            //var monsters = JsonSerializer.Deserialize<List<Monster>>(monsterJson);
 
-            AllMonsters = new Dictionary<int, Monster>();
+            var max = 1;
+            
+            var monsters = AppState.AllMonsters.Where(x => x.DifficultyLevel <= 1).ToList();
+           
+            var count = Math.Min(monsters.Count, MonsterCount);
+            AllMonsters = new Dictionary<string, Monster>();
             for (int i = 1; i <= MonsterCount; i++)
             {
-                AllMonsters.Add(i, monsters[i-1]);
+                AllMonsters[$"Monster {i}"] = monsters[i - 1];
+                //AllMonsters.Add($"", monsters[i-1]);
             }
-           
+
             AllSkillsTemp = _combatPlayer.Skills;
-            var armor = await HttpClient.GetFromJsonAsync<Equipment>($"{AppConstants.ApiUrl}/GetEquipmentById/1");
+            //var armor = await HttpClient.GetFromJsonAsync<Equipment>($"{AppConstants.ApiUrl}/GetEquipmentById/1");
+            var armor = AppState.AllEquipment.FirstOrDefault(x => x.Id == 1);
             _combatPlayer.EquipArmor(armor);
             await BeginCombat();
             AppState.PropertyChanged += UpdateState;
@@ -103,13 +110,14 @@ namespace RpgApp.Client.Pages.CombatTests
         private async Task BeginCombat()
         {
             isBeginCombat = true;
-            var weapons = _combatPlayer?.Inventory ?? new List<Equipment> { new Equipment {EquipLocation = "TwoHands" }};
+            var weapons = _combatPlayer?.Inventory ?? new List<Equipment> { new Equipment { EquipLocation = "TwoHands" } };
             var weapon = weapons.FirstOrDefault(x => x.Effects.Any(e => e.Type == EffectType.Attack));
+            Console.WriteLine($"weapon: {JsonSerializer.Serialize(weapon)}");
             _combatPlayer.EquipWeapon(weapon);
             await CombatService.BeginCombat(ref _combatPlayer, ref AllMonsters);
 
         }
-        private async Task Attack(int key)
+        private async Task Attack(string key)
         {
             Console.WriteLine("Attack!");
 
@@ -135,7 +143,8 @@ namespace RpgApp.Client.Pages.CombatTests
         }
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
-            AllMonsters = AppState.Monsters;
+            if (e.PropertyName != "Monsters" && e.PropertyName != "CurrentPlayer")
+            AllMonsters = AppState.CombatMonsters;
             CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
         }
@@ -154,21 +163,16 @@ namespace RpgApp.Client.Pages.CombatTests
 
             AppState.UpdateCurrentPlayer(CurrentPlayer);
             Console.WriteLine($"CurrentPlayer Stats: {_combatPlayer}");
-           // await ModalDialogService.ShowMessageBoxAsync(alertTitle, alertMessage);
-            if (isPlayerDefeated)
-            {
-                ModalDialogService.Close(false);
-                return;
-            }
-            ModalDialogService.Close(true);
-
-            await InvokeAsync(StateHasChanged);
+            await ModalDialogService.ShowMessageBoxAsync(alertTitle, alertMessage);
+          
+            await OnCombatEnded.InvokeAsync(!isPlayerDefeated);
+          
         }
 
-        private async void HandlePlayerHit(bool isPlayer, int monsterId)
+        private async void HandlePlayerHit(bool isPlayer, string monsterId)
         {
             isPlayerHit = isPlayer;
-            if (monsterId == 0)
+            if (!monsterId.Contains("Monster"))
                 return;
             AllMonsters[monsterId].IsHit = true;
             await Task.Delay(500);
@@ -176,7 +180,7 @@ namespace RpgApp.Client.Pages.CombatTests
             await InvokeAsync(StateHasChanged);
         }
 
-        private void OnMonsterHit(int monsterId) => AllMonsters[monsterId].IsHit = false;
+        private void OnMonsterHit(string monsterId) => AllMonsters[monsterId].IsHit = false;
         private void OnPlayerHit() => isPlayerHit = false;
         private void HandleNewMessage(string message)
         {

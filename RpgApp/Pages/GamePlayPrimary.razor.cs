@@ -47,7 +47,7 @@ namespace RpgApp.Client.Pages
             IsPlayerCreated = true;
             StateHasChanged();
         }
-        
+
         public async Task CreateCharacter()
         {
             ModalDialogResult result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character");

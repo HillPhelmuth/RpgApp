@@ -31,16 +31,26 @@ namespace RpgApp.Server.Controllers
             //return players;
             return new OkObjectResult(players);
         }
-        [HttpGet("GetEquipment/{goldMax}")]
-        public async Task<List<Equipment>> GetEquipmentAsync(int goldMax)
+
+        [HttpGet("AllAppData")]
+        public async Task<AllAppData> GetAllAppData()
         {
-            Expression<Func<Equipment, bool>> filterEquipExpression = equip => equip.GoldCost < goldMax;
-            return await _context.Equipment.Where(filterEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            return new AllAppData
+            {
+                Equipment = await _context.Equipment.Include(x => x.Effects).AsSplitQuery().ToListAsync(),
+                Skills = await _context.Skills.Include(x => x.Effects).AsSplitQuery().ToListAsync(),
+                Monsters = await _context.Monsters.ToListAsync()
+            };
         }
-        [HttpGet("GetSingleEquipment/{goldMax}")]
-        public async Task<Equipment> GetSingleEquipmentAsync(int goldMax)
+        [HttpGet("GetEquipment")]
+        public async Task<List<Equipment>> GetEquipmentAsync()
         {
-            Expression<Func<Equipment, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
+            return await _context.Equipment.Include(x => x.Effects).AsSplitQuery().ToListAsync();
+        }
+        [HttpGet("GetSingleEquipment")]
+        public async Task<Equipment> GetSingleEquipmentAsync([FromQuery] int goldMax, [FromQuery] string name)
+        {
+            Expression<Func<Equipment, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax || equip.Name == name;
             return await _context.Equipment.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().FirstOrDefaultAsync();
         }
         [HttpGet("GetEquipmentById/{equipId}")]
@@ -48,11 +58,11 @@ namespace RpgApp.Server.Controllers
         {
             return await _context.Equipment.FindAsync(equipId);
         }
-        [HttpGet("GetSkills/{goldMax}")]
-        public async Task<List<Skill>> GetSkillsAsync(int goldMax)
+        [HttpGet("GetSkills")]
+        public async Task<List<Skill>> GetSkillsAsync()
         {
-            Expression<Func<Skill, bool>> filterSkillsExpression = skill => skill.GoldCost < goldMax;
-            return await _context.Skills.Where(filterSkillsExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            //Expression<Func<Skill, bool>> filterSkillsExpression = skill => skill.GoldCost < goldMax;
+            return await _context.Skills.Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
         [HttpGet("GetSingleSkill/{goldMax}")]
         public async Task<Skill> GetSingleSkillAsync(int goldMax)
@@ -65,11 +75,11 @@ namespace RpgApp.Server.Controllers
         {
             return await _context.Skills.FindAsync(skillId);
         }
-        [HttpGet("GetMonsters/{maxLevel}")]
-        public async Task<List<Monster>> GetMonstersAsync(int maxLevel)
+        [HttpGet("GetMonsters")]
+        public async Task<List<Monster>> GetMonstersAsync()
         {
-            Expression<Func<Monster, bool>> filterMonsters = skill => skill.DifficultyLevel < maxLevel;
-            return await _context.Monsters.Where(filterMonsters).ToListAsync();
+            //Expression<Func<Monster, bool>> filterMonsters = monster => monster.DifficultyLevel < maxLevel;
+            return await _context.Monsters.ToListAsync();
         }
         [HttpGet("GetSingleMonsters/{maxLevel}")]
         public async Task<Monster> GetSingleMonsterAsync(int maxLevel)

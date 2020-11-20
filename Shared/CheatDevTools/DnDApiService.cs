@@ -24,7 +24,7 @@ namespace RpgApp.Shared.CheatDevTools
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"Api Error Code: {response.StatusCode} Response: {response.ReasonPhrase}");
-                return new GeneralList {Count = 0, GeneralApiData = new List<GeneralApiData> {new GeneralApiData {Name = $"APi Fucked up. They say because: {response.ReasonPhrase}"}}};
+                return new GeneralList { Count = 0, GeneralApiData = new List<GeneralApiData> { new GeneralApiData { Name = $"APi Fucked up. They say because: {response.ReasonPhrase}" } } };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
@@ -40,7 +40,7 @@ namespace RpgApp.Shared.CheatDevTools
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"Api Error Code: {response.StatusCode} Response: {response.ReasonPhrase}");
-                return new MonsterData {Name = $"Api Error Code: {response.StatusCode} Response: {response.ReasonPhrase}" };
+                return new MonsterData { Name = $"Api Error Code: {response.StatusCode} Response: {response.ReasonPhrase}" };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
@@ -56,7 +56,7 @@ namespace RpgApp.Shared.CheatDevTools
             if (!response.IsSuccessStatusCode)
             {
                 Console.WriteLine($"Api Error Code: {response.StatusCode} Response: {response.ReasonPhrase}");
-                return new List<GeneralApiData> { new GeneralApiData { Name = $"APi Fucked up. They say because: {response.ReasonPhrase}" } } ;
+                return new List<GeneralApiData> { new GeneralApiData { Name = $"APi Fucked up. They say because: {response.ReasonPhrase}" } };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();

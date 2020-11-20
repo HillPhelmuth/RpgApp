@@ -17,7 +17,7 @@ using RpgApp.Shared.Types;
 
 namespace RpgApp.Client.Pages.Layouts
 {
-    public partial class LayoutMyCss:IDisposable
+    public partial class LayoutMyCss : IDisposable
     {
         [CascadingParameter(Name = "AppState")]
         public AppStateManager AppState { get; set; }
@@ -27,7 +27,7 @@ namespace RpgApp.Client.Pages.Layouts
         public IModalDialogService ModalService { get; set; }
         [Inject]
         public HttpClient Http { get; set; }
-        [Parameter] 
+        [Parameter]
         public (int x, int y) PlayerLoc { get; set; } = (0, 0);
         protected Player CurrentPlayer { get; set; }
         private ElementReference gameboardReference;
@@ -35,6 +35,9 @@ namespace RpgApp.Client.Pages.Layouts
         private string gridCss = "primary-grid";
         private enum Direction { Blank, Up, Down, Left, Right }
         private Random random = new Random();
+        private bool isCombatActive = false;
+
+        private int monsterCount;
         protected override Task OnInitializedAsync()
         {
             CurrentPlayer = AppState.CurrentPlayer;
@@ -54,7 +57,8 @@ namespace RpgApp.Client.Pages.Layouts
 
         private void MovePlayer(Direction direction)
         {
-            var playerLocation = PlayerLoc;
+            Console.Write($"Moved {Enum.GetName(direction)}");
+            var playerLocation = AppState.PlayerLocation;
             if (playerLocation.x == 0 && direction == Direction.Left)
                 return;
             if (playerLocation.y == 0 && direction == Direction.Up)
@@ -63,7 +67,7 @@ namespace RpgApp.Client.Pages.Layouts
                 return;
             if (playerLocation.y == 11 && direction == Direction.Down)
                 return;
-            
+
             switch (direction)
             {
                 case Direction.Down:
@@ -80,8 +84,12 @@ namespace RpgApp.Client.Pages.Layouts
                     break;
             }
 
-            PlayerLoc = playerLocation;
-            AppState.PlayerLocation = PlayerLoc;
+            var randomVal = random.Next(1, 8);
+            if (randomVal == 1)
+            {
+                TriggerCombat();
+            }
+            AppState.PlayerLocation = playerLocation;
             //AppState.UpdatePlayerLocation(PlayerLoc);
             StateHasChanged();
         }
@@ -109,51 +117,70 @@ namespace RpgApp.Client.Pages.Layouts
             moveUpdates.Add(moveInfo);
             if (moveUpdates.Count > 5)
                 moveUpdates.RemoveAt(0);
-            var randomVal = random.Next(1, 8);
-            if (randomVal != 1)
-            {
-                await InvokeAsync(StateHasChanged);
-                return;
-            }
-            await TriggerCombat();
+            //var randomVal = random.Next(1, 8);
+            //if (randomVal != 1)
+            //{
+            //    await InvokeAsync(StateHasChanged);
+            //    return;
+            //}
+            //await TriggerCombat();
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task TriggerCombat()
+        private void TriggerCombat()
         {
-            var options = new ModalDialogOptions
-            {
-                ShowCloseButton = false,
-                BackgroundClickToClose = false,
-                Style = "liquid-modal-dialog-combat"
-            };
-            var difficulty = random.Next(1, CurrentPlayer.Level + 3);
             var monsterOdds = random.Next(1, 101);
-            var monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
-            var parameters = new ModalDialogParameters {{"Difficulty", difficulty}, {"MonsterCount", monsterCount}};
-            var result =
-                await ModalService.ShowDialogAsync<MultiMonster>($"Holy Shit! You Were Attacked by {monsterCount} monsters!",
-                    options, parameters);
-            if (result.Success)
-            {
-                moveUpdates.Add("Victory!");
-                moveUpdates.Add("It's time get back to the road to continue your fucking quest you goddamn slacker");
-            }
-            else
-            {
-                CurrentPlayer.Health = CurrentPlayer.MaxHealth;
-                PlayerLoc = (0, 0);
-            }
+            monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
+            isCombatActive = true;
+            StateHasChanged();
+            //var options = new ModalDialogOptions
+            //{
+            //    ShowCloseButton = false,
+            //    BackgroundClickToClose = false,
+            //    Style = "liquid-modal-dialog-combat"
+            //};
+            //var difficulty = random.Next(1, CurrentPlayer.Level + 3);
+            //var monsterOdds = random.Next(1, 101);
+            //var monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
+            //var parameters = new ModalDialogParameters { { "Difficulty", difficulty }, { "MonsterCount", monsterCount } };
+            //var result =
+            //    await ModalService.ShowDialogAsync<MultiMonster>($"Holy Shit! You Were Attacked by {monsterCount} monsters!",
+            //        options, parameters);
+            //if (result.Success)
+            //{
+            //    moveUpdates.Add("Victory!");
+            //    moveUpdates.Add("It's time get back to the road to continue your fucking quest you goddamn slacker");
+            //}
+            //else
+            //{
+            //    CurrentPlayer.Health = CurrentPlayer.MaxHealth;
+            //    PlayerLoc = (0, 0);
+            //}
 
-            await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
-           
+            //await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
+
         }
 
         private void ToggleCss()
         {
             gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
         }
+        private async void HandleCombatEnded(bool isVictory)
+        {
+            if (isVictory)
+            {
+                await ModalService.ShowMessageBoxAsync("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
+                await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
+            }
+            else
+            {
+                AppState.CurrentPlayer.Health = AppState.CurrentPlayer.MaxHealth;
+                AppState.PlayerLocation = (0, 0);
+            }
 
+            isCombatActive = false;
+            await InvokeAsync(StateHasChanged);
+        }
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "CurrentPlayer") return;

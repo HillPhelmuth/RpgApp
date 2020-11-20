@@ -19,7 +19,7 @@ namespace RpgApp.Client.Pages.DataTests
     {
         [CascadingParameter(Name = "AppState")]
         private AppStateManager AppState { get; set; }
-        
+
         [Inject]
         private HttpClient HttpClient { get; set; }
 
@@ -46,6 +46,7 @@ namespace RpgApp.Client.Pages.DataTests
                 selectedPlayer.Health = selectedPlayer.MaxHealth;
                 selectedPlayer.AbilityPoints = selectedPlayer.MaxAbilityPoints;
                 AppState.UpdateCurrentPlayer(selectedPlayer);
+                Console.WriteLine($"Player: {JsonSerializer.Serialize(selectedPlayer)}");
                 //var jsonSetting = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
 
                 //Console.WriteLine(

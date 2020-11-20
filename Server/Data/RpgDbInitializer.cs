@@ -2,7 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+//using Newtonsoft.Json;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 
@@ -20,6 +22,11 @@ namespace RpgApp.Server.Data
             context.Database.EnsureCreated();
             if (context.Players.Any() || context.Equipment.Any())
                 return;
+            
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            //options.WriteIndented = true;
+            ////jsonString = JsonSerializer.Serialize(weatherForecast, options);
             // Going to create the Equipment with the .json file by making it an embedded resource so I can
             // use Reflection to grab it's contents at runtime.
             var assembly = Assembly.GetExecutingAssembly(); // Gets all embedded and compiled files in the program
@@ -34,7 +41,7 @@ namespace RpgApp.Server.Data
                 result = reader.ReadToEnd();
             }
             // takes our json file text and converts or "deserializes" the json into a list of our Equipment class
-            var equipmentList = JsonConvert.DeserializeObject<EquipmentList>(result);
+            var equipmentList = JsonSerializer.Deserialize<EquipmentList>(result, options);
 
             // do the same for our Skill jsons
             var skillsResourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith("Skills.json"));
@@ -50,17 +57,17 @@ namespace RpgApp.Server.Data
 
                 if (resourceName.Contains("Mage"))
                 {
-                    var mageSkills = JsonConvert.DeserializeObject<MageSkillList>(skillResult);
+                    var mageSkills = JsonSerializer.Deserialize<MageSkillList>(skillResult, options);
                     allSkills.AddRange(mageSkills.MageSkills);
                 }
                 if (resourceName.Contains("Warrior"))
                 {
-                    var warriorSkills = JsonConvert.DeserializeObject<WarriorSkillList>(skillResult);
+                    var warriorSkills = JsonSerializer.Deserialize<WarriorSkillList>(skillResult, options);
                     allSkills.AddRange(warriorSkills.WarriorSkills);
                 }
                 if (resourceName.Contains("Ranger"))
                 {
-                    var rangerSkills = JsonConvert.DeserializeObject<RangerSkillList>(skillResult);
+                    var rangerSkills = JsonSerializer.Deserialize<RangerSkillList>(skillResult, options);
                     allSkills.AddRange(rangerSkills.RangerSkills);
                 }
             }
@@ -78,6 +85,7 @@ namespace RpgApp.Server.Data
                 context.Skills.Add(skill);
             }
             var dagger = equipmentList.Equipments.FirstOrDefault(x => x.Name == "Dagger");
+            var armor = equipmentList.Equipments.FirstOrDefault(x => x.Name == "Leather armor");
             var enrage = allSkills.FirstOrDefault(x => x.Name == "Enrage");
             var magicMissile = allSkills.FirstOrDefault(x => x.Name == "Magic missile");
             var doubleShot = allSkills.FirstOrDefault(x => x.Name == "Double shot");
@@ -86,19 +94,19 @@ namespace RpgApp.Server.Data
             var warrior = create.CreateNewCharacter(ClassType.Warrior).Result;
             warrior.UserId = "admin";
             warrior.Name = "Seed Warrior";
-            warrior.Inventory = new List<Equipment> { dagger };
+            warrior.Inventory = new List<Equipment> { dagger, armor };
             warrior.Skills = new List<Skill> { enrage };
             warrior.Gold = 50;
             var mage = create.CreateNewCharacter(ClassType.Mage).Result;
             mage.UserId = "admin";
             mage.Name = "Seed Mage";
-            mage.Inventory = new List<Equipment> { dagger };
+            mage.Inventory = new List<Equipment> { dagger, armor };
             mage.Skills = new List<Skill> { magicMissile };
             mage.Gold = 50;
             var ranger = create.CreateNewCharacter(ClassType.Ranger).Result;
             ranger.UserId = "admin";
             ranger.Name = "Seed Ranger";
-            ranger.Inventory = new List<Equipment> { dagger };
+            ranger.Inventory = new List<Equipment> { dagger, armor };
             ranger.Skills = new List<Skill> { doubleShot };
             ranger.Gold = 50;
             // and add it to our Players table

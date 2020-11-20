@@ -29,7 +29,7 @@ namespace RpgApp.Server.Data
         //public DbSet<PlayerEquipment> PlayerInventory { get; set; }
         public DbSet<Monster> Monsters { get; set; }
 
-        public RpgDbContext(DbContextOptions<RpgDbContext> options) 
+        public RpgDbContext(DbContextOptions<RpgDbContext> options)
             : base(options)
         {
 

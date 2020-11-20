@@ -8,25 +8,33 @@ namespace RpgApp.Shared.Types.PlayerExtensions
     {
         public int ArmorValue => GetArmorValue() + ArmorModifier;
         public int ArmorModifier { get; set; }
-        public string DamageDice => GetDamageDice();
-        
+
+        public string DamageDice
+        {
+            get
+            {
+                var dice = GetDamageDice();
+                return string.IsNullOrWhiteSpace(dice) ? "1D2" : dice;
+            }
+        } /*=> GetDamageDice();*/
+
         private int GetArmorValue()
         {
             var inventory = Inventory;
             var armor = inventory.FirstOrDefault(x => x.Id == BodyId);
-            
+
             var armorValue = armor?.Effects.Where(x => x.Type == EffectType.Defend).Select(x => x.Value).FirstOrDefault();
             int value = 0;
             return int.TryParse(armorValue, out value) ? value : default;
         }
-        
+
         private string GetDamageDice()
         {
             var inventory = Inventory;
             var weapon = inventory.FirstOrDefault(x => x.Id == WeaponHandId);
             return weapon?.Effects.Where(x => x.Type == EffectType.Attack).Select(x => x.Value)
                 .FirstOrDefault();
-            
+
         }
         public void EquipWeapon(int itemId)
         {

@@ -1,4 +1,4 @@
-﻿
+﻿@page "/multiMonster"
 <div class="mat-layout-grid" style="line-height:1.2rem">
     <div class="mat-layout-grid-inner">
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4" style="font-size: .9rem; line-height: 1.2rem; overflow: scroll; height: auto;min-height:200px; max-height: 400px">
@@ -55,7 +55,7 @@
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
             <MatH3>Monsters</MatH3>
-            @foreach ((int key, var monster) in AllMonsters)
+            @foreach ((string key, var monster) in AllMonsters.Where(x => !x.Value.isDead))
             {
                 <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
                  <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">   

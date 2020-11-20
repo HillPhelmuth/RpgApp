@@ -11,12 +11,12 @@
         {
             MapName = mapName;
             BackgroundUrl = background;
-            GridMap = new MapTile[12,12];
+            GridMap = new MapTile[12, 12];
             for (int i = 0; i < 12; i++)
             {
                 for (int j = 0; j < 12; j++)
                 {
-                    GridMap[i,j] = new MapTile {XCoordinate = i, YCoordinate = j};
+                    GridMap[i, j] = new MapTile { XCoordinate = i, YCoordinate = j };
                 }
             }
         }

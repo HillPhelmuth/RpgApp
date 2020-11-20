@@ -44,7 +44,7 @@
         {
           "type": "Status",
           "value": "Stealth"
-            //The Ranger keeps the Stealth status until doing an Attack action or using an ability. The next ability they use will deal 1d6 extra damage.
+           
         }
       ] 
     }
