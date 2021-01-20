@@ -1,58 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using TurnBasedRpg.Types.Enums;
+using System.Text.Json.Serialization;
+using RpgApp.Shared.Types.Enums; //using Newtonsoft.Json;
 
-namespace TurnBasedRpg.Types
+namespace RpgApp.Shared.Types
 {
-    
+
     public class EquipmentList
     {
-        [JsonProperty("Equipment")]
+        [JsonPropertyName("Equipment")]
         public List<Equipment> Equipments { get; set; }
     }
     public class Equipment
     {
-        //[JsonProperty("id")]
+        //[JsonPropertyName("id")]
         [JsonIgnore]
         public int Id { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("rarity")]
+        [JsonPropertyName("rarity")]
         public Rarity Rarity { get; set; }
 
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("equipLocation")]
+        [JsonPropertyName("equipLocation")]
         public string EquipLocation { get; set; }
 
-        [JsonProperty("areaEffect", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("areaEffect")]
         public bool? AreaEffect { get; set; }
 
-        [JsonProperty("goldCost")]
+        [JsonPropertyName("goldCost")]
         public int GoldCost { get; set; }
 
-        [JsonProperty("classTypes")]
+        [JsonPropertyName("classTypes")]
         [NotMapped]
         public List<string> AllowedClasses //All this is required to send and receive lists from sql db
         {
             get => AllowedClassesData?.Split(',').ToList();
-            set => AllowedClassesData = string.Join(',', value);
+            set => AllowedClassesData = string.Join(',', value ?? new List<string>());
         }
         [JsonIgnore]
         public string AllowedClassesData { get; set; }
 
-        [JsonProperty("effects")]
+        [JsonPropertyName("effects")]
         public List<Effect> Effects { get; set; }
-        [JsonIgnore]
-        public List<PlayerEquipment> PlayerEquipments { get; set; }
         [NotMapped]
         public bool IsEquipped { get; set; }
+        [JsonIgnore]
+        public ICollection<Player> Players { get; set; }
+
     }
 }

@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using TurnBasedRpg.Types.Enums;
+﻿//using Newtonsoft.Json;
 
-namespace TurnBasedRpg.Types
+using System.Text.Json.Serialization;
+using RpgApp.Shared.Types.Enums; //using Newtonsoft.Json;
+
+namespace RpgApp.Shared.Types
 {
     public class Effect
     {
         [JsonIgnore]
         public int ID { get; set; }
-        
-        [JsonProperty("type")]
+
+        [JsonPropertyName("type")]
         public EffectType Type { get; set; }
 
-        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("areaEffect")]
         public int? Area { get; set; }
 
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public string Value { get; set; }
 
-        [JsonProperty("attribute", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("attribute")]
         public string Attribute { get; set; }
 
-        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("duration")]
         public int? Duration { get; set; }
-        
+
 
     }
 }

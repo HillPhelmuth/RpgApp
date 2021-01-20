@@ -27,28 +27,28 @@
             {
                 <MatH4 Class="text-center">Equipment form</MatH4><hr />
                 <MatButton OnClick="ClearForm">Clear Form</MatButton>
-                <EditForm Model="CreateItemForm" OnValidSubmit="SubmitItemForm">
+                <EditForm Model="RpgApp.Shared.CheatDevTools.CreateItemForm" OnValidSubmit="SubmitItemForm">
                     <DataAnnotationsValidator />
                     <div class="mat-layout-grid-inner">
                         <div class="mat-layout-grid-cell">
                             <p>Name:</p>
-                            <MatTextField @bind-Value="CreateItemForm.Name"></MatTextField>
+                            <MatTextField @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.Name"></MatTextField>
                         </div>
                         <div class="mat-layout-grid-cell">
                             <p>Rarity:</p>
-                            <MatSelectItem Items="CreateItemForm.RarityItems" @bind-Value="CreateItemForm.Rarity"></MatSelectItem>
+                            <MatSelectItem Items="RpgApp.Shared.CheatDevTools.CreateItemForm.RarityItems" @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.Rarity"></MatSelectItem>
                         </div>
                         <div class="mat-layout-grid-cell">
                             <p>Attack/Defense Value:</p>
-                            <MatTextField @bind-Value="CreateItemForm.Value"></MatTextField>
+                            <MatTextField @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.Value"></MatTextField>
                         </div>
                         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
                             <p>Description:</p>
-                            <MatTextField TextArea="true" Style="width: 80%; margin: auto" @bind-Value="CreateItemForm.Description"></MatTextField>
+                            <MatTextField TextArea="true" Style="width: 80%; margin: auto" @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.Description"></MatTextField>
                         </div>
                         <div class="mat-layout-grid-cell">
                             <p>Equip location:</p>
-                            <MatSelect @bind-Value="CreateItemForm.EquipLocation">
+                            <MatSelect @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.EquipLocation">
                                 <MatOptionString></MatOptionString>
                                 <MatOptionString Value="@("OneHand")">One Hand</MatOptionString>
                                 <MatOptionString Value="@("TwoHand")">Two Handed</MatOptionString>
@@ -57,11 +57,11 @@
                         </div>
                         <div class="mat-layout-grid-cell">
                             <p>Gold Cost:</p>
-                            <MatNumericUpDownField Minimum="1" @bind-Value="CreateItemForm.GoldCost"></MatNumericUpDownField>
+                            <MatNumericUpDownField Minimum="1" @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.GoldCost"></MatNumericUpDownField>
                         </div>
                         <div class="mat-layout-grid-cell">
                             <p>Allowed classes:</p>
-                            <MatSelect @bind-Value="CreateItemForm.AllowedClassesData">
+                            <MatSelect @bind-Value="RpgApp.Shared.CheatDevTools.CreateItemForm.AllowedClassesData">
                                 <MatOptionString></MatOptionString>
                                 <MatOptionString Value="@("Warrior")">Warrior</MatOptionString>
                                 <MatOptionString Value="@("Mage")">Mage</MatOptionString>

@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.ComponentModel;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
-using TurnBasedRpg.StateManager;
-using TurnBasedRpg.Types;
-using Blazor.ModalDialog;
-using Blazor.ModalDialog.Components;
-using TurnBasedRpg.Pages.CombatTests;
-using TurnBasedRpg.Services;
+using RpgApp.Client.Pages.Modals;
+using RpgApp.Shared;
+using RpgApp.Shared.Types;
 
-namespace TurnBasedRpg.Pages.Layouts
+namespace RpgApp.Client.Pages.Layouts
 {
-    public partial class LayoutMyCss:IDisposable
+    public partial class LayoutMyCss : ComponentBase, IDisposable
     {
-        [Inject]
-        public AppStateManager AppStateManager { get; set; }
+        [CascadingParameter(Name = "AppState")]
+        public AppStateManager AppState { get; set; }
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
         [Inject]
         public IModalDialogService ModalService { get; set; }
         [Inject]
-        public RpgDataService RpgData { get; set; }
-        [Parameter] 
+        public HttpClient Http { get; set; }
+        [Parameter]
         public (int x, int y) PlayerLoc { get; set; } = (0, 0);
         protected Player CurrentPlayer { get; set; }
         private ElementReference gameboardReference;
@@ -34,10 +32,13 @@ namespace TurnBasedRpg.Pages.Layouts
         private string gridCss = "primary-grid";
         private enum Direction { Blank, Up, Down, Left, Right }
         private Random random = new Random();
+        private bool isCombatActive = false;
+
+        private int monsterCount;
         protected override Task OnInitializedAsync()
         {
-            CurrentPlayer = AppStateManager.CurrentPlayer;
-            AppStateManager.OnChange += UpdateState;
+            CurrentPlayer = AppState.CurrentPlayer;
+            AppState.PropertyChanged += UpdateState;
             return base.OnInitializedAsync();
         }
 
@@ -53,7 +54,8 @@ namespace TurnBasedRpg.Pages.Layouts
 
         private void MovePlayer(Direction direction)
         {
-            var playerLocation = PlayerLoc;
+            Console.Write($"Moved {Enum.GetName(direction)}");
+            var playerLocation = AppState.PlayerLocation;
             if (playerLocation.x == 0 && direction == Direction.Left)
                 return;
             if (playerLocation.y == 0 && direction == Direction.Up)
@@ -62,7 +64,7 @@ namespace TurnBasedRpg.Pages.Layouts
                 return;
             if (playerLocation.y == 11 && direction == Direction.Down)
                 return;
-            
+
             switch (direction)
             {
                 case Direction.Down:
@@ -79,8 +81,13 @@ namespace TurnBasedRpg.Pages.Layouts
                     break;
             }
 
-            PlayerLoc = playerLocation;
-            AppStateManager.UpdatePlayerLocation(PlayerLoc);
+            var randomVal = random.Next(1, 8);
+            if (randomVal == 1)
+            {
+                TriggerCombat();
+            }
+            AppState.PlayerLocation = playerLocation;
+            //AppState.UpdatePlayerLocation(PlayerLoc);
             StateHasChanged();
         }
 
@@ -107,73 +114,50 @@ namespace TurnBasedRpg.Pages.Layouts
             moveUpdates.Add(moveInfo);
             if (moveUpdates.Count > 5)
                 moveUpdates.RemoveAt(0);
-            var randomVal = random.Next(1, 8);
-            if (randomVal != 1)
-            {
-                await InvokeAsync(StateHasChanged);
-                return;
-            }
-            await TriggerCombat();
+            
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task TriggerCombat()
+        private void TriggerCombat()
         {
-            var options = new ModalDialogOptions
-            {
-                ShowCloseButton = false,
-                BackgroundClickToClose = false,
-                Style = "liquid-modal-dialog-combat"
-            };
-            var difficulty = random.Next(1, CurrentPlayer.Level + 3);
             var monsterOdds = random.Next(1, 101);
-            var monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
-            var parameters = new ModalDialogParameters {{"Difficulty", difficulty}, {"MonsterCount", monsterCount}};
-            var result =
-                await ModalService.ShowDialogAsync<MultiMonster>($"Holy Shit! You Were Attacked by {monsterCount} monsters!",
-                    options, parameters);
-            if (result.Success)
-            {
-                //await ModalService.ShowMessageBoxAsync("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
-                moveUpdates.Add("Victory!");
-                moveUpdates.Add("It's time get back to the road to continue your fucking quest you goddamn slacker");
-                //if (innerResult == MessageBoxDialogResult.Cancel && innerResult == MessageBoxDialogResult.OK)
-                //    return;
-                //var currentPlayer = result.ReturnParameters.Get<Player>("CurrentPlayer");
-                //var messages = result.ReturnParameters.Get<List<string>>("Messages");
-                //while (messages.Count > 5) messages.RemoveAt(0);
-                //moveUpdates.AddRange(messages);
-                //await AppStateManager.UpdateCurrentPlayer(currentPlayer);
-            }
-            else
-            {
-                CurrentPlayer.Health = CurrentPlayer.MaxHealth;
-                PlayerLoc = (0, 0);
-            }
-            await RpgData.UpdateOrAddPlayer(CurrentPlayer);
+            monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
+            isCombatActive = true;
+            StateHasChanged();
         }
 
         private void ToggleCss()
         {
             gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
         }
-
-        private Task UpdateState()
+        private async void HandleCombatEnded(bool isVictory)
         {
-            CurrentPlayer = AppStateManager.CurrentPlayer;
+            if (isVictory)
+            {
+                await ModalService.ShowMessageBoxAsync("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
+                await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
+            }
+            else
+            {
+                AppState.CurrentPlayer.Health = AppState.CurrentPlayer.MaxHealth;
+                AppState.PlayerLocation = (0, 0);
+            }
+
+            isCombatActive = false;
+            await InvokeAsync(StateHasChanged);
+        }
+        private void UpdateState(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "CurrentPlayer") return;
+            CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
-            return Task.CompletedTask;
         }
         public async Task ShowMenu()
         {
-            ModalDialogResult result = await ModalService.ShowDialogAsync<MenuModal>("Menu");
+            var result = await ModalService.ShowDialogAsync<MenuModal>("Menu");
             StateHasChanged();
         }
 
-        public void Dispose()
-        {
-            AppStateManager.OnChange -= UpdateState;
-        }
-
+        public void Dispose() => AppState.PropertyChanged -= UpdateState;
     }
 }

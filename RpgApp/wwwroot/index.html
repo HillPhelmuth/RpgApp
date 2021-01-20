@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,13 +8,40 @@
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="RpgApp.styles.css" rel="stylesheet" />
+    <link href="Client.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="~/gameIcons/*.png" />
+    <link href="dist/rpgui.css" rel="stylesheet" type="text/css">
+    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
+    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+    <link href="_content/LiquidTechnologies.Blazor.ModalDialog/liquid-modal-dialog.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <iframe src="https://giphy.com/embed/xT1XGF2WF5566Va9qg" width="960" height="536" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/warnerarchive-kung-fu-warner-archive-pedicab-driver-xT1XGF2WF5566Va9qg">via GIPHY</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <iframe src="https://giphy.com/embed/gLRTwEwvBlhLBYThOq" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            </div>
+            <div class="col">
+                <iframe src="https://giphy.com/embed/26tncKS342OAhfGYU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            </div>
+
+            <div class="col">
+                <iframe src="https://giphy.com/embed/UvQ2W4OYg3EKahV5Xe" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -23,6 +50,9 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+<script src="rpgInterop.js"></script>
+<script src="_content/BlazorAnimation/blazorAnimationInterop.js"></script>
+<script src="_content/LiquidTechnologies.Blazor.ModalDialog/liquid-modal-dialog.js"></script>
 </body>
 
 </html>

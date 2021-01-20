@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TurnBasedRpg.Types
+﻿namespace RpgApp.Shared.Types
 {
     public abstract class LivingEntity
     {

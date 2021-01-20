@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
-namespace TurnBasedRpg.Types.PlayerExtensions
+namespace RpgApp.Shared.Types.PlayerExtensions
 {
     public static class ExtensionMethods
     {
@@ -38,20 +38,14 @@ namespace TurnBasedRpg.Types.PlayerExtensions
                 MaxAbilityPoints = player.MaxAbilityPoints,
                 Inventory = player.Inventory,
                 Name = player.Name,
-                Skills = player.Skills,
+                Skills = player.Skills?.Distinct().ToList(),
                 Initiative = 0
             };
-            if (player.WeaponHandId != null) 
-                combatPlayer.EquipWeapon((int) player.WeaponHandId);
+            if (player.WeaponHandId != null)
+                combatPlayer.EquipWeapon((int)player.WeaponHandId);
             if (player.BodyId != null)
                 combatPlayer.EquipArmor((int)player.BodyId);
             return combatPlayer;
-        }
-
-        public static void AddToInventory(this Player player, Equipment item)
-        {
-            player.Inventory ??= new List<PlayerEquipment>();
-            player.Inventory.Add(new PlayerEquipment {Equipment = item});
         }
     }
 }

@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
-namespace TurnBasedRpg.Services.ExtensionMethods
+namespace RpgApp.Shared.Services.ExtensionMethods
 {
     public static class CombatExtensions
     {
         public static int ToDiceValue(this string dice)
         {
             int damage = 0;
-            if (!dice.ToUpper().Contains("D"))
+            if (!dice.Contains("D", StringComparison.OrdinalIgnoreCase))
             {
                 int.TryParse(dice, out damage);
                 return damage;
             }
             var diceRoller = new DiceRoller();
             var damageDiceValues = dice.ToUpper().Split('D');
-            
+
             for (int i = 0; i < Convert.ToInt32(damageDiceValues[0]); i++)
             {
                 damage += damageDiceValues[1] switch
@@ -46,7 +43,7 @@ namespace TurnBasedRpg.Services.ExtensionMethods
             PropertyInfo prop = type.GetProperty(attribute);
             var modifier = value.ToDiceValue();
             var currentVal = prop?.GetValue(combatPlayer) ?? 0;
-            var propertyValue = combatPlayer is CombatPlayer ? (int) currentVal + modifier : (int)currentVal - modifier;
+            var propertyValue = combatPlayer is CombatPlayer ? (int)currentVal + modifier : (int)currentVal - modifier;
             prop?.SetValue(combatPlayer, propertyValue, null);
         }
 
@@ -54,9 +51,9 @@ namespace TurnBasedRpg.Services.ExtensionMethods
         {
             return player.ClassType switch
             {
-                ClassType.Warrior => Math.Ceiling((decimal) player.Strength / 2),
-                ClassType.Mage => Math.Ceiling((decimal) player.Intelligence / 2),
-                ClassType.Ranger => Math.Ceiling((decimal) player.Agility / 2),
+                ClassType.Warrior => Math.Ceiling((decimal)player.Strength / 2),
+                ClassType.Mage => Math.Ceiling((decimal)player.Intelligence / 2),
+                ClassType.Ranger => Math.Ceiling((decimal)player.Agility / 2),
                 _ => 0
             };
         }

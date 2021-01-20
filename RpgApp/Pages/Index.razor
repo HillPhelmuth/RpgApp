@@ -1,6 +1,9 @@
 ﻿@page "/"
-@using TurnBasedRpg.StateManager
-@inject AppStateManager AppStateManager
+@using System.Net.Http.Json
+@using System.ComponentModel
+@using RpgApp.Shared
+@inject HttpClient Http
+
 <MatTabGroup @bind-ActiveIndex="indexTab">
    
         <MatTab Label="Generate Character">
@@ -12,11 +15,11 @@
         <MatTab Label="MyLayout">
             <LayoutMyCss />
         </MatTab>
-        <MatTab Label="Home page Tab">
-            
+        <MatTab Label="Test Styles">
+            <StyleTester/>
         </MatTab>
         <MatTab Label="Test Page">
-            @if (AppStateManager.CurrentPlayer == null)
+            @if (AppState.CurrentPlayer == null)
             {
                 <MatH3 Style="color:red">Error!</MatH3>
                 <MatH5>Visit Query tester page and Select a default player before returning</MatH5>
@@ -28,22 +31,36 @@
 
         </MatTab>
         <MatTab Label="D&D API Dev Tools">
-            <CheatCreate/>
+            @*<CheatCreate/>*@ <MatH3>Moving to it's own project</MatH3>
         </MatTab>
 </MatTabGroup>
 @code
 {
-    protected int indexTab = 0;
-
+    protected int indexTab;
+    [CascadingParameter(Name = "AppState")]
+    public AppStateManager AppState { get; set; }
     protected override Task OnInitializedAsync()
     {
-        AppStateManager.OnTabChange += UpdateTab;
+        AppState.PropertyChanged += UpdateTab;
         return base.OnInitializedAsync();
     }
 
-    protected async void UpdateTab()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        indexTab = AppStateManager.IndexTab;
+        if (firstRender)
+        {
+            var allData = await Http.GetFromJsonAsync<AllAppData>($"{AppConstants.ApiUrl}/AllAppData");
+            AppState.AllEquipment = allData.Equipment;
+            AppState.AllMonsters = allData.Monsters;
+            AppState.AllSkills = allData.Skills;
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected async void UpdateTab(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != "IndexTab") return;
+        indexTab = AppState.IndexTab;
         await InvokeAsync(StateHasChanged);
     }
     

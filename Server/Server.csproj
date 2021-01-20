@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RpgApp.Server</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\JsonConverters\**" />
+    <Compile Remove="DnDApi\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Data\JsonConverters\**" />
+    <Content Remove="DnDApi\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Data\JsonConverters\**" />
+    <EmbeddedResource Remove="DnDApi\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Data\JsonConverters\**" />
+    <None Remove="DnDApi\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\DnDApiController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="TypeStoreJson\ClassSkills\MageSkills.json" />
+    <Content Remove="TypeStoreJson\ClassSkills\RangerSkills.json" />
+    <Content Remove="TypeStoreJson\ClassSkills\WarriorSkills.json" />
+    <Content Remove="TypeStoreJson\Inventory\EquipmentList.json" />
+    <Content Remove="TypeStoreJson\Inventory\ItemList.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RpgApp\Client.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\Error.cshtml" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\MageSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\RangerSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\ClassSkills\WarriorSkills.json" />
+    <EmbeddedResource Include="TypeStoreJson\Inventory\EquipmentList.json" />
+    <EmbeddedResource Include="TypeStoreJson\Inventory\ItemList.json" />
+  </ItemGroup>
+</Project>

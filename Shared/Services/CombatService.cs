@@ -2,102 +2,101 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using TurnBasedRpg.Services.ExtensionMethods;
-using TurnBasedRpg.Types;
-using TurnBasedRpg.Types.Enums;
-using TurnBasedRpg.Types.PlayerExtensions;
+using RpgApp.Shared.Services.ExtensionMethods;
+using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
-namespace TurnBasedRpg.Services
+namespace RpgApp.Shared.Services
 {
     public class CombatService
     {
         public event Func<bool, Task> OnCombatEnded;
         public event Action<string> OnNewMessage;
-        public event Action<bool, int> OnPlayerHit;
-        
-        private CombatPlayer _combatPlayer;
+        public event Action<bool, string> OnPlayerHit;
+
+        private CombatPlayer _combatPlayer = new();
         public CombatPlayer CurrentPlayer { get; private set; }
         //private Monster _monster;
-        private Dictionary<int, Monster> _allMonsters = new Dictionary<int, Monster>();
+        private Dictionary<string, Monster> _allMonsters = new();
 
         private bool _isActiveCombat;
-        
-        public Task BeginCombat(ref CombatPlayer player, ref Monster monster)
-        {
-            _combatPlayer = null;
-            CurrentPlayer = null;
-           // _monster = null;
-            _combatPlayer = player;
-            //_monster = monster;
-            //_monster.Health = _monster.MaxHealth;
-            _isActiveCombat = true;
-            NotifyNewMessage("Combat has begun");
-            return EvaluatePlayerTurn();
-        }
 
         #region BeginCombat Overloads
 
-        // Overload for Two monsters
-        public Task BeginCombat(ref CombatPlayer player, ref Dictionary<int, Monster> allMonsters)
+        public Task BeginCombat(CombatPlayer player, Dictionary<string, Monster> allMonsters)
         {
             _allMonsters = allMonsters;
             _combatPlayer = null;
             CurrentPlayer = null;
-            //_monster = null;
             _combatPlayer = player;
-            //_monster = monster;
-            foreach ((int key, var _monster) in _allMonsters)
+            foreach ((string key, var monster) in _allMonsters)
             {
-                _monster.Health = _monster.MaxHealth;
-                _monster.isDead = false;
-                _monster.IsHit = false;
-                _monster.Initiative = 0;
+                monster.Health = monster.MaxHealth;
+                monster.isDead = false;
+                monster.IsHit = false;
+                monster.Initiative = 0;
             }
             _isActiveCombat = true;
             NotifyNewMessage("Multi Combat has begun");
             return EvaluatePlayerTurn();
         }
-       
+
         #endregion
 
-        public async Task PlayerAttack(string damageDice = "1D6", int targetId = 0)
+        public async Task PlayerAttack(string damageDice = "1D4", string targetId = "")
         {
             var random = new Random();
-            if (targetId == 0) targetId = random.Next(1, _allMonsters.Count + 1);
-            if (!_isActiveCombat/* || _monster == null*/) return;
+            _combatPlayer.Initiative = 0;
+            if (string.IsNullOrWhiteSpace(targetId))
+            {
+                targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
+                await NotifyNewMessage($"Attacking random monster: {targetId}");
+            }
+            if (!_isActiveCombat) return;
             if (!_allMonsters.ContainsKey(targetId))
             {
-                await NotifyNewMessage($"Monster {targetId} is Dead");
+                await NotifyNewMessage($"{targetId} Does not appear to exist. Weird...");
                 return;
             }
 
-            int key = targetId;
-            
-            _combatPlayer.Initiative = 0;
-            
-            var modifier = _combatPlayer.GetModifier();
-            var damageDealt = damageDice.ToUpper().ToDiceValue() + (int)modifier - _allMonsters[targetId].Armor;
-            _allMonsters[targetId].Health -= Math.Max(1, damageDealt);
-
-            if (_allMonsters.Values.Any(x => x.Health >= 0))
+            if (_allMonsters[targetId].isDead)
             {
-                await NotifyNewMessage($"You dealt {damageDealt} Damage");
-                await NotifyPlayerHit(false, targetId);
-                await Task.Delay(500);
-                await EvaluatePlayerTurn();
+                await NotifyNewMessage($"{targetId} is dead already, dummy");
                 return;
             }
-            else
+
+            (decimal modifier, int damageDealt) = DealDamage(damageDice, targetId);
+            Console.WriteLine($"modifier = {modifier}\r\ndamageDice = {damageDice}");
+            Console.WriteLine($"damage: {damageDealt}, minus monster armor: {_allMonsters[targetId].Armor}");
+            var messageTask = NotifyNewMessage($"You dealt {damageDealt} Damage");
+            var playerHitTask = NotifyPlayerHit(false, targetId);
+            await Task.WhenAll(messageTask, playerHitTask);
+            
+            if (_allMonsters.Values.All(x => x.isDead))
             {
-                _combatPlayer.Experience = _allMonsters.Values.Sum(x => x.ExpProvided);
-                _combatPlayer.Gold = _allMonsters.Values.Sum(x => x.GoldProvided);
-                await NotifyCombatEnded(false);
                 await NotifyNewMessage(
                     $"monster {string.Join(", ", _allMonsters.Values.Select(x => x.Name))} have been killed");
-                _isActiveCombat = false;
-                return;
             }
+            //await Task.Delay(500);
+            await EvaluatePlayerTurn();
+
+        }
+
+        
+        private (decimal modifier, int damageDealt) DealDamage(string damageDice, string targetId)
+        {
+            var modifier = _combatPlayer.GetModifier();
+
+            var damageDealt = damageDice.ToUpper().ToDiceValue() + (int) modifier - _allMonsters[targetId].Armor;
+            _allMonsters[targetId].Health -= Math.Max(1, damageDealt);
+            
+            foreach (var monster in _allMonsters.Where(monster => monster.Value.Health <= 0))
+            {
+                monster.Value.isDead = true;
+            }
+
+            return (modifier, damageDealt);
         }
 
         public async Task PlayerUseSkill(Skill skill)
@@ -112,55 +111,87 @@ namespace TurnBasedRpg.Services
             _combatPlayer.Initiative = 0;
             _combatPlayer.AbilityPoints -= skill.AbilityCost;
             // check the skill Effect property and execute based on type of skill
-            var skillType = skill.Effects.Select(x => x.Type).FirstOrDefault();
-            var skillValue = skill.Effects.FirstOrDefault()?.Value;
-            var skillAttrib = skill.Effects.FirstOrDefault()?.Attribute;
+            var effect = skill.Effects.FirstOrDefault() ?? new Effect();
+            var skillType = effect.Type;
+            var skillValue = effect.Value;
+            var skillAttrib = effect.Attribute;
             // Creates task variable and assigns it to a Task method based on skill type
             Task skillTask = skillType switch
             {
-                EffectType.Attack => PlayerAttack(skillValue),
+                EffectType.Attack => PlayerSkillAttack(effect, skillValue),
                 EffectType.Defend => Defend(skillValue),
                 EffectType.Heal => Heal(skillValue),
                 EffectType.ModifySelf => Modify(skillValue, skillAttrib, true),
                 EffectType.Modify => Modify(skillValue, skillAttrib),
                 _ => PlayerAttack()
             };
-            
-            
-            await NotifyNewMessage($"You Attempt {skill.Name} is completed");
-            await skillTask;
-        }
 
-        private Task Heal(string val)
+            var notify = NotifyNewMessage($"You Attempt {skill.Name} is completed");
+            await Task.WhenAll(notify, skillTask);
+
+        }
+        private async Task PlayerSkillAttack(Effect effect, string damageDice = "1D4")
+        {
+            var random = new Random();
+            string targetId = "";
+            var targets = effect.Area ?? 1;
+            for (var i = 0; i < targets; i++)
+            {
+                targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
+                await NotifyNewMessage($"Attacking random monster: {targetId}");
+
+                (decimal modifier, int damageDealt) = DealDamage(damageDice, targetId);
+                Console.WriteLine($"modifier = {modifier}\r\ndamageDice = {damageDice}");
+                Console.WriteLine($"damage: {damageDealt}, minus monster armor: {_allMonsters[targetId].Armor}");
+                var messageTask = NotifyNewMessage($"You dealt {damageDealt} Damage");
+                var playerHitTask = NotifyPlayerHit(false, targetId);
+                await Task.WhenAll(messageTask, playerHitTask);
+            }
+
+
+            if (_allMonsters.Values.All(x => x.isDead))
+            {
+                await NotifyNewMessage(
+                    $"monster {string.Join(", ", _allMonsters.Values.Select(x => x.Name))} have been killed");
+            }
+        }
+        private async Task Heal(string val)
         {
             _combatPlayer.Health += val.ToDiceValue();
-            NotifyPlayerHit(true);
-            return NotifyNewMessage($"Player healed");
+            var hitTask = NotifyPlayerHit(true);
+            var messageTask = NotifyNewMessage("Player healed");
+            await Task.WhenAll(hitTask, messageTask);
+            await EvaluatePlayerTurn();
         }
 
-        private Task Defend(string val)
+        private async Task Defend(string val)
         {
             var value = int.TryParse(val, out int modifier);
             _combatPlayer.ArmorModifier = modifier;
-            NotifyPlayerHit(true);
-            return NotifyNewMessage($"Armor increased by {modifier}");
+            var hitTask = NotifyPlayerHit(true);
+            var messageTask = NotifyNewMessage($"Armor increased by {modifier}");
+            await Task.WhenAll(hitTask, messageTask);
+            await EvaluatePlayerTurn();
         }
 
-        private Task Modify(string val, string attrib, bool isSelf = false)
+        private async Task Modify(string val, string attrib, bool isSelf = false)
         {
             if (isSelf)
             {
                 _combatPlayer.ModifyAttribute(attrib, val);
-                NotifyPlayerHit(true);
-                NotifyNewMessage($"Your {attrib}+{val}");
-                return EvaluatePlayerTurn();
+                var isHit = NotifyPlayerHit(true);
+                var message = NotifyNewMessage($"Your {attrib}+{val}");
+                await Task.WhenAll(isHit, message);
+                await EvaluatePlayerTurn();
+                return;
             }
             var random = new Random();
             var keyVal = random.Next(1, 4);
-            _allMonsters[keyVal].ModifyAttribute(attrib, val);
-            NotifyPlayerHit(false);
-            NotifyNewMessage($"Enemy {attrib}-{val}");
-            return EvaluatePlayerTurn();
+            _allMonsters[$"Monster {keyVal}"].ModifyAttribute(attrib, val);
+            var hitTask = NotifyPlayerHit(false);
+            var messageTask = NotifyNewMessage($"Enemy {attrib}-{val}");
+            await Task.WhenAll(hitTask, messageTask);
+            await EvaluatePlayerTurn();
 
         }
         public Task PlayerFlee()
@@ -168,7 +199,7 @@ namespace TurnBasedRpg.Services
             // Create Run await logic
             return NotifyNewMessage("You attempted to run away like a little girl, but you can't you pussy");
         }
-        private async Task MonsterAttack(int monsterKey)
+        private async Task MonsterAttack(string monsterKey)
         {
             if (!_isActiveCombat || _combatPlayer == null) return;
             var monster = _allMonsters[monsterKey];
@@ -176,45 +207,55 @@ namespace TurnBasedRpg.Services
             var damageTotal = monster.DamageDice.ToUpper().ToDiceValue() - _combatPlayer.ArmorValue;
             var damage = Math.Max(damageTotal, 1);
             _combatPlayer.Health -= damage;
+            var message = NotifyNewMessage($"Monster hits for {damage}");
+            var hit = NotifyPlayerHit(true);
+            await Task.WhenAll(message, hit);
+            //await Task.Delay(500);
+            await EvaluatePlayerTurn();
 
-            if (_combatPlayer.Health > 0)
-            {
-                await NotifyNewMessage($"Monster hits for {damage}");
-                await NotifyPlayerHit(true);
-                await Task.Delay(500);
-                await EvaluatePlayerTurn();
-                return;
-            }
-
-            _isActiveCombat = false;
-            await NotifyCombatEnded(true);
         }
         private Task EvaluatePlayerTurn()
         {
             var isPlayerReady = false;
-            if (_allMonsters.Values.All(x => x.Health <= 0))
+            foreach (var monster in _allMonsters.Where(m => m.Value.Health <= 0))
+            {
+                monster.Value.isDead = true;
+            }
+            if (_allMonsters.Values.All(x => x.isDead))
+            {
+
                 return NotifyCombatEnded(false);
+            }
+            if (_combatPlayer.Health <= 0)
+            {
+                //_isActiveCombat = false;
+                return NotifyCombatEnded(true);
+            }
+
             while (!isPlayerReady)
             {
                 _combatPlayer.Initiative += _combatPlayer.Speed;
-                foreach (var monster in _allMonsters.Where(x => x.Value.Health >= 0))
+                foreach (var monster in _allMonsters.Where(x => !x.Value.isDead))
                 {
                     monster.Value.Initiative += monster.Value.Speed;
-                    
+
                 }
                 //_monster.Initiative += _monster.Speed;
                 if (_combatPlayer.Initiative > 99) isPlayerReady = true;
-                //if (_monster.Initiative > 99) isPlayerReady = true;
+
                 if (_allMonsters.Values.Any(x => x.Initiative > 99)) isPlayerReady = true;
             }
 
-            (int key, var topMonster) = _allMonsters.OrderByDescending(x => x.Value.Initiative).FirstOrDefault();
+            (string key, var topMonster) = _allMonsters.OrderByDescending(x => x.Value.Initiative).FirstOrDefault();
             return _combatPlayer.Initiative >= topMonster.Initiative ? NotifyNewMessage("Player Turn...") : MonsterAttack(key);
         }
 
         private async Task NotifyCombatEnded(bool isPlayer)
         {
-            if (OnCombatEnded != null) await OnCombatEnded.Invoke(isPlayer);
+            if (OnCombatEnded != null && _isActiveCombat)
+                await OnCombatEnded.Invoke(isPlayer);
+            Console.WriteLine($"OnCombatEnded Invoked, isActiveCombat == {_isActiveCombat}");
+            _isActiveCombat = false;
         }
 
         private Task NotifyNewMessage(string str)
@@ -223,11 +264,30 @@ namespace TurnBasedRpg.Services
             return Task.CompletedTask;
         }
 
-        private Task NotifyPlayerHit(bool isPlayer, int monsterKey = 0)
+        private Task NotifyPlayerHit(bool isPlayer, string monsterKey = "")
         {
+            if (!_isActiveCombat) return Task.CompletedTask;
             OnPlayerHit?.Invoke(isPlayer, monsterKey);
+            Console.WriteLine("OnPlayerHit Invoked");
             return Task.CompletedTask;
         }
+
+        #region old BeginCombat Signiture
+
+        public Task BeginCombat(ref CombatPlayer player, ref Monster monster)
+        {
+            _combatPlayer = null;
+            CurrentPlayer = null;
+            // _monster = null;
+            _combatPlayer = player;
+            //_monster = monster;
+            //_monster.Health = _monster.MaxHealth;
+            _isActiveCombat = true;
+            NotifyNewMessage("Combat has begun");
+            return EvaluatePlayerTurn();
+        }
+        #endregion
+
     }
-   
+
 }

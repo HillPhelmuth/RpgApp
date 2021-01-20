@@ -1,23 +1,9 @@
 ﻿
+@if (!isCombatActive)
+{
 
     <div class="game-screen" @ref="gameboardReference" @onkeyup="@(KeyboardMove)" tabindex="0">
-        @*<div class="player-info">
-            Player Information
-            @if (CurrentPlayer != null)
-            {
-                <p>Name: @CurrentPlayer.Name</p>
-                <p>Class: @CurrentPlayer.ClassType.ToString()</p>
-                <p>Attributes</p>
-                <p>Agility: @CurrentPlayer?.Attributes?.Agility</p>
-                <p>Intelligence: @CurrentPlayer?.Attributes?.Intelligence</p>
-                <p>Toughness: @CurrentPlayer?.Attributes?.Toughness</p>
-                <p>Stats</p>
-                <p>XP: @CurrentPlayer?.Experience</p>
-                <p>Level: @CurrentPlayer?.Level</p>
-                <p>Health: @CurrentPlayer?.Health</p>
-            }
-
-        </div>*@
+       
         <div class="menu">
             <MatButton Raised="true" OnClick="ShowMenu">Menu</MatButton>
         </div>
@@ -62,3 +48,8 @@
             }
         </div>
     </div>
+}
+@if (isCombatActive)
+{
+    <CombatLauncher MonsterCount="@monsterCount" OnCombatEnded="HandleCombatEnded" />
+}
