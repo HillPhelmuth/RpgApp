@@ -8,16 +8,13 @@ using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using RpgApp.Client.Pages.CombatTests;
 using RpgApp.Client.Pages.Modals;
 using RpgApp.Shared;
-using RpgApp.Shared.Services;
-using RpgApp.Shared.StateManager;
 using RpgApp.Shared.Types;
 
 namespace RpgApp.Client.Pages.Layouts
 {
-    public partial class LayoutMyCss : IDisposable
+    public partial class LayoutMyCss : ComponentBase, IDisposable
     {
         [CascadingParameter(Name = "AppState")]
         public AppStateManager AppState { get; set; }
@@ -117,13 +114,7 @@ namespace RpgApp.Client.Pages.Layouts
             moveUpdates.Add(moveInfo);
             if (moveUpdates.Count > 5)
                 moveUpdates.RemoveAt(0);
-            //var randomVal = random.Next(1, 8);
-            //if (randomVal != 1)
-            //{
-            //    await InvokeAsync(StateHasChanged);
-            //    return;
-            //}
-            //await TriggerCombat();
+            
             await InvokeAsync(StateHasChanged);
         }
 
@@ -133,32 +124,6 @@ namespace RpgApp.Client.Pages.Layouts
             monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
             isCombatActive = true;
             StateHasChanged();
-            //var options = new ModalDialogOptions
-            //{
-            //    ShowCloseButton = false,
-            //    BackgroundClickToClose = false,
-            //    Style = "liquid-modal-dialog-combat"
-            //};
-            //var difficulty = random.Next(1, CurrentPlayer.Level + 3);
-            //var monsterOdds = random.Next(1, 101);
-            //var monsterCount = monsterOdds <= 50 ? 1 : monsterOdds <= 85 ? 2 : 3;
-            //var parameters = new ModalDialogParameters { { "Difficulty", difficulty }, { "MonsterCount", monsterCount } };
-            //var result =
-            //    await ModalService.ShowDialogAsync<MultiMonster>($"Holy Shit! You Were Attacked by {monsterCount} monsters!",
-            //        options, parameters);
-            //if (result.Success)
-            //{
-            //    moveUpdates.Add("Victory!");
-            //    moveUpdates.Add("It's time get back to the road to continue your fucking quest you goddamn slacker");
-            //}
-            //else
-            //{
-            //    CurrentPlayer.Health = CurrentPlayer.MaxHealth;
-            //    PlayerLoc = (0, 0);
-            //}
-
-            //await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
-
         }
 
         private void ToggleCss()
@@ -186,7 +151,6 @@ namespace RpgApp.Client.Pages.Layouts
             if (e.PropertyName != "CurrentPlayer") return;
             CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
-            //return Task.CompletedTask;
         }
         public async Task ShowMenu()
         {

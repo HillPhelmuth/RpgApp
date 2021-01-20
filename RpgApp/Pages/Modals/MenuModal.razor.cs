@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
-using RpgApp.Shared.StateManager;
+using RpgApp.Shared;
 using RpgApp.Shared.Types;
 
 namespace RpgApp.Client.Pages.Modals

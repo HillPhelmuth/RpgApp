@@ -38,17 +38,16 @@ namespace RpgApp.Client.Pages
             AppState.PropertyChanged += UpdateState;
             return base.OnInitializedAsync();
         }
-        public async Task CreateNewPlayer(ClassType classType)
-        {
-            var create = new CreateCharacter();
-            CurrentPlayer = await create.CreateNewCharacter(classType);
-            AppState.UpdateCurrentPlayer(CurrentPlayer);
-            CurrentPlayer.Name = name;
-            IsPlayerCreated = true;
-            StateHasChanged();
-        }
+        //public async Task CreateNewPlayer(ClassType classType)
+        //{
+        //    CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType);
+        //    AppState.UpdateCurrentPlayer(CurrentPlayer);
+        //    CurrentPlayer.Name = name;
+        //    IsPlayerCreated = true;
+        //    StateHasChanged();
+        //}
 
-        public async Task CreateCharacter()
+        public async Task CreateNewCharacter()
         {
             ModalDialogResult result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character");
             StateHasChanged();

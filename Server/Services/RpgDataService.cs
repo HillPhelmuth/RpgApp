@@ -11,9 +11,9 @@ namespace RpgApp.Server.Services
 {
     public class RpgDataService
     {
-        private readonly RpgDbContext _context;
+        private readonly RpgAppDbContext _context;
 
-        public RpgDataService(RpgDbContext context)
+        public RpgDataService(RpgAppDbContext context)
         {
             _context = context;
 

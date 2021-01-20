@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using RpgApp.Shared.Types;
 
-namespace RpgApp.Shared.StateManager
+namespace RpgApp.Shared
 {
     /// <summary>
     /// This with simplify the process of keeping all of our page components in sync.

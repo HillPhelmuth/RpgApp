@@ -6,17 +6,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\JsonConverters\**" />
     <Compile Remove="DnDApi\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Data\JsonConverters\**" />
     <Content Remove="DnDApi\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Data\JsonConverters\**" />
     <EmbeddedResource Remove="DnDApi\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Data\JsonConverters\**" />
     <None Remove="DnDApi\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\DnDApiController.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="TypeStoreJson\ClassSkills\MageSkills.json" />
     <Content Remove="TypeStoreJson\ClassSkills\RangerSkills.json" />
     <Content Remove="TypeStoreJson\ClassSkills\WarriorSkills.json" />
-    <Content Remove="TypeStoreJson\InventoryLists.json" />
     <Content Remove="TypeStoreJson\Inventory\EquipmentList.json" />
     <Content Remove="TypeStoreJson\Inventory\ItemList.json" />
   </ItemGroup>
@@ -35,7 +46,6 @@
     <EmbeddedResource Include="TypeStoreJson\ClassSkills\MageSkills.json" />
     <EmbeddedResource Include="TypeStoreJson\ClassSkills\RangerSkills.json" />
     <EmbeddedResource Include="TypeStoreJson\ClassSkills\WarriorSkills.json" />
-    <EmbeddedResource Include="TypeStoreJson\InventoryLists.json" />
     <EmbeddedResource Include="TypeStoreJson\Inventory\EquipmentList.json" />
     <EmbeddedResource Include="TypeStoreJson\Inventory\ItemList.json" />
   </ItemGroup>

@@ -39,7 +39,7 @@
                             @if (isSkillMenu)
                             {
                                 <MatList SingleSelection="true">
-                                    @foreach (var skill in AllSkillsTemp)
+                                    @foreach (var skill in CurrentPlayer.Skills)
                                     {
                                         <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
                                     }
@@ -55,34 +55,36 @@
         </div>
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
             <MatH3>Monsters</MatH3>
-            @foreach ((string key, var monster) in AllMonsters.Where(x => !x.Value.isDead))
+            @foreach ((string key, var monster) in AllMonsters ?? new Dictionary<string, Monster>())
             {
-                <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
-                 <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">   
-                    <MatCard>
-                        <div>
-                            <MatHeadline6>
-                                @monster.Name
-                            </MatHeadline6>
-                            <MatSubtitle2>
-                                @monster.Description
-                            </MatSubtitle2>
-                        </div>
-                        <MatCardContent>
-                            
-                            <MatBody2 Style="height: auto">
-                                <MatH5>HP: @monster.Health / @monster.MaxHealth</MatH5>
-                                <MatH5>Difficulty: @monster.DifficultyLevel Damage: @monster.DamageDice</MatH5>
-                            </MatBody2>
-                        </MatCardContent>
-                        <MatCardActions>
-                            <MatCardActionButtons>
-                                <MatButton OnClick="@(() => Attack(key))" Raised="true">Attack This Monster</MatButton>
-                            </MatCardActionButtons>
-                        </MatCardActions>
-                    </MatCard></Animation>
-                </Animation>
+                if (!monster.isDead)
+                {
+                    <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
+                        <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">
+                            <MatCard>
+                                <div>
+                                    <MatHeadline6>
+                                        @monster.Name
+                                    </MatHeadline6>
+                                    <MatSubtitle2>
+                                        @monster.Description
+                                    </MatSubtitle2>
+                                </div>
+                                <MatCardContent>
 
+                                    <MatBody2 Style="height: auto">
+                                        <MatH5>HP: @monster.Health / @monster.MaxHealth</MatH5>
+                                        <MatH5>Difficulty: @monster.DifficultyLevel Damage: @monster.DamageDice</MatH5>
+                                    </MatBody2>
+                                </MatCardContent>
+                                <MatCardActions>
+                                    <MatCardActionButtons>
+                                        <MatButton OnClick="@(() => Attack(key))" Raised="true">Attack This Monster</MatButton>
+                                    </MatCardActionButtons>
+                                </MatCardActions>
+                            </MatCard></Animation>
+                    </Animation>
+                }
             }
         </div>
     </div>

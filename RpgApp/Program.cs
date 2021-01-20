@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using RpgApp.Shared.CheatDevTools;
+using RpgApp.Shared;
 using RpgApp.Shared.Services;
-using RpgApp.Shared.StateManager;
 
 namespace RpgApp.Client
 {

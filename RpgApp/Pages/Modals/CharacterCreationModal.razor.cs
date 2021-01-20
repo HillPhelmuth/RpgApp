@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
-using RpgApp.Shared.StateManager;
+using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 
@@ -19,8 +19,7 @@ namespace RpgApp.Client.Pages.Modals
 
         public async Task CreateNewPlayer(ClassType classType)
         {
-            var create = new CreateCharacter();
-            CurrentPlayer = await create.CreateNewCharacter(classType);
+            CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType, AppState.AllSkills, AppState.AllEquipment);
             AppState.UpdateCurrentPlayer(CurrentPlayer);
             CurrentPlayer.Name = name;
             ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!");

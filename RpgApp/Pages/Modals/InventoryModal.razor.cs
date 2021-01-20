@@ -27,7 +27,7 @@ namespace RpgApp.Client.Pages.Modals
             playerInventory = JsonSerializer.Deserialize<List<Equipment>>(equipmentJson) ?? new List<Equipment>();
             foreach (var item in playerInventory.Where(item => item.Effects == null))
             {
-                item.Effects = new List<Effect> { new Effect() { Type = EffectType.Status, Value = "none" } };
+                item.Effects = new List<Effect> { new Effect { Type = EffectType.Status, Value = "none" } };
             }
 
         }

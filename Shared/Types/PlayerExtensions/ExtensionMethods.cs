@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace RpgApp.Shared.Types.PlayerExtensions
 {
@@ -38,7 +38,7 @@ namespace RpgApp.Shared.Types.PlayerExtensions
                 MaxAbilityPoints = player.MaxAbilityPoints,
                 Inventory = player.Inventory,
                 Name = player.Name,
-                Skills = player.Skills,
+                Skills = player.Skills?.Distinct().ToList(),
                 Initiative = 0
             };
             if (player.WeaponHandId != null)
@@ -46,12 +46,6 @@ namespace RpgApp.Shared.Types.PlayerExtensions
             if (player.BodyId != null)
                 combatPlayer.EquipArmor((int)player.BodyId);
             return combatPlayer;
-        }
-
-        public static void AddToInventory(this Player player, Equipment item)
-        {
-            player.Inventory ??= new List<Equipment>();
-            player.Inventory.Add(item);
         }
     }
 }

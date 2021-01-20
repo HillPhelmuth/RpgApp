@@ -20,13 +20,10 @@ namespace RpgApp.Shared.Types
         public ClassType ClassType { get; set; }
         [JsonIgnore]
         public List<Skill> Skills { get; set; }
-        //[NotMapped] 
-        //public List<Skill> SkillList => Skills.Select(x => x.Skill).ToList();
-        [JsonIgnore]
         public List<Equipment> Inventory { get; set; }
-        //[NotMapped]
-        //public List<Equipment> InventoryList => Inventory.Select(x => x.Equipment).ToList();
-
+        [JsonIgnore]
+        [NotMapped]
+        public Equipment Weapon { get; set; }
         public int? WeaponHandId { get; protected set; }
         public int? OffHandId { get; protected set; }
         public int? BodyId { get; protected set; }
@@ -57,6 +54,8 @@ namespace RpgApp.Shared.Types
                     OffHandId = item.Id;
                     break;
             }
+
+            Weapon = item;
         }
         public void EquipOffHand(Equipment item)
         {
@@ -78,6 +77,7 @@ namespace RpgApp.Shared.Types
 
         public void AddToInventory(Equipment item)
         {
+            Inventory ??= new List<Equipment>();
             Inventory.Add(item);
         }
 

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
-using RpgApp.Shared.StateManager;
+using RpgApp.Shared;
 
 namespace RpgApp.Client.Pages.Layouts
 {
@@ -54,13 +53,6 @@ namespace RpgApp.Client.Pages.Layouts
             }
 
             await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task TryModifyModal()
-        {
-            var result = await ModalDialogService.ShowDialogAsync<StyleTester>("this");
-            if (result.Success)
-                ModalDialogService.Close(true);
         }
 
         public void Dispose()

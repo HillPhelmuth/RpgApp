@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-//using Newtonsoft.Json;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 
@@ -17,7 +16,7 @@ namespace RpgApp.Server.Data
         /// from Program.cs on app start.
         /// </summary>
         /// <param name="context"></param>
-        public static void Initialize(RpgDbContext context)
+        public static void Initialize(RpgAppDbContext context)
         {
             context.Database.EnsureCreated();
             if (context.Players.Any() || context.Equipment.Any())
@@ -25,8 +24,7 @@ namespace RpgApp.Server.Data
             
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            //options.WriteIndented = true;
-            ////jsonString = JsonSerializer.Serialize(weatherForecast, options);
+            
             // Going to create the Equipment with the .json file by making it an embedded resource so I can
             // use Reflection to grab it's contents at runtime.
             var assembly = Assembly.GetExecutingAssembly(); // Gets all embedded and compiled files in the program
@@ -71,8 +69,6 @@ namespace RpgApp.Server.Data
                     allSkills.AddRange(rangerSkills.RangerSkills);
                 }
             }
-
-
             // add each equipment item to our database Equipment table
             foreach (var equipment in equipmentList.Equipments)
             {
@@ -80,30 +76,29 @@ namespace RpgApp.Server.Data
                 context.Equipment.Add(equipment);
             }
             // add each skill item to our database Skill table
-            foreach (var skill in allSkills)
+            foreach (var skill in allSkills.Distinct())
             {
                 context.Skills.Add(skill);
             }
-            var dagger = equipmentList.Equipments.FirstOrDefault(x => x.Name == "Dagger");
-            var armor = equipmentList.Equipments.FirstOrDefault(x => x.Name == "Leather armor");
-            var enrage = allSkills.FirstOrDefault(x => x.Name == "Enrage");
-            var magicMissile = allSkills.FirstOrDefault(x => x.Name == "Magic missile");
-            var doubleShot = allSkills.FirstOrDefault(x => x.Name == "Double shot");
-            var create = new CreateCharacter();
+            var dagger = equipmentList.Equipments.Find(x => x.Name == "Dagger");
+            var armor = equipmentList.Equipments.Find(x => x.Name == "Leather armor");
+            var enrage = allSkills.Find(x => x.Name == "Enrage");
+            var magicMissile = allSkills.Find(x => x.Name == "Magic missile");
+            var doubleShot = allSkills.Find(x => x.Name == "Double shot");
             // Now we create a player to seed the Players table
-            var warrior = create.CreateNewCharacter(ClassType.Warrior).Result;
+            var warrior = CreateCharacter.CreateNewCharacter(ClassType.Warrior).Result;
             warrior.UserId = "admin";
             warrior.Name = "Seed Warrior";
             warrior.Inventory = new List<Equipment> { dagger, armor };
             warrior.Skills = new List<Skill> { enrage };
             warrior.Gold = 50;
-            var mage = create.CreateNewCharacter(ClassType.Mage).Result;
+            var mage = CreateCharacter.CreateNewCharacter(ClassType.Mage).Result;
             mage.UserId = "admin";
             mage.Name = "Seed Mage";
             mage.Inventory = new List<Equipment> { dagger, armor };
             mage.Skills = new List<Skill> { magicMissile };
             mage.Gold = 50;
-            var ranger = create.CreateNewCharacter(ClassType.Ranger).Result;
+            var ranger = CreateCharacter.CreateNewCharacter(ClassType.Ranger).Result;
             ranger.UserId = "admin";
             ranger.Name = "Seed Ranger";
             ranger.Inventory = new List<Equipment> { dagger, armor };

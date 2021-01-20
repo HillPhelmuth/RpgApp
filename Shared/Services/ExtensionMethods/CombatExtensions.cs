@@ -11,7 +11,7 @@ namespace RpgApp.Shared.Services.ExtensionMethods
         public static int ToDiceValue(this string dice)
         {
             int damage = 0;
-            if (!dice.ToUpper().Contains("D"))
+            if (!dice.Contains("D", StringComparison.OrdinalIgnoreCase))
             {
                 int.TryParse(dice, out damage);
                 return damage;

@@ -1,19 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Linq;
-using Blazor.ModalDialog;
-using Microsoft.EntityFrameworkCore;
 using RpgApp.Server.Data;
-using RpgApp.Server.Services;
-using RpgApp.Shared.CheatDevTools;
-using RpgApp.Shared.Services;
-using RpgApp.Shared.StateManager;
-using RpgApp.Shared.Types;
+using RpgApp.Shared;
+using RpgApp.Shared.Types; //using RpgApp.Server.Services;
 
 namespace RpgApp.Server
 {
@@ -33,15 +26,11 @@ namespace RpgApp.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<RpgDbContext>(options =>
+            services.AddDbContext<RpgAppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RpgDbConnection"))); // gets the connection string from appsettings.json
             services.AddSingleton<AppStateManager>();
-            //services.AddScoped<CombatService>();
             services.AddTransient<CreateCharacter>();
-            services.AddTransient<RpgDataService>();
-
-            //services.AddScoped<InventoryService>();
-            //services.AddScoped<DnDApiService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

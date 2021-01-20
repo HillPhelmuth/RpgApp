@@ -4,19 +4,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-//using Newtonsoft.Json;
 using RpgApp.Client.Shared;
 using RpgApp.Shared;
 using RpgApp.Shared.Services;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
-using RpgApp.Shared.Types.PlayerExtensions;
-using CombatService = RpgApp.Shared.Services.CombatService;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using RpgApp.Shared.Types.PlayerExtensions; //using Newtonsoft.Json;
 
 namespace RpgApp.Client.Pages
 {
@@ -91,7 +89,7 @@ namespace RpgApp.Client.Pages
                 EquipLocation = "TwoHands",
                 
             }};
-            var weapon = weapons.FirstOrDefault(x => x.Effects.Any(e => e.Type == EffectType.Attack));
+            var weapon = weapons.Find(x => x.Effects.Any(e => e.Type == EffectType.Attack));
             _combatPlayer.EquipWeapon(weapon);
             await CombatService.BeginCombat(ref _combatPlayer, ref _monster);
             

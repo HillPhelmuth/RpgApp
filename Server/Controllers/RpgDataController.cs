@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RpgApp.Server.Data;
-using RpgApp.Server.Services;
-using RpgApp.Shared.Types;
+using RpgApp.Shared.Types; //using RpgApp.Server.Services;
 
 namespace RpgApp.Server.Controllers
 {
@@ -16,8 +14,8 @@ namespace RpgApp.Server.Controllers
     [ApiController]
     public class RpgDataController : ControllerBase
     {
-        private readonly RpgDbContext _context;
-        public RpgDataController(RpgDbContext context)
+        private readonly RpgAppDbContext _context;
+        public RpgDataController(RpgAppDbContext context)
         {
             _context = context;
         }
@@ -47,11 +45,11 @@ namespace RpgApp.Server.Controllers
         {
             return await _context.Equipment.Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
-        [HttpGet("GetSingleEquipment")]
-        public async Task<Equipment> GetSingleEquipmentAsync([FromQuery] int goldMax, [FromQuery] string name)
+        [HttpGet("GetSomeEquipment")]
+        public async Task<List<Equipment>> GetSomeEquipmentAsync([FromQuery] int goldMax = 0)
         {
-            Expression<Func<Equipment, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax || equip.Name == name;
-            return await _context.Equipment.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().FirstOrDefaultAsync();
+            Expression<Func<Equipment, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
+            return await _context.Equipment.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
         [HttpGet("GetEquipmentById/{equipId}")]
         public async Task<Equipment> GetEquipmentById(int equipId)
@@ -61,15 +59,15 @@ namespace RpgApp.Server.Controllers
         [HttpGet("GetSkills")]
         public async Task<List<Skill>> GetSkillsAsync()
         {
-            //Expression<Func<Skill, bool>> filterSkillsExpression = skill => skill.GoldCost < goldMax;
             return await _context.Skills.Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
-        [HttpGet("GetSingleSkill/{goldMax}")]
-        public async Task<Skill> GetSingleSkillAsync(int goldMax)
+        [HttpGet("GetSomeSkills")]
+        public async Task<List<Skill>> GetSomeSkillsAsync([FromQuery] int goldMax = 0)
         {
-            Expression<Func<Skill, bool>> firstSkillExpression = skill => skill.GoldCost < goldMax;
-            return await _context.Skills.Where(firstSkillExpression).Include(x => x.Effects).AsSplitQuery().FirstOrDefaultAsync();
+            Expression<Func<Skill, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
+            return await _context.Skills.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
+       
         [HttpGet("GetSkillById/{skillId}")]
         public async Task<Skill> GetSkillById(int skillId)
         {
@@ -78,7 +76,6 @@ namespace RpgApp.Server.Controllers
         [HttpGet("GetMonsters")]
         public async Task<List<Monster>> GetMonstersAsync()
         {
-            //Expression<Func<Monster, bool>> filterMonsters = monster => monster.DifficultyLevel < maxLevel;
             return await _context.Monsters.ToListAsync();
         }
         [HttpGet("GetSingleMonsters/{maxLevel}")]
@@ -87,7 +84,7 @@ namespace RpgApp.Server.Controllers
             Expression<Func<Monster, bool>> firstMonsterExpression = skill => skill.DifficultyLevel < maxLevel;
             return await _context.Monsters.FirstOrDefaultAsync(firstMonsterExpression);
         }
-        [HttpGet("GetSkillById{monsterId}")]
+        [HttpGet("GetMonsterById{monsterId}")]
         public async Task<Monster> GetMonsterById(int monsterId)
         {
             return await _context.Monsters.FindAsync(monsterId);
@@ -95,6 +92,9 @@ namespace RpgApp.Server.Controllers
         [HttpPost("UpdateOrAddPlayer")]
         public async Task UpdateOrAddPlayer([FromBody] Player player)
         {
+            // Make sure we don't accidently add duplicates to the Db
+            player.Skills = player.Skills?.Distinct().ToList();
+            player.Inventory = player.Inventory?.Distinct().ToList();
             _context.Players.Update(player);
             await _context.SaveChangesAsync();
         }

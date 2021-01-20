@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-//using Newtonsoft.Json;
 using RpgApp.Shared;
-using RpgApp.Shared.Services;
-using RpgApp.Shared.StateManager;
-using RpgApp.Shared.Types;
+using RpgApp.Shared.Types; //using Newtonsoft.Json;
 
 namespace RpgApp.Client.Pages.DataTests
 {
@@ -24,7 +19,7 @@ namespace RpgApp.Client.Pages.DataTests
         private HttpClient HttpClient { get; set; }
 
         #region Player Query Region
-        private List<Player> UserPlayers { get; set; } = new List<Player>();
+        private List<Player> UserPlayers { get; set; } = new();
         private Player selectedPlayer;
         private string userInput;
         private bool isPlayerQuery = false;
@@ -40,7 +35,7 @@ namespace RpgApp.Client.Pages.DataTests
         private void SelectPlayer(object row)
         {
             if (row == null) return;
-            selectedPlayer = UserPlayers.FirstOrDefault(x => x.ID == ((Player)row).ID);
+            selectedPlayer = UserPlayers.Find(x => x.ID == ((Player)row).ID);
             if (selectedPlayer != null)
             {
                 selectedPlayer.Health = selectedPlayer.MaxHealth;
@@ -58,15 +53,12 @@ namespace RpgApp.Client.Pages.DataTests
         #endregion
 
         #region Equipment Queries
-        private List<Equipment> EquipmentQueryResult { get; set; } = new List<Equipment>();
+        private List<Equipment> EquipmentQueryResult { get; set; } = new();
         private int equipGold;
         private bool isEquipQuery = false;
         public async void GetEquipFilterByGp(int value)
         {
-            //Expression<Func<Equipment, bool>> equipFilter = equipment => equipment.GoldCost <= value;
-            EquipmentQueryResult = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetEquipment/{value}");
-            //var equipmentJson = await apiResponse.Content.ReadAsStringAsync();
-            //EquipmentQueryResult = JsonSerializer.Deserialize<List<Equipment>>(equipmentJson);
+            EquipmentQueryResult = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={value}");
             isEquipQuery = true;
             equipGold = value;
             StateHasChanged();
@@ -75,15 +67,12 @@ namespace RpgApp.Client.Pages.DataTests
         #endregion
 
         #region Skills Query
-        private List<Skill> SkillQueryResult { get; set; } = new List<Skill>();
+        private List<Skill> SkillQueryResult { get; set; } = new();
         private int skillGold;
         private bool isSkillQuery = false;
         public async void GetSkillFilterByGp(int value)
         {
-            Expression<Func<Skill, bool>> skillFilter = skill => skill.GoldCost <= value;
-            SkillQueryResult = await HttpClient.GetFromJsonAsync<List<Skill>>($"{AppConstants.ApiUrl}/GetSkills/{value}");
-            //var skillJson = await apiResponse.Content.ReadAsStringAsync();
-            //SkillQueryResult = JsonSerializer.Deserialize<List<Skill>>(skillJson);
+            SkillQueryResult = await HttpClient.GetFromJsonAsync<List<Skill>>($"{AppConstants.ApiUrl}/GetSomeSkills?goldMax={value}");
             isSkillQuery = true;
             skillGold = value;
             StateHasChanged();

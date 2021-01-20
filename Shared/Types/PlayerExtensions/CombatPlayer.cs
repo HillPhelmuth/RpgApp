@@ -21,7 +21,7 @@ namespace RpgApp.Shared.Types.PlayerExtensions
         private int GetArmorValue()
         {
             var inventory = Inventory;
-            var armor = inventory.FirstOrDefault(x => x.Id == BodyId);
+            var armor = inventory.Find(x => x.Id == BodyId);
 
             var armorValue = armor?.Effects.Where(x => x.Type == EffectType.Defend).Select(x => x.Value).FirstOrDefault();
             int value = 0;
@@ -31,9 +31,8 @@ namespace RpgApp.Shared.Types.PlayerExtensions
         private string GetDamageDice()
         {
             var inventory = Inventory;
-            var weapon = inventory.FirstOrDefault(x => x.Id == WeaponHandId);
-            return weapon?.Effects.Where(x => x.Type == EffectType.Attack).Select(x => x.Value)
-                .FirstOrDefault();
+            var weapon = Weapon; //inventory.FirstOrDefault(x => x.Id == WeaponHandId);
+            return weapon?.Effects.Select(x => x.Value).FirstOrDefault();
 
         }
         public void EquipWeapon(int itemId)

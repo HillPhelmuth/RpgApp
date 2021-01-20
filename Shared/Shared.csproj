@@ -6,14 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CheatDevTools\**" />
     <Compile Remove="Types\ClassTypes\**" />
+    <Compile Remove="Types\World\**" />
+    <EmbeddedResource Remove="CheatDevTools\**" />
     <EmbeddedResource Remove="Types\ClassTypes\**" />
+    <EmbeddedResource Remove="Types\World\**" />
+    <None Remove="CheatDevTools\**" />
     <None Remove="Types\ClassTypes\**" />
+    <None Remove="Types\World\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Services\InventoryService.cs" />
     <Compile Remove="Services\RpgDataService.cs" />
+    <Compile Remove="Types\Attributes.cs" />
+    <Compile Remove="Types\PlayerEquipment.cs" />
+    <Compile Remove="Types\PlayerSkill.cs" />
   </ItemGroup>
 
   <ItemGroup>

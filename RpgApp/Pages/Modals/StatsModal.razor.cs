@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using RpgApp.Shared.StateManager;
+using RpgApp.Shared;
 using RpgApp.Shared.Types;
 
 namespace RpgApp.Client.Pages.Modals

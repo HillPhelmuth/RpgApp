@@ -1,7 +1,6 @@
 ﻿@page "/"
-@using RpgApp.Shared.StateManager
-@using System.ComponentModel
 @using System.Net.Http.Json
+@using System.ComponentModel
 @using RpgApp.Shared
 @inject HttpClient Http
 
@@ -16,8 +15,8 @@
         <MatTab Label="MyLayout">
             <LayoutMyCss />
         </MatTab>
-        <MatTab Label="Home page Tab">
-            
+        <MatTab Label="Test Styles">
+            <StyleTester/>
         </MatTab>
         <MatTab Label="Test Page">
             @if (AppState.CurrentPlayer == null)
@@ -37,7 +36,7 @@
 </MatTabGroup>
 @code
 {
-    protected int indexTab = 0;
+    protected int indexTab;
     [CascadingParameter(Name = "AppState")]
     public AppStateManager AppState { get; set; }
     protected override Task OnInitializedAsync()
