@@ -1,0 +1,205 @@
+﻿/**
+* global content styling
+*/
+/* game div with background image*/
+::deep .rpgui-content {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+    left: 50px;
+    top: 0px;
+    position: absolute;
+    overflow: scroll;
+    font-size: 0.9em;
+   
+}
+
+/* general rules to apply on anything inside the content */
+::deep.rpgui-content * {
+    /* remove outline effect for input elements etc */
+    outline: none;
+    /* prevent dragging */
+    user-drag: none;
+    -webkit-user-drag: none;
+    /* prevent text selecting */
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    /* pixelated enlargement filter (to keep the pixel-art style when enlarging pictures) */
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: pixelated;
+    /* default font */
+    font-family: 'Press Start 2P', cursive;
+}
+::deep.rpgui-container {
+    /* position style and default z */
+    position: absolute;
+    z-index: 10;
+    overflow: show;
+}
+
+    /* game div with background image*/
+::deep.rpgui-container.framed {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image.png");
+        border-image-repeat: repeat;
+        border-image-slice: 6 6 6 6;
+        border-image-width: 18px;
+        border-width: 15px;
+        padding: 12px;
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background: url("img/background-image.png") repeat repeat;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with golden background image*/
+::deep.rpgui-container.framedgolden {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-golden.png");
+        border-image-repeat: repeat;
+        border-image-slice: 4 4 4 4;
+        border-image-width: 18px;
+        border-width: 15px;
+        padding: 12px;
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background: url("img/background-image-golden.png") repeat repeat;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with golden2 background image*/
+::deep.rpgui-container.framedgolden2 {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-golden2.png");
+        border-image-repeat: repeat;
+        border-image-slice: 8 8 8 8;
+        border-image-width: 18px;
+        border-width: 15px;
+        padding: 12px;
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background: url("img/background-image-golden2.png") repeat repeat;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with soft grey background image*/
+::deep.rpgui-container.framedgrey {
+        position: relative;
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-grey.png");
+        border-image-repeat: repeat;
+        border-image-slice: 3 3 3 3;
+        border-image-width: 7px;
+        border-width: 7px;
+        padding: 12px;
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background: url("img/background-image-grey.png") repeat repeat;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+/**
+* different cursor graphics
+*/
+/* default cursor important */
+/* this rule is for when you specifically request this cursor class */
+::deep.rpgui-cursor-default {
+    cursor: url("img/cursor/default.png"), auto !important;
+}
+
+/* default cursor, not important, for all elements without any other rule. */
+::deep.rpgui-content,
+::deep label {
+    cursor: url("img/cursor/default.png"), auto;
+}
+
+/* pointer / hand cursor important */
+/* this rule is for when you specifically request this cursor class */
+::deep .rpgui-cursor-point,
+::deep .rpgui-cursor-point * {
+    cursor: url("img/cursor/point.png") 10 0, auto !important;
+}
+
+/* pointer / hand cursor, not important, for all elements that have pointer by-default */
+::deep .rpgui-content a,
+::deep .rpgui-content button,
+::deep .rpgui-button,
+::deep .rpgui-slider-container,
+::deep .rpgui-content input[type=radio]::deep .rpgui-radio + label,
+::deep .rpgui-list-imp,
+::deep .rpgui-dropdown-imp,
+::deep .rpgui-content input[type=checkbox]::deep .rpgui-checkbox + label {
+    cursor: url("img/cursor/point.png") 10 0, auto;
+}
+
+/* for input / text selection important */
+/* this rule is for when you specifically request this cursor class */
+::deep .rpgui-cursor-select,
+::deep .rpgui-cursor-select * {
+    cursor: url("img/cursor/select.png") 10 0, auto !important;
+}
+
+/* for input / text selection, not important, for all elements that have pointer by-default */
+::deep .rpgui-cursor-select,
+::deep .rpgui-content input,
+::deep .rpgui-content textarea {
+    cursor: url("img/cursor/select.png") 10 0, auto;
+}
+
+/* for grabbing stuff */
+/* this rule is for when you specifically request this cursor class */
+::deep .rpgui-cursor-grab-open,
+::deep .rpgui-cursor-grab-open * {
+    cursor: url("img/cursor/grab-open.png") 10 0, auto !important;
+}
+
+/* for grabbing stuff */
+/* this rule is for when you specifically request this cursor class */
+::deep .rpgui-cursor-grab-close,
+::deep .rpgui-cursor-grab-close * {
+    cursor: url("img/cursor/grab-close.png") 10 0, auto !important;
+}
+::deep .rpgui-content hr {
+    display: block;
+    border: 0px;
+    height: 10px;
+    background: url("img/hr.png") repeat-x top left;
+}
+
+/* rpgui golden hr */
+::deep .rpgui-content hr.golden {
+    display: block;
+    border: 0px;
+    height: 10px;
+    background: url("img/hr-golden.png") no-repeat top left;
+    background-size: 100% 100%;
+}

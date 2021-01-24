@@ -1,0 +1,42 @@
+﻿@typeparam TItem
+
+<div class="rpgui-container @Enum.GetName(MenuFrame)?.ToLower() @_draggale">
+    <div>@MenuHeader</div>
+    <hr />
+
+    @foreach (var itemTemplate in _indexImageItems)
+    {
+        <div class="rpgui-icon" @onclick="@(() => itemTemplate.IsOpen = !itemTemplate.IsOpen)">
+            <Tooltip>
+                <Content>@ToolTipTemplate(itemTemplate.Item)
+                    <p style="font-size:80%">(click for options)</p></Content>
+                <ChildContent>
+                    <div>
+                        <img width="64" height="64" src="@($"_content/RpgComponentLibrary/img/icons/{itemTemplate.Image}.png")" alt="No Img Src found" />
+                    </div>
+                </ChildContent>
+            </Tooltip>
+            @if (itemTemplate.IsOpen)
+            {
+                <div class="action">
+                    <button class="close">X</button>
+                    @ActionTemplate(itemTemplate.Item)
+                </div>
+            }
+          
+        </div>
+
+    }
+    @for (var i = 0; i < _spillOver; i++)
+    {
+        <Tooltip>
+            <Content><p>This is an Empty Slot</p></Content>
+            <ChildContent>
+                <div class="rpgui-icon">
+                    <img src="@($"_content/RpgComponentLibrary/img/icons/empty-slot.png")" alt="No Img Src found" />
+                </div>
+            </ChildContent>
+        </Tooltip>
+    }
+
+</div>

@@ -2,6 +2,7 @@
 @using System.Net.Http.Json
 @using System.ComponentModel
 @using RpgApp.Shared
+@using RpgApp.Client.Pages.StyleTests
 @inject HttpClient Http
 
 <MatTabGroup @bind-ActiveIndex="indexTab">
@@ -15,8 +16,9 @@
         <MatTab Label="MyLayout">
             <LayoutMyCss />
         </MatTab>
-        <MatTab Label="Test Styles">
-        </MatTab>
+    <MatTab Label="Test Styles">
+        <div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>
+    </MatTab>
         <MatTab Label="Test Page">
             @if (AppState.CurrentPlayer == null)
             {
