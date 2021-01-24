@@ -1,0 +1,19 @@
+﻿<div class="text-left">
+    @foreach (var item in shopInventory)
+    {
+        <h3>@item.Name</h3>
+        <ul>
+            <li>@item.GoldCost Gold</li>
+            <li>@item.Description</li>
+            <ol>
+                Effects:
+                @foreach (var effect in item.Effects)
+                {
+                    <li>@effect.Type.ToString()</li>
+                    <li>@effect.Value</li>
+                }
+            </ol>
+        </ul>
+        <MatButton Raised="true" OnClick="@(() => BuyEquipment(item))">Buy</MatButton>
+    }
+</div>
