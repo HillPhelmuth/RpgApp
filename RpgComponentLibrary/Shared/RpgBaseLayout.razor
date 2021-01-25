@@ -1,0 +1,7 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+<button @onclick="OnClick" style="top:0;left:0;position:fixed;height:20px; width: 60px; font-size:12px">Home</button>
+<div class="rpgui-content">@Body</div>
+@code {
+    void OnClick() => NavigationManager.NavigateTo("/");
+}

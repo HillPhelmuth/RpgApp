@@ -2,6 +2,7 @@
 @using System.Net.Http.Json
 @using System.ComponentModel
 @using RpgApp.Shared
+@using RpgApp.Client.Pages.StyleTests
 @inject HttpClient Http
 
 <MatTabGroup @bind-ActiveIndex="indexTab">
@@ -15,8 +16,10 @@
         <MatTab Label="MyLayout">
             <LayoutMyCss />
         </MatTab>
-        <MatTab Label="Test Styles">
-        </MatTab>
+    <MatTab Label="Test Styles">
+        @*<div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>*@
+        <CompLibraryTester/>
+    </MatTab>
         <MatTab Label="Test Page">
             @if (AppState.CurrentPlayer == null)
             {
@@ -52,6 +55,8 @@
             AppState.AllEquipment = allData.Equipment;
             AppState.AllMonsters = allData.Monsters;
             AppState.AllSkills = allData.Skills;
+            Console.WriteLine($"Equipment: {string.Join(",",AppState.AllEquipment.Select(x => x.Name))}");
+            Console.WriteLine($"Skills: {string.Join(",", AppState.AllSkills.Select(x => x.Name))}");
         }
         await base.OnAfterRenderAsync(firstRender);
     }
@@ -62,5 +67,5 @@
         indexTab = AppState.IndexTab;
         await InvokeAsync(StateHasChanged);
     }
-    
+
 }

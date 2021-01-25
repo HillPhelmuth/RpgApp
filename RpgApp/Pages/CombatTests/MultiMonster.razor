@@ -39,7 +39,7 @@
                             @if (isSkillMenu)
                             {
                                 <MatList SingleSelection="true">
-                                    @foreach (var skill in CurrentPlayer.Skills)
+                                    @foreach (var skill in CurrentPlayer.Skills.Distinct())
                                     {
                                         <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
                                     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -12,7 +13,7 @@ namespace RpgApp.Shared.Types
         [JsonPropertyName("Equipment")]
         public List<Equipment> Equipments { get; set; }
     }
-    public class Equipment
+    public class Equipment : IEquatable<Equipment>
     {
         //[JsonPropertyName("id")]
         [JsonIgnore]
@@ -53,5 +54,25 @@ namespace RpgApp.Shared.Types
         [JsonIgnore]
         public ICollection<Player> Players { get; set; }
 
+
+        public bool Equals(Equipment other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Name == other.Name && Description == other.Description && EquipLocation == other.EquipLocation && GoldCost == other.GoldCost;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Equipment) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Description, EquipLocation, GoldCost);
+        }
     }
 }
