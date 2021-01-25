@@ -1,8 +1,10 @@
 ﻿@page "/samples"
 @layout RpgBaseLayout
     <div class="rpgui-content" style="top:50px">
-        <h3>Component Library Tester</h3>
-        <h4>Trying it without ANY javascript</h4>
+        <div style="background-color:black">
+            <h1 style="font-size:125%">Component Library Tester</h1>
+            <h1 style="font-size:125%">Trying it without ANY javascript</h1>
+        </div>
 
         <div class="page-container">
             <div class="col">
@@ -12,14 +14,14 @@
                     <h2>Click to display and update progress bars</h2>
                     <br />
                     <div class="btn-icon-grp">
-                        <RpgButton OnClick="@(async() =>await UpdateBar("Life"))" Label="Adjust Life" RpgButtonStyle="RpgButtonStyle.Standard"><img style="margin-left: 10px; z-index: 2;float:right" src="_content/RpgComponentLibrary/img/icons/potion-blue.png" height="40" width="40" /> </RpgButton>
+                        <span style="width:75%"> <RpgButton OnClick="@(async() =>await UpdateBar("Life"))" Label="Adjust Life" RpgButtonStyle="RpgButtonStyle.Standard"></RpgButton></span>
                     </div>
                     <div class="btn-icon-grp">
-                        <span style="width:75%"><RpgButton OnClick="@(async() =>await UpdateBar("Mana"))" Label="Adjust Mana" RpgButtonStyle="RpgButtonStyle.Golden"><img style="margin-left: 10px; z-index:2" src="_content/RpgComponentLibrary/img/icons/potion-red.png" height="40" width="40" /></RpgButton></span>
+                        <span style="width:75%"><RpgButton OnClick="@(async() =>await UpdateBar("Mana"))" Label="Adjust Mana" RpgButtonStyle="RpgButtonStyle.Golden"></RpgButton></span>
 
                     </div>
                     <div class="btn-icon-grp">
-                        <span style="width:75%"><RpgButton OnClick="@(async() =>await UpdateBar("Stamina"))" Label="Adjust Stamina" RpgButtonStyle="RpgButtonStyle.Silver"> <img style="margin-left: 10px; z-index:2" src="_content/RpgComponentLibrary/img/icons/potion-green.png" height="40" width="40" /></RpgButton></span>
+                        <span style="width:75%"><RpgButton OnClick="@(async() =>await UpdateBar("Stamina"))" Label="Adjust Stamina" RpgButtonStyle="RpgButtonStyle.Silver"> </RpgButton></span>
 
                     </div>
                     <hr />

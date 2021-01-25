@@ -155,3 +155,6 @@
         .rpgui-button.silver:active {
             background-image: url("img/button-silver-down.png");
         }
+        p {
+            display:inline-block
+        }
