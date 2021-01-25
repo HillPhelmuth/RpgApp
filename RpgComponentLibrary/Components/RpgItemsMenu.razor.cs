@@ -10,6 +10,7 @@ namespace RpgComponentLibrary.Components
         private int _spillOver;
         private string _draggale = "";
         private string _width;
+        private int _menuColumns = 3;
 
         private class MenuItemTemplate
         {
@@ -37,7 +38,19 @@ namespace RpgComponentLibrary.Components
         public IReadOnlyList<KeyValuePair<string, TItem>> ImageItemActions { get; set; }
 
         [Parameter]
-        public int MenuColumns { get; set; } = 3;
+        public int MenuColumns
+        {
+            get
+            {
+                return _menuColumns switch
+                {
+                    <= 3 => 3,
+                    >= 7 => 7,
+                    _ => _menuColumns
+                };
+            }
+            set => _menuColumns = value;
+        }
 
         [Parameter]
         public Frame MenuFrame { get; set; }
@@ -56,12 +69,12 @@ namespace RpgComponentLibrary.Components
                 imagesWithIndex.Add(new MenuItemTemplate(i, imageItem.Key, false, imageItem.Value));
                 i++;
             }
-            _spillOver = 0;
-            while (i % MenuColumns != 0)
-            {
-                _spillOver++;
-                i++;
-            }
+            //_spillOver = 0;
+            //while (i % MenuColumns != 0)
+            //{
+            //    _spillOver++;
+            //    i++;
+            //}
 
             _indexImageItems = imagesWithIndex;
             return base.OnParametersSetAsync();

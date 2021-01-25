@@ -4,39 +4,46 @@
     <div>@MenuHeader</div>
     <hr />
 
-    @foreach (var itemTemplate in _indexImageItems)
-    {
-        <div class="rpgui-icon" @onclick="@(() => itemTemplate.IsOpen = !itemTemplate.IsOpen)">
+    <div class="@($"rpgui-icon-grid{MenuColumns}")">
+        @foreach (var itemTemplate in _indexImageItems)
+        {
+            <div class="rpgui-icon @itemTemplate.Image" @onclick="@(() => itemTemplate.IsOpen = !itemTemplate.IsOpen)">
+                <Tooltip>
+                    <Content>
+                        @ToolTipTemplate(itemTemplate.Item)
+                        <p style="font-size:80%">(click for options)</p>
+                    </Content>
+                    <ChildContent>
+                        <div>
+                            <img style="z-index:-1" width="64" height="64" src="@($"_content/RpgComponentLibrary/img/icons/{itemTemplate.Image}.png")" alt="No Img Src found" />
+                        </div>
+                    </ChildContent>
+                </Tooltip>
+
+            </div>
+
+            @if (itemTemplate.IsOpen)
+            {
+                <div class="action-wrapper">
+                    <div class="action">
+                        <button @onclick="@(()=> itemTemplate.IsOpen = false)" class="close">X</button>
+                        @ActionTemplate(itemTemplate.Item)
+                    </div>
+                </div>
+            }
+
+
+        }
+        @*@for (var i = 0; i < _spillOver; i++)
+        {
             <Tooltip>
-                <Content>@ToolTipTemplate(itemTemplate.Item)
-                    <p style="font-size:80%">(click for options)</p></Content>
+                <Content><p>This is an Empty Slot</p></Content>
                 <ChildContent>
-                    <div>
-                        <img width="64" height="64" src="@($"_content/RpgComponentLibrary/img/icons/{itemTemplate.Image}.png")" alt="No Img Src found" />
+                    <div class="rpgui-icon">
+                        <img src="@($"_content/RpgComponentLibrary/img/icons/empty-slot.png")" alt="No Img Src found" />
                     </div>
                 </ChildContent>
             </Tooltip>
-            @if (itemTemplate.IsOpen)
-            {
-                <div class="action">
-                    <button class="close">X</button>
-                    @ActionTemplate(itemTemplate.Item)
-                </div>
-            }
-          
-        </div>
-
-    }
-    @for (var i = 0; i < _spillOver; i++)
-    {
-        <Tooltip>
-            <Content><p>This is an Empty Slot</p></Content>
-            <ChildContent>
-                <div class="rpgui-icon">
-                    <img src="@($"_content/RpgComponentLibrary/img/icons/empty-slot.png")" alt="No Img Src found" />
-                </div>
-            </ChildContent>
-        </Tooltip>
-    }
-
+        }*@
+    </div>
 </div>

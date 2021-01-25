@@ -14,7 +14,7 @@ namespace RpgComponentLibrary.Components
         private GuiInterop gui => new(jsRuntime);
         private ElementReference _barRef;
         private double _convertedVal;
-        private string fillWidth;
+        private string _fillWidth;
         [Parameter]
         public string Label { get; set; }
         [Parameter]
@@ -32,7 +32,7 @@ namespace RpgComponentLibrary.Components
         protected override void OnParametersSet()
         {
             _convertedVal = DataValue <= MinValue ? 0 : DataValue >= MaxValue ? 1.0 : DataValue / MaxValue;
-            fillWidth = FormatToPercentWidth(_convertedVal);
+            _fillWidth = FormatToPercentWidth(_convertedVal);
             base.OnParametersSet();
         }
 

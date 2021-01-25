@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -22,7 +23,7 @@ namespace RpgApp.Shared.Types
         [JsonPropertyName("Spells")]
         public List<Skill> MageSkills { get; set; }
     }
-    public class Skill
+    public class Skill : IEquatable<Skill>
     {
         [JsonIgnore]
         public int ID { get; set; }
@@ -52,5 +53,25 @@ namespace RpgApp.Shared.Types
         public List<Effect> Effects { get; set; }
         [JsonIgnore]
         public ICollection<Player> Players { get; set; }
+
+        public bool Equals(Skill other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Name == other.Name && Description == other.Description && GoldCost == other.GoldCost && AbilityCost == other.AbilityCost;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Skill) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Description, GoldCost, AbilityCost);
+        }
     }
 }

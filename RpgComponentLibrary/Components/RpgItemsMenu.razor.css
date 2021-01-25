@@ -1,15 +1,56 @@
 ﻿.rpgui-icon {
     display: inline-block;
-    float: left;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 64px;
     height: 64px;
-    z-index:2;
+    z-index: 2;
+}
+.rpgui-icon-grid7 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}
+.rpgui-icon-grid6 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+.rpgui-icon-grid5 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+.rpgui-icon-grid4 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+.rpgui-icon-grid3 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.rpgui-icon-grid2 {
+    height: auto;
+    width: auto;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.action-wrapper {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
 }
 .action {
     padding: 15px;
     border-style: solid;
+    background-color: lightgray;
     border-image-source: url(img/border-image-golden.png);
     border-image-repeat: repeat;
     border-image-slice: 4 4 4 4;
@@ -26,22 +67,36 @@
     margin-top: -50px;
     box-shadow: 20px 20px 50px 15px darkgrey;
     z-index: 3;
-    position: relative;
+    position: absolute;
 }
+    .action::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
+
     .action .close {
         position: absolute;
         top: -10px;
         right: -10px;
         color: white;
+        font-size:150%;
         z-index: 4;
-        background-color: red;
+        background-color:black;
     }
+
 .rpgui-container {
     height: auto;
     width: auto;
     max-width: 300px;
     min-height: 540px;
 }
+
     .rpgui-container.framed {
         /* border */
         border-style: solid;
@@ -125,6 +180,7 @@
         background-origin: padding-box;
         background-position: center;
     }
+
 .rpgui-icon.sword {
     background-image: url("img/icons/sword.png");
 }

@@ -17,7 +17,8 @@
             <LayoutMyCss />
         </MatTab>
     <MatTab Label="Test Styles">
-        <div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>
+        @*<div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>*@
+        <CompLibraryTester/>
     </MatTab>
         <MatTab Label="Test Page">
             @if (AppState.CurrentPlayer == null)
@@ -54,6 +55,8 @@
             AppState.AllEquipment = allData.Equipment;
             AppState.AllMonsters = allData.Monsters;
             AppState.AllSkills = allData.Skills;
+            Console.WriteLine($"Equipment: {string.Join(",",AppState.AllEquipment.Select(x => x.Name))}");
+            Console.WriteLine($"Skills: {string.Join(",", AppState.AllSkills.Select(x => x.Name))}");
         }
         await base.OnAfterRenderAsync(firstRender);
     }
@@ -64,5 +67,5 @@
         indexTab = AppState.IndexTab;
         await InvokeAsync(StateHasChanged);
     }
-    
+
 }

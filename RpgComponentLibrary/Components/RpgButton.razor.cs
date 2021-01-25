@@ -33,7 +33,12 @@ namespace RpgComponentLibrary.Components
 
         protected override Task OnParametersSetAsync()
         {
-            _rpgCssClass = RpgButtonStyle == RpgButtonStyle.Golden ? "golden" : RpgButtonStyle == RpgButtonStyle.Silver ? "silver" : "";
+            _rpgCssClass = RpgButtonStyle switch
+            {
+                RpgButtonStyle.Golden => "golden",
+                RpgButtonStyle.Silver => "silver",
+                _ => ""
+            };
             return base.OnParametersSetAsync();
         }
     }
