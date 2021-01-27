@@ -93,7 +93,7 @@
 .rpgui-container {
     height: auto;
     width: auto;
-    max-width: 300px;
+    min-width: 200px;
     min-height: 540px;
 }
 
