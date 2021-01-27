@@ -1,5 +1,12 @@
 ﻿.page-container {
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
+}
+.page-container >* {
+    flex:1 1 200px;
+}
+.rpg-log {
+    align-self: stretch;
 }

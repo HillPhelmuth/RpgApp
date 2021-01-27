@@ -9,7 +9,7 @@
         <div class="page-container">
             <div class="col">
                 <div class="rpgui-container framed rpgui-draggable" style="height:auto; width:300px">
-                    <h1>Custom Buttons</h1>
+                    <h1>Custom Buttons RpgButton.razor</h1>
                     <hr />
                     <h2>Click to display and update progress bars</h2>
                     <br />
@@ -25,7 +25,7 @@
 
                     </div>
                     <hr />
-                    <h1>Custom Progress</h1>
+                    <h1>Custom Progress RpgProgressBar.razor</h1>
                     @if (showProgress)
                     {
                         <RpgProgressBar Label="Life" ElementId="life-id2" MinValue="0" MaxValue="100" DataValue="life" ProgressBarColor="ProgressBarColor.Red" />
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col">
-                <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Silver">Toggle Equip Menu</RpgButton>
+                <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Silver">Equip RpgItemsMenu.razor</RpgButton>
                 <hr />
                 @if (showMenu)
                 {
@@ -57,10 +57,11 @@
                 }
             </div>
             <div class="col">
-                <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Golden">Toggle Skill Menu</RpgButton>
+                <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Golden">Skills RpgItemsMenu.razor</RpgButton>
                 <hr />
                 @if (showMenu)
                 {
+
                     <RpgItemsMenu ImageItemActions="_imagesSkillPairs" MenuColumns="4" MenuFrame="Frame.FramedGolden2" Context="item" TItem="Skill">
                         <MenuHeader>
                             <h1>This is a menu header TEMPLATE</h1>
@@ -78,7 +79,18 @@
                 }
             </div>
             <div class="col">
-                <div class="rpgui-container framedgolden" style="min-width: 350px">
+                <div class="rpgui-container framedgolden2">
+                    <h1>RpgSelectDropdown.razor</h1>
+                    <label>Equipment Dropdown</label>
+                    <RpgSelectDropdown TItem="Equipment" OptionsList="AppState.AllEquipment" DisplayPropertyName="Name" OnSelectItem="SelectedEquipmentHanlder"/>
+                    <label>Skill Dropdown</label>
+                    <RpgSelectDropdown TItem="Skill" OptionsList="AppState.AllSkills" DisplayPropertyName="Name" OnSelectItem="SelectedSkillHandler"/>
+                    <label>String Drowdown (monster names)</label>
+                    <RpgSelectDropdown TItem="string" OptionsList="selectStrings" OnSelectItem="SelectedStringHandler"/>
+                </div>
+            </div>
+            <div class="rpg-log">
+                <div class="rpgui-container framedgolden" style="min-width: 450px">
                     <h1>Menu Logs</h1>
                     <ol>
                         @foreach (var item in TestLog)
