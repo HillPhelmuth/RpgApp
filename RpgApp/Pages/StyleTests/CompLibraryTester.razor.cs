@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
@@ -19,8 +20,7 @@ namespace RpgApp.Client.Pages.StyleTests
         private double stamina;
         private bool showProgress = true;
         private bool showMenu = true;
-        private List<KeyValuePair<string, Equipment>> _imagesEquipPairs = new();
-        private List<KeyValuePair<string, Skill>> _imagesSkillPairs = new();
+        
         private List<string> TestLog = new();
         protected override Task OnInitializedAsync()
         {
@@ -28,21 +28,29 @@ namespace RpgApp.Client.Pages.StyleTests
             _imagesSkillPairs = AddImages(AppState.AllSkills);
             return base.OnInitializedAsync();
         }
+      
+        #region RpgItemsMenu.razor
 
+        private List<KeyValuePair<string, Equipment>> _imagesEquipPairs = new();
+        private List<KeyValuePair<string, Equipment>> AddImages(List<Equipment> equipment)
+        {
+            return equipment.Select(eq => eq.AddImagePath()).ToList();
+        }
+        private List<KeyValuePair<string, Skill>> _imagesSkillPairs = new();
+        private List<KeyValuePair<string, Skill>> AddImages(List<Skill> skills)
+        {
+            return skills.Select(sk => sk.AddImagePath()).ToList();
+        }
+        // This is the event handler for the RpgItemsMenu Action template button
         private void AddToLog(string info)
         {
             TestLog.Add(info);
             StateHasChanged();
         }
-        private List<KeyValuePair<string, Equipment>> AddImages(List<Equipment> equipment)
-        {
-            return equipment.Select(eq => eq.AddImagePath()).ToList();
-        }
 
-        private List<KeyValuePair<string, Skill>> AddImages(List<Skill> skills)
-        {
-            return skills.Select(sk => sk.AddImagePath()).ToList();
-        }
+        #endregion
+        #region RpgProgressBar
+
         private async Task UpdateBar(string meterNmae)
         {
             var random = new Random();
@@ -62,7 +70,25 @@ namespace RpgApp.Client.Pages.StyleTests
 
             await InvokeAsync(StateHasChanged);
         }
+        #endregion
+        #region RpgSelectDropdown.razor
 
-       
+        private void SelectedEquipmentHanlder(Equipment item)
+        {
+            AddToLog(item.AsDisplayString());
+        }
+
+        private void SelectedSkillHandler(Skill skill)
+        {
+            AddToLog(skill.AsDisplayString());
+        }
+
+        private List<string> selectStrings => AppState.AllMonsters.Select(x => x.Name).ToList();
+        private void SelectedStringHandler(string str)
+        {
+            AddToLog(str);
+        }
+        #endregion
+
     }
 }

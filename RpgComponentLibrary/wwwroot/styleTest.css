@@ -224,9 +224,9 @@ inside your html file.
     margin: 0 0 0 0;
     width: 100%;
     height: 100%;
-    left: 50px;
+    /*left: 50px;
     top: 0px;
-    position: absolute;
+    position: absolute;*/
     overflow: scroll;
     font-size: 0.9em;
    
@@ -264,7 +264,7 @@ inside your html file.
 /* game div without background image*/
 .rpgui-container {
     /* position style and default z */
-    position: absolute;
+    /*position: absolute;*/
     z-index: 10;
     overflow: show;
 
@@ -719,8 +719,9 @@ ul.rpgui-list-imp {
 .rpgui-content h1 {
     /* color and border */
     color: white;
-    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-    font-size: 1.14em;
+    /*text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;*/
+    text-shadow: 5px 5px 10px black, -5px -5px 10px black, 5px -5px 10px black, -5px 5px 10px black;
+    font-size: 1.40em;
     /* center text */
     text-align: center;
     /* padding */
