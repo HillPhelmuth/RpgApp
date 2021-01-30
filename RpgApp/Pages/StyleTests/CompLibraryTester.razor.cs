@@ -7,6 +7,7 @@ using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
 using RpgApp.Shared.Types.PlayerExtensions;
 
 namespace RpgApp.Client.Pages.StyleTests
@@ -20,7 +21,6 @@ namespace RpgApp.Client.Pages.StyleTests
         private double stamina;
         private bool showProgress = true;
         private bool showMenu = true;
-        
         private List<string> TestLog = new();
         protected override Task OnInitializedAsync()
         {
@@ -82,7 +82,11 @@ namespace RpgApp.Client.Pages.StyleTests
         {
             AddToLog(skill.AsDisplayString());
         }
-
+        // private fields to bind to SelectedValue property
+        private ClassType selectedClass;
+        private string selectedMonster;
+        private Skill selectedSkill = new();
+        private Equipment selectedEquipment = new();
         private List<string> selectStrings => AppState.AllMonsters.Select(x => x.Name).ToList();
         private void SelectedStringHandler(string str)
         {

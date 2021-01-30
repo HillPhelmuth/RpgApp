@@ -10,3 +10,7 @@
 .rpg-log {
     align-self: stretch;
 }
+code {
+    color: lightblue;
+    font-size:110%;
+}

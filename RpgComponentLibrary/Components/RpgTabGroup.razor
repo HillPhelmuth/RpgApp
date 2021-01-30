@@ -1,0 +1,13 @@
+﻿<div class="btn-group" role="group">
+    @foreach (var tabPage in _pages)
+    {
+        <button type="button"
+                class="rpgui-button @GetButtonClass(tabPage)"
+                @onclick=@(() => ActivatePage(tabPage))>
+            @tabPage.Text
+        </button>
+    }
+</div>
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>

@@ -82,15 +82,40 @@
                 <div class="rpgui-container framedgolden2">
                     <h1>RpgSelectDropdown.razor</h1>
                     <label>Equipment Dropdown</label>
-                    <RpgSelectDropdown TItem="Equipment" OptionsList="AppState.AllEquipment" DisplayPropertyName="Name" OnSelectItem="SelectedEquipmentHanlder"/>
+                    <RpgSelectDropdown TItem="Equipment" @bind-SelectedValue="selectedEquipment" OptionsList="AppState.AllEquipment" DisplayPropertyName="Name" OnSelectItem="SelectedEquipmentHanlder" />
+                    <h2>@selectedEquipment.Name</h2>
+                    <hr class="golden" />
                     <label>Skill Dropdown</label>
-                    <RpgSelectDropdown TItem="Skill" OptionsList="AppState.AllSkills" DisplayPropertyName="Name" OnSelectItem="SelectedSkillHandler"/>
+                    <RpgSelectDropdown TItem="Skill" @bind-SelectedValue="selectedSkill" OptionsList="AppState.AllSkills" DisplayPropertyName="Name" OnSelectItem="SelectedSkillHandler" />
+                    <h2>@selectedSkill.Name</h2>
+                    <hr class="golden" />
                     <label>String Drowdown (monster names)</label>
-                    <RpgSelectDropdown TItem="string" OptionsList="selectStrings" OnSelectItem="SelectedStringHandler"/>
+                    <RpgSelectDropdown TItem="string" @bind-SelectedValue="selectedMonster" OptionsList="selectStrings" OnSelectItem="SelectedStringHandler" />
+                    <h2>@selectedMonster</h2>
+                    <hr class="golden" />
+                    <label>Enum Dropdown <code>ClassType</code> enum</label>
+                    <RpgSelectDropdown TItem="ClassType" @bind-SelectedValue="selectedClass" OptionsList="@(Enum.GetValues(typeof(ClassType)).Cast<ClassType>().ToArray())" />
+                    <h2>@Enum.GetName(selectedClass)</h2>
                 </div>
             </div>
+            <div class="col">
+                <h2 style="background-color:black">RpgTabGroup.razor & RpgTab.razor</h2>
+                <RpgTabGroup>
+                    @foreach (var monster in AppState.AllMonsters)
+                    {
+                        <RpgTab Text="@monster.Name">
+                            <div class="rpgui-container framed">
+                                <p>Description: @monster.Description</p>
+                                <p>Difficulty: @monster.DifficultyLevel</p>
+                                <p>Exp awarded: @monster.ExpProvided</p>
+                                <p>Gold awareded: @monster.GoldProvided</p>
+                            </div>
+                        </RpgTab>
+                    }
+                </RpgTabGroup>
+            </div>
             <div class="rpg-log">
-                <div class="rpgui-container framedgolden" style="min-width: 450px">
+                <div class="rpgui-container framedgolden" style="min-width: 450px; max-height:520px; overflow-y:scroll">
                     <h1>Menu Logs</h1>
                     <ol>
                         @foreach (var item in TestLog)

@@ -8,7 +8,7 @@ namespace RpgComponentLibrary.Components
     public partial class RpgSelectDropdown<TItem>
     {
         private bool showList;
-       
+        private string DisplaySelectedValue => SelectedValue?.GetStringPropValue(DisplayPropertyName);
         [Parameter]
         public IReadOnlyList<TItem> OptionsList { get; set; }
        
@@ -19,6 +19,8 @@ namespace RpgComponentLibrary.Components
         public string DisplayPropertyName { get; set; } = "";
         [Parameter]
         public EventCallback<TItem> OnSelectItem { get; set; }
+        [Parameter]
+        public EventCallback<TItem> SelectedValueChanged { get; set; }
 
         protected override Task OnParametersSetAsync()
         {
@@ -31,6 +33,7 @@ namespace RpgComponentLibrary.Components
             showList = false;
             SelectedValue = item;
             await OnSelectItem.InvokeAsync(item);
+            await SelectedValueChanged.InvokeAsync(item);
         }
         
     }

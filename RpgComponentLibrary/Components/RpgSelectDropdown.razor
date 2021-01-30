@@ -1,6 +1,6 @@
 ﻿@typeparam TItem
 
-<p @onclick="@(()=> showList = !showList)" style="width:100%" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @SelectedValue?.GetStringPropValue(DisplayPropertyName)</p>
+<p @onclick="@(()=> showList = !showList)" style="width:100%" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @DisplaySelectedValue</p>
 @if (showList)
 {
     <ul class="rpgui-dropdown-imp" style="position: absolute; width: 90%; display: block;">
