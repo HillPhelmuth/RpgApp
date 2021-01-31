@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -19,30 +20,20 @@ namespace RpgComponentLibrary.Services
         public GuiInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/RpgComponentLibrary/rpgui.js").AsTask());
+               "import", "./_content/RpgComponentLibrary/rpgui-helper.js").AsTask());
         }
 
-        public async ValueTask InitGui()
+       
+        public async ValueTask<double> GetWidth(ElementReference element)
         {
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("initGui");
+            return await module.InvokeAsync<double>("getWidth", element);
         }
-        public async ValueTask CreateList(string elementId)
-        {
-            var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("createDynamicList", elementId);
-        }
-        public async ValueTask<string> GetJavascriptObjectString()
-        {
-            var module = await moduleTask.Value;
-            return await module.InvokeAsync<string>("getGuiJsObject");
-        }
-
-        public async ValueTask UpdateProgressBar(ElementReference element, double value)
-        {
-            var module = await moduleTask.Value;
-            await module.InvokeAsync<string>("setValue", element, value);
-        }
+        //public async ValueTask UpdateProgressBar(ElementReference element, double value)
+        //{
+        //    var module = await moduleTask.Value;
+        //    await module.InvokeAsync<string>("setValue", element, value);
+        //}
         public async ValueTask DisposeAsync()
         {
             if (moduleTask.IsValueCreated)

@@ -51,11 +51,11 @@ namespace RpgApp.Client.Pages.StyleTests
         #endregion
         #region RpgProgressBar
 
-        private async Task UpdateBar(string meterNmae)
+        private async Task UpdateBar(string meterName)
         {
             var random = new Random();
             double newVal = random.Next(1, 101);
-            switch (meterNmae)
+            switch (meterName)
             {
                 case "Life":
                     life = newVal;
@@ -94,5 +94,30 @@ namespace RpgApp.Client.Pages.StyleTests
         }
         #endregion
 
+        #region RpgSlider.razor
+        
+        private double slideLife;
+        private double slideMana;
+        private double lifeDisplayValue;
+        private double manaDisplayValue;
+        private async Task UpdateProgress(string meterName, double newVal)
+        {
+            switch (meterName)
+            {
+                case "Life":
+                    slideLife = newVal;
+                    lifeDisplayValue = newVal;
+                    break;
+                case "Mana":
+                    slideMana = newVal;
+                    manaDisplayValue = newVal;
+                    break;
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        #endregion
     }
 }

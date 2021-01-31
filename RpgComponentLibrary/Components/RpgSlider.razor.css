@@ -1,0 +1,108 @@
+﻿.rpgui-slider-container {
+    height: 20px;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+   
+}
+
+/* slider left edge */
+.rpgui-slider-left-edge {
+    position: absolute;
+    height: 20px;
+    width: 5%;
+    left: 0px;
+    background-image: url("img/slider-left.png");
+    background-size: 100% 100%;
+}
+
+/* slider right edge */
+.rpgui-slider-right-edge {
+    position: absolute;
+    height: 20px;
+    width: 5%;
+    right: 0px;
+    background-image: url("img/slider-right.png");
+    background-size: 100% 100%;
+}
+
+/* slider background track */
+.rpgui-slider-track {
+    position: absolute;
+    height: 20px;
+    left: 5%;
+    right: 5%;
+    width: 90%;
+    background-image: url("img/slider-track.png");
+    background-repeat: repeat-x;
+    background-size: 24px 100%;
+    z-index: 10;
+}
+
+
+/* the part of the slider that moves and indicates the value */
+.rpgui-slider-thumb {
+    position: absolute;
+    height: 30px;
+    width: 15px;
+    margin-top: -5px;
+    left: 40px;
+    background-image: url("img/slider-thumb.png");
+    background-size: 100% 100%;
+}
+
+/* golden slider stuff */
+/* golden slider container */
+.rpgui-slider-container.golden {
+    height: 30px;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 10;
+}
+
+/* golden slider left edge */
+.rpgui-slider-left-edge.golden {
+    position: absolute;
+    height: 30px;
+    width: 7%;
+    left: 0px;
+    background-image: url("img/slider-left-golden.png");
+    background-size: 100% 100%;
+}
+
+/* golden slider right edge */
+.rpgui-slider-right-edge.golden {
+    position: absolute;
+    height: 30px;
+    width: 7%;
+    right: 0px;
+    background-image: url("img/slider-right-golden.png");
+    background-size: 100% 100%;
+}
+
+/* golden slider background track */
+.rpgui-slider-track.golden {
+    position: absolute;
+    height: 30px;
+    width: 86%;
+    left: 7%;
+    right: 7%;
+    background-image: url("img/slider-track-golden.png");
+    background-repeat: repeat-x;
+    background-size: 40px 100%;
+    z-index: 10;
+}
+
+/* golden the part of the slider that moves and indicates the value */
+.rpgui-slider-thumb.golden {
+    position: absolute;
+    height: 36px;
+    width: 18px;
+    margin-top: -4px;
+    left: 40px;
+    background-image: url("img/slider-thumb-golden.png");
+    background-size: 100% 100%;
+}

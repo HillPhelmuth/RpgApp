@@ -42,12 +42,12 @@ namespace RpgComponentLibrary.Components
         //    await base.OnAfterRenderAsync(firstRender);
         //}
 
-        private async Task UpdateData()
-        {
-            await gui.UpdateProgressBar(_barRef, _convertedVal);
-            Console.WriteLine($"Progress Bar Updated to {_convertedVal}");
-            //await InvokeAsync(StateHasChanged);
-        }
+        //private async Task UpdateData()
+        //{
+        //    await gui.UpdateProgressBar(_barRef, _convertedVal);
+        //    Console.WriteLine($"Progress Bar Updated to {_convertedVal}");
+        //    //await InvokeAsync(StateHasChanged);
+        //}
 
         private string FormatToPercentWidth(double num)
         {

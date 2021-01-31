@@ -114,6 +114,15 @@
                     }
                 </RpgTabGroup>
             </div>
+            <div class="col">
+                <div class="rpgui-container framed" style="height: auto; width: 300px">
+                    <h2>RpgSlider.razor with RpgProgressBar.razor</h2>
+                    <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100"/>
+                    <RpgProgressBar Label="Life Meter" DataValue="slideLife" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Red"/>
+                    <RpgSlider Label="Mana Setter" @bind-DataValue="slideMana" MinValue="0" MaxValue="100" IsGolden="true"/>
+                    <RpgProgressBar Label="Mana Meter" DataValue="slideMana" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Blue"/>
+                </div>
+            </div>
             <div class="rpg-log">
                 <div class="rpgui-container framedgolden" style="min-width: 450px; max-height:520px; overflow-y:scroll">
                     <h1>Menu Logs</h1>

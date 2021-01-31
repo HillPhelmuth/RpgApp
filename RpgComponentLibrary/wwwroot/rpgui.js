@@ -809,3 +809,6 @@ export function addDragDrop() {
 
     console.log("addDragDrop");
 }
+export function getWidth(element) {
+    return element.offsetWidth;
+}

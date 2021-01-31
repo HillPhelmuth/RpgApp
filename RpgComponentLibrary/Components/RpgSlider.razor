@@ -1,0 +1,8 @@
+﻿<label>@Label</label>
+
+<div class="rpgui-slider-container @(IsGolden ? "golden" : "")">
+    <div @ref="_trackRef" @onmouseout="MouseUpOrOut"  @onclick="SlideClick" @onmouseup="MouseUpOrOut" @onmousemove="SlideMove" @onmousedown="MouseDown" class="rpgui-slider-track @(IsGolden ? "golden" : "")"></div>
+    <div class="rpgui-slider-left-edge @(IsGolden ? "golden" : "")"></div>
+    <div class="rpgui-slider-right-edge @(IsGolden ? "golden" : "")"></div>
+    <div class="rpgui-slider-thumb @(IsGolden ? "golden" : "")" style="left: @_thumbLocation;"></div>
+</div>
