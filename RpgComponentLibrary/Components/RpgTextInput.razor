@@ -1,0 +1,14 @@
+﻿@layout RpgBaseLayout
+<label>@Label</label>
+@if (IsTextArea)
+{
+    <textarea disabled="@IsReadOnly" maxlength="@MaxLength" placeholder="@Placeholder" @bind="InputValue" 
+              @oninput="HandleInput"></textarea>
+}
+else
+{
+    <input disabled="@IsReadOnly" maxlength="@MaxLength" placeholder="@Placeholder" type="text" @bind="InputValue"
+            @oninput="HandleInput" />
+}
+
+
