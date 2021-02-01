@@ -49,7 +49,11 @@ namespace RpgApp.Client.Pages
 
         public async Task CreateNewCharacter()
         {
-            ModalDialogResult result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character");
+            var options = new ModalDialogOptions()
+            {
+                Style = "rpgui-content rpgui-modal-framed"
+            };
+            var result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character", options);
             StateHasChanged();
         }
 
