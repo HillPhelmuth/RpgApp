@@ -93,7 +93,6 @@ namespace RpgApp.Client.Pages.StyleTests
             AddToLog(str);
         }
         #endregion
-
         #region RpgSlider.razor
         
         private double slideLife;
@@ -117,6 +116,16 @@ namespace RpgApp.Client.Pages.StyleTests
             await InvokeAsync(StateHasChanged);
         }
 
+
+        #endregion
+
+        #region RpgTextInput.razor and RpgNumberInput.razor
+
+        private string textInput;
+        private string textAreaInput;
+        private int intInput;
+        private decimal decInput;
+        private double doubleInput;
 
         #endregion
     }

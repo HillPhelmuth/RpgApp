@@ -116,11 +116,28 @@
             </div>
             <div class="col">
                 <div class="rpgui-container framed" style="height: auto; width: 300px">
-                    <h2>RpgSlider.razor with RpgProgressBar.razor</h2>
+                    <h1>RpgSlider.razor with RpgProgressBar.razor</h1>
                     <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100"/>
                     <RpgProgressBar Label="Life Meter" DataValue="slideLife" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Red"/>
                     <RpgSlider Label="Mana Setter" @bind-DataValue="slideMana" MinValue="0" MaxValue="100" IsGolden="true"/>
                     <RpgProgressBar Label="Mana Meter" DataValue="slideMana" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Blue"/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="rpgui-container framed" style="height: auto; width: 300px">
+                    <h1>RpgTextInput.razor with RpgNumberInput.razor</h1>
+                    <h2>Text Inputs</h2>
+                    <RpgTextInput @bind-InputValue="textInput" Label="text box" Placeholder="This is Placeholder" MaxLength="20" />
+                    <p>value: <span style="font-weight:600;color:lightblue">@textInput</span></p>
+                    <RpgTextInput @bind-InputValue="textAreaInput" Label="textarea box" IsTextArea="true" />
+                    <p>value <span style="font-weight:600;color:lightblue">@textAreaInput</span></p>
+                    <h2>Number inputs</h2>
+                    <RpgNumberInput @bind-NumberValue="intInput" Label="Int32 input" />
+                    <p>value <span style="font-weight:600;color:lightblue">@intInput</span></p>
+                    <RpgNumberInput @bind-NumberValue="decInput" Label="decimal input" />
+                    <p>value <span style="font-weight:600;color:lightblue">@decInput</span></p>
+                    <RpgNumberInput @bind-NumberValue="doubleInput" Label="double input" />
+                    <p>value <span style="font-weight:600;color:lightblue">@doubleInput</span></p>
                 </div>
             </div>
             <div class="rpg-log">
