@@ -26,6 +26,7 @@ ul.rpgui-dropdown-imp {
     z-index: 100;
     max-height: 20rem;
     overflow-y: scroll;
+    position: absolute;
 }
 
 /* note! this affect only the dropdown header */

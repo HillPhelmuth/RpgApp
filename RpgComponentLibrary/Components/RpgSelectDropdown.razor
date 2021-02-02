@@ -1,13 +1,15 @@
 ﻿@typeparam TItem
-
-<p @onclick="@(()=> showList = !showList)" style="width:100%" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @DisplaySelectedValue</p>
+<label>@Label</label>
+<p @ref="_selectHeader" @onclick="@(()=> showList = !showList)" style="width: 100%;position:absolute" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @DisplaySelectedValue</p>
 @if (showList)
 {
-    <ul class="rpgui-dropdown-imp" style="position: absolute; width: 90%; display: block;">
+<div style="width:90%;position:absolute">
+    <ul class="rpgui-dropdown-imp" style="width: @_menuWidth; display: block;">
 
         @foreach (var option in OptionsList)
         {
             <li @onclick="@(async () => await SelectItem(option))" class="item">@option.GetStringPropValue(DisplayPropertyName)</li>
         }
     </ul>
+</div>
 }

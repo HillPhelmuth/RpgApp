@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using RpgComponentLibrary.Services;
 
 namespace RpgComponentLibrary.Components
 {
@@ -9,6 +12,13 @@ namespace RpgComponentLibrary.Components
     {
         private bool showList;
         private string DisplaySelectedValue => SelectedValue?.GetStringPropValue(DisplayPropertyName);
+        [Inject]
+        private IJSRuntime jsRuntime { get; set; }
+        private GuiInterop gui => new(jsRuntime);
+        private ElementReference _selectHeader;
+        private string _menuWidth;
+        [Parameter]
+        public string Label { get; set; }
         [Parameter]
         public IReadOnlyList<TItem> OptionsList { get; set; }
        
@@ -35,7 +45,16 @@ namespace RpgComponentLibrary.Components
             await OnSelectItem.InvokeAsync(item);
             await SelectedValueChanged.InvokeAsync(item);
         }
-        
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                var head = await gui.GetWidth(_selectHeader);
+                _menuWidth = $"{head * .9}px";
+
+            }
+            await base.OnAfterRenderAsync(firstRender);
+        }
     }
     public static class Extentions
     {
@@ -47,6 +66,10 @@ namespace RpgComponentLibrary.Components
             if (property == null)
                 return $"Property {propName} not found in type {nameof(item)}";
             return property.GetValue(item)?.ToString();
+        }
+        private static string FormatToPercentWidth(this double num)
+        {
+            return num.ToString("P0", new NumberFormatInfo { PercentPositivePattern = 1 });
         }
     }
 
