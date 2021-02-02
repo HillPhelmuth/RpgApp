@@ -7,7 +7,7 @@
         </div>
 
         <div class="page-container">
-            <div class="col">
+            <div class="col-rpg">
                 <div class="rpgui-container framed rpgui-draggable" style="height:auto; width:300px">
                     <h1>Custom Buttons RpgButton.razor</h1>
                     <hr />
@@ -35,7 +35,7 @@
 
                 </div>
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Silver">Equip RpgItemsMenu.razor</RpgButton>
                 <hr />
                 @if (showMenu)
@@ -56,7 +56,7 @@
                     </RpgItemsMenu>
                 }
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <RpgButton OnClick="@(() => showMenu = !showMenu)" RpgButtonStyle="RpgButtonStyle.Golden">Skills RpgItemsMenu.razor</RpgButton>
                 <hr />
                 @if (showMenu)
@@ -78,7 +78,7 @@
                     </RpgItemsMenu>
                 }
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <div class="rpgui-container framedgolden2">
                     <h1>RpgSelectDropdown.razor</h1>
                     <label>Equipment Dropdown</label>
@@ -98,7 +98,7 @@
                     <h2>@Enum.GetName(selectedClass)</h2>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <h2 style="background-color:black">RpgTabGroup.razor & RpgTab.razor</h2>
                 <RpgTabGroup>
                     @foreach (var monster in AppState.AllMonsters)
@@ -114,7 +114,7 @@
                     }
                 </RpgTabGroup>
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <div class="rpgui-container framed" style="height: auto; width: 300px">
                     <h1>RpgSlider.razor with RpgProgressBar.razor</h1>
                     <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100"/>
@@ -123,7 +123,7 @@
                     <RpgProgressBar Label="Mana Meter" DataValue="slideMana" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Blue"/>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-rpg">
                 <div class="rpgui-container framed" style="height: auto; width: 300px">
                     <h1>RpgTextInput.razor with RpgNumberInput.razor</h1>
                     <h2>Text Inputs</h2>
@@ -140,8 +140,19 @@
                     <p>value <span style="font-weight:600;color:lightblue">@doubleInput</span></p>
                 </div>
             </div>
+            <div class="col-rpg">
+                <div class="rpgui-container framed" style="height: auto; width: 300px">
+                    <h1>RpgCheckbox.razor</h1>
+                    <h2>Standard style</h2>
+                    <RpgCheckbox Label="Checkbox one" @bind-IsChecked="isChecked1" CheckboxStyle="CheckboxStyle.Standard" />
+                    <p>Checkbox 1 is @(isChecked1 ? "checked":"unchecked")</p>
+                    <h2>Golden style</h2>
+                    <RpgCheckbox Label="Checkbox two" @bind-IsChecked="isChecked2" CheckboxStyle="CheckboxStyle.Golden" />
+                    <p>Checkbox 2 is @(isChecked2 ? "checked":"unchecked")</p>
+                </div>
+            </div>
             <div class="rpg-log">
-                <div class="rpgui-container framedgolden" style="min-width: 450px; max-height:520px; overflow-y:scroll">
+                <div class="rpgui-container framedgolden" style="min-width: 90vw; max-height:520px; overflow-y:scroll">
                     <h1>Menu Logs</h1>
                     <ol>
                         @foreach (var item in TestLog)

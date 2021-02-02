@@ -118,7 +118,6 @@ namespace RpgApp.Client.Pages.StyleTests
 
 
         #endregion
-
         #region RpgTextInput.razor and RpgNumberInput.razor
 
         private string textInput;
@@ -126,6 +125,13 @@ namespace RpgApp.Client.Pages.StyleTests
         private int intInput;
         private decimal decInput;
         private double doubleInput;
+
+        #endregion
+
+        #region RpgCheckbox.razor
+
+        private bool isChecked1;
+        private bool isChecked2;
 
         #endregion
     }

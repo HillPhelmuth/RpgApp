@@ -1,0 +1,40 @@
+﻿input[type=checkbox].rpgui-checkbox + label {
+    cursor: url("img/cursor/point.png") 10 0, auto;
+}
+/*style for checkboxes
+*/
+/* basic checkbox */
+input[type=checkbox].rpgui-checkbox {
+    display: none;
+}
+
+input[type=checkbox].rpgui-checkbox + label {
+    background: url("img/checkbox-off.png") no-repeat;
+    line-height: 24px;
+    display: inline-block;
+    background-size: auto 100%;
+    padding-left: 34px;
+    height: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input[type=checkbox].rpgui-checkbox:checked + label {
+    background: url("img/checkbox-on.png") no-repeat;
+    line-height: 24px;
+    display: inline-block;
+    background-size: auto 100%;
+    padding-left: 34px;
+    height: 24px;
+}
+
+/* golden checkbox */
+input[type=checkbox].rpgui-checkbox.golden + label {
+    background: url("img/checkbox-golden-off.png") no-repeat;
+    background-size: auto 100%;
+}
+
+input[type=checkbox].rpgui-checkbox.golden:checked + label {
+    background: url("img/checkbox-golden-on.png") no-repeat;
+    background-size: auto 100%;
+}

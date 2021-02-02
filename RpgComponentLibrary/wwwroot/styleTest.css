@@ -355,8 +355,8 @@ inside your html file.
         background-position: center;
     }
 .rpgui-modal-framed {
-    display: flex;
-    flex-direction: column;
+    /*display: flex;
+    flex-direction: column;*/
     width: 90vw;
     /*background-color: #fff;*/
     /*border-radius: 4px;*/
@@ -383,6 +383,7 @@ inside your html file.
     background-origin: padding-box;
     background-position: center;
 }
+
 /**
 * different cursor graphics
 */
