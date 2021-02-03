@@ -9,6 +9,7 @@ using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 using RpgApp.Shared.Types.PlayerExtensions;
+using RpgComponentLibrary.Animations;
 
 namespace RpgApp.Client.Pages.StyleTests
 {
@@ -26,9 +27,11 @@ namespace RpgApp.Client.Pages.StyleTests
         {
             _imagesEquipPairs = AddImages(AppState.AllEquipment);
             _imagesSkillPairs = AddImages(AppState.AllSkills);
+            classType = ClassType.Warrior;
+            SetCombatAnimationData();
             return base.OnInitializedAsync();
         }
-      
+
         #region RpgItemsMenu.razor
 
         private List<KeyValuePair<string, Equipment>> _imagesEquipPairs = new();
@@ -94,7 +97,7 @@ namespace RpgApp.Client.Pages.StyleTests
         }
         #endregion
         #region RpgSlider.razor
-        
+
         private double slideLife;
         private double slideMana;
         private double lifeDisplayValue;
@@ -132,6 +135,37 @@ namespace RpgApp.Client.Pages.StyleTests
 
         private bool isChecked1;
         private bool isChecked2;
+
+        #endregion
+        #region RpgCombatAnimation.razor
+
+        private AnimationCombatActions combatActions = new();
+        private AnimationModel combatAnimation;
+        private ClassType classType;
+        private CanvasBackgound canvasBackgound;
+        private void SetCombatAnimationData()
+        {
+            combatAnimation = new AnimationModel
+            {
+                Sprites = classType == ClassType.Mage ? SpriteSets.WizardSprites : SpriteSets.WarriorSprites,
+                Scale = 3
+            };
+            combatAnimation.CurrentSprite = combatAnimation.Sprites["Idle"];
+        }
+        private void RunAnimation(string animation)
+        {
+            combatActions.TriggerAnimation(animation);
+        }
+
+        private void ChangeAnimationCanvas(ClassType type, CanvasBackgound background)
+        {
+            combatAnimation.Sprites = type == ClassType.Mage ? SpriteSets.WizardSprites : SpriteSets.WarriorSprites;
+            canvasBackgound = background;
+            StateHasChanged();
+        }
+        #endregion
+
+        #region RpgGlobalAnimation.razor
 
         #endregion
     }

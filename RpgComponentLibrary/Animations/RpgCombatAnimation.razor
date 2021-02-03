@@ -1,0 +1,10 @@
+﻿@layout AnimationLayout
+@inherits RpgAnimationBase
+<div class="rpgui-container framed">
+
+    <div class="rpgui-animation-container @Enum.GetName(CanvasBackgound)?.ToLower()">
+        <Canvas @ref="_canvas" height="@CanvasSpecs.H" width="@CanvasSpecs.W"></Canvas>
+    </div>
+
+</div>
+<SpriteComponent/>

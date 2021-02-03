@@ -31,6 +31,8 @@ namespace RpgComponentLibrary.Components
         public EventCallback<TItem> OnSelectItem { get; set; }
         [Parameter]
         public EventCallback<TItem> SelectedValueChanged { get; set; }
+        [Parameter] 
+        public int Width { get; set; } = 100;
 
         protected override Task OnParametersSetAsync()
         {

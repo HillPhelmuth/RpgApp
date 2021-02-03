@@ -1,0 +1,36 @@
+﻿<h3 class="text-center">Canvas CSharp</h3>
+<SpriteComponent/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h6>Overhead commands</h6>
+            <p>Move (a - left, w - up, s - down, d - right )</p>
+            <button class="btn btn-primary" @onclick="Reset">Reset</button>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm">
+            <div style="margin-left: auto; margin-right: auto">
+                <Canvas @ref="canvas" style="border: 1px solid black" width="@CanvasSpecs.W" height="@CanvasSpecs.H"></Canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div style="max-height:350px; width:100%; overflow:scroll">
+                <h6>Action log</h6>
+                <ol style="font-size:.8rem">
+                    @foreach (var log in Logs)
+                    {
+                        <li>
+                            <pre>@log</pre>
+                        </li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+

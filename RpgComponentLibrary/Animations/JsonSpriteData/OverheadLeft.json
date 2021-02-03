@@ -1,0 +1,35 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "Index": 3,
+      "x": 48,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    }
+  ],
+  "name": "Left",
+  "imgUrl": "iVBORw0KGgoAAAANSUhEUgAAAEAAAAASCAMAAADc8SgQAAAAYFBMVEUAAAAAAABcxHctn0ry1sEzslOZe1hyXEKEakx3OBdRwZT39/dCxGNf4qw/lj8BEwY8yWMisUgCIQsU0EkO0UUWxEYIdCYjr0gIeigjsEgDLw8TyEYDKg4yy1whwUwxtFKc0mZmAAAAAXRSTlMAQObYZgAAAAlwSFlzAAALEwAACxMBAJqcGAAAAOlJREFUOMuNktkWgyAMRJ2C4Fa70X37/78siaclqEjnwUO4k4GoRcGCV7Gg/elyW8DAyktGxIHYHJxzjzRXK1aJ+UCore93zwT3lVIl9XeYCyS+o4BXgvPaR6iyY8cocOBH5+7vWT6MAzUkYDaQ+Pma4mTR3wxMA//gZNBahxcbN+Q57QxKBKb571NC8klDntNgsgQ7kOHSAAM0RtwYfE0scfZEB1TBANP0UcCIazS96ccBNpRVu27XiO8sOYhX0mD9ng2/ujVeNs3NiNOZJoxY1zRzhRpL3EhOm6EEr1HLgAznH1QW4ZnjH69qCcLOX35XAAAAAElFTkSuQmCC"
+}

@@ -1,8 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Include="Animations\JsonSpriteData\OverheadDown.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\OverheadLeft.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\OverheadRight.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\OverheadUp.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack1.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack2.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WarDead.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WarIdle.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WizardAttack1.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WizardAttack2.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WizardDead.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WizardIdle.json" />
+  </ItemGroup>
 
   
   <ItemGroup>
@@ -10,7 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
+    <PackageReference Include="Excubo.Blazor.Canvas" Version="2.5.4" />
   </ItemGroup>
 
 </Project>
