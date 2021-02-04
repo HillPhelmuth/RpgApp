@@ -182,19 +182,7 @@ namespace RpgApp.Client.Pages.StyleTests
         private void HandleMove((double x, double y) pos)
         {
             AddToLog($"moved to {pos.x}-{pos.y}");
-            //var isCollide = collitionsBlocks.Any(blk => pos.x + (moveAnimation.FrameWidth() * moveAnimation.Scale) > blk.X && pos.x < blk.X + blk.W && pos.y + (moveAnimation.FrameHeight() * moveAnimation.Scale) > blk.Y && pos.y < blk.Y + blk.H);
-
-            //if (!isCollide || hasCollided) return;
-            //stopTimer = true;
-            //hasCollided = true;
-            //await InvokeAsync(StateHasChanged);
-            //var result = await ModalService.ShowMessageBoxAsync("Collision!", "You collided with a collision Block! Continue Animation?");
-            //// hasCollided = true;
-            //if (result == MessageBoxDialogResult.OK || result == MessageBoxDialogResult.None)
-            //{
-            //    stopTimer = false;
-            //    await InvokeAsync(StateHasChanged);
-            //}
+            
         }
 
         private List<string> collisionList = new();
