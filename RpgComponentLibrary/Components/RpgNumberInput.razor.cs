@@ -29,12 +29,7 @@ namespace RpgComponentLibrary.Components
         public double? Step { get; set; } = GetDefaultStep();
         [Parameter]
         public bool IsReadOnly { get; set; }
-
-        protected override Task OnInitializedAsync()
-        {
-            Console.WriteLine($"MaxValue on Init: {MaxValue}");
-            return base.OnInitializedAsync();
-        }
+        
 
         protected override Task OnParametersSetAsync()
         {
@@ -90,7 +85,7 @@ namespace RpgComponentLibrary.Components
                 TypeCode.Double => double.MaxValue,
                 _ => int.MaxValue
             };
-            Console.WriteLine($"maxVal {maxValue}");
+           
             try
             {
                 return (TNum) Convert.ChangeType(maxValue, typeof(TNum));

@@ -8,6 +8,7 @@ using System.Timers;
 using Excubo.Blazor.Canvas;
 using Excubo.Blazor.Canvas.Contexts;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
 
@@ -18,28 +19,38 @@ namespace RpgComponentLibrary.Animations
         [Inject]
         private IJSRuntime Js { get; set; }
 
-        private IJSObjectReference module;
-        private Canvas canvas;
-        private Context2D context;
-        private Timer timer;
+        private IJSObjectReference _module;
+        private Canvas _canvas;
+        private Context2D _context2D;
+        private Timer _timer;
+        private bool _areImagesLoaded;
         private int TimerInterval => 1000 / Fps;
+        private Func<CollisionBlock, bool> CollidePredicate => blk => Animation.PosX + (Animation.FrameWidth() * Animation.Scale) > blk.X && Animation.PosX < blk.X + blk.W && Animation.PosY + (Animation.FrameHeight() * Animation.Scale) > blk.Y && Animation.PosY < blk.Y + blk.H;
         [Parameter]
         public AnimationMoveActions MoveActions { get; set; }
-        private readonly List<string> Logs = new();
-        
+        [Parameter]
+        public List<CollisionBlock> CollisionBlocks { get; init; } = new();
+        [Parameter]
+        public string BackgroundImageId { get; set; }
+        [Parameter]
+        public EventCallback<ValueTuple<double, double>> OnMove { get; set; }
+        [Parameter]
+        public EventCallback<string> OnCollide { get; set; }
+        [Parameter]
+        public KeyValuePair<string, string> BackgroundImage { get; set; }
+        [Parameter]
+        public bool StopTimer { get; set; }
+        //private readonly List<string> Logs = new();
 
-        protected override Task OnInitializedAsync()
-        {
-            Animation = new() { Scale = 3, MoveSpeed = 4 };
-            CanvasSpecs = new CanvasSpecs(600, 800);
-            Fps = 10;
-            return base.OnInitializedAsync();
-        }
+
 
         protected override Task OnParametersSetAsync()
         {
+            Animation ??= new() { Scale = 3, MoveSpeed = 4 };
             Animation.Sprites ??= SpriteSets.OverheadSprites;
             Animation.CurrentSprite ??= Animation.Sprites["Right"];
+            CanvasSpecs ??= new CanvasSpecs(600, 800);
+            Fps = Fps == 7 ? 10 : Fps;
             return base.OnParametersSetAsync();
         }
 
@@ -48,21 +59,23 @@ namespace RpgComponentLibrary.Animations
             if (firstRender)
             {
 
-                context = await canvas.GetContext2DAsync();
-                timer = new Timer(TimerInterval);
+                _context2D = await _canvas.GetContext2DAsync();
+                _timer = new Timer(TimerInterval);
                 InitOverhead();
-                timer.Elapsed += HandleAnimationLoop;
-                module = await Js.InvokeAsync<IJSObjectReference>("import",
+                _timer.Elapsed += HandleAnimationLoop;
+                _module = await Js.InvokeAsync<IJSObjectReference>("import",
                     "./_content/RpgComponentLibrary/animateInterop.js");
-                await module.InvokeVoidAsync("setEventListeners", DotNetObjectReference.Create(this));
-                await module.InvokeVoidAsync("ping");
+                await _module.InvokeVoidAsync("setEventListeners", DotNetObjectReference.Create(this));
+                await _module.InvokeVoidAsync("ping");
+                await ResetCanvas();
+
             }
         }
-       
+
         public void InitOverhead()
         {
-            Animation.CurrentSprite = Animation.Sprites["Right"];
-            timer.Start();
+            Animation.CurrentSprite ??= Animation.Sprites["Right"];
+            //_timer.Start();
         }
         private void Reset()
         {
@@ -70,23 +83,38 @@ namespace RpgComponentLibrary.Animations
             StateHasChanged();
         }
         [JSInvokable]
-        public void HandleKeyDown(string key) => Animation.KeyPresses[key] = true;
+        public void HandleKeyDown(string key)
+        {
+            Animation.KeyPresses[key] = true;
+            if (!_timer.Enabled) _timer.Start();
+        }
 
         [JSInvokable]
         public void HandleKeyUp(string key) => Animation.KeyPresses[key] = false;
 
-        private void AddToLog(string logMessage)
-        {
-            Logs.Add(logMessage);
-            if (Logs.Count > 100)
-                Logs.RemoveAt(0);
-
-        }
-
         private async Task AnimationLoop()
         {
-            await context.ClearRectAsync(0, 0, CanvasSpecs.W, CanvasSpecs.H);
+            await ResetCanvas();
             await HandleMoves();
+        }
+
+        private async Task ResetCanvas()
+        {
+            try
+            {
+                await _context2D.ClearRectAsync(0, 0, CanvasSpecs.W, CanvasSpecs.H);
+                await _context2D.DrawImageAsync(BackgroundImage.Key, 0, 0, CanvasSpecs.W, CanvasSpecs.H);
+                foreach (var frame in CollisionBlocks)
+                {
+                    await _context2D.DrawImageAsync(frame.Name, 0, 0, frame.W, frame.H, frame.X, frame.Y, frame.W,
+                        frame.H);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex}");
+                _timer.Stop();
+            }
         }
 
         private void Move(double deltaX, double deltaY)
@@ -105,6 +133,15 @@ namespace RpgComponentLibrary.Animations
             await AnimationLoop();
         }
 
+        private int imagesLoaded = 0;
+        private void OnImageLoad(ProgressEventArgs args)
+        {
+            Console.WriteLine($"Type: {args.Type}, Computable: {args.LengthComputable}, Progress: {args.Loaded}/{args.Total}");
+            var done = args.LengthComputable && args.Total == args.Loaded;
+            if (done) imagesLoaded++;
+            if (!_timer.Enabled) _timer.Start();
+
+        }
         #region Actions
 
         private string imageString = "Right";
@@ -144,7 +181,20 @@ namespace RpgComponentLibrary.Animations
             if (!hasMoved)
                 Animation.Index = 1;
             await InvokeAsync(StateHasChanged);
-            MoveActions.UpdatePosition(Animation.PosX, Animation.PosY);
+            if (hasMoved)
+            {
+                await OnMove.InvokeAsync((Animation.PosX, Animation.PosY));
+                
+                if (CollisionBlocks.Any(CollidePredicate))
+                {
+                    _timer.Stop();
+                    var collide = CollisionBlocks.FirstOrDefault(CollidePredicate);
+                    Console.WriteLine($"collided {collide.Name}");
+                    await OnCollide.InvokeAsync(collide.Name);
+                }
+            }
+
+            Console.WriteLine($"Moved to X = {Animation.PosX}, Y = {Animation.PosY}");
             Animation.Index++;
             var frames = Animation.CurrentSprite.Frames;
             if (Animation.Index >= frames.Count)
@@ -153,17 +203,20 @@ namespace RpgComponentLibrary.Animations
 
             var frame = Animation.CurrentSprite.Frames[Animation.Index];
             var logMessage = $"sprite: {Animation.CurrentSprite.Name}\r\nframe specs: {JsonSerializer.Serialize(frame)}";
-            AddToLog(logMessage);
-            await context.DrawImageAsync($"overhead{imageString}", frame.X, frame.Y, frame.W, frame.H, Animation.PosX, Animation.PosY, frame.W * Animation.Scale, frame.H * Animation.Scale);
+
+            await _context2D.DrawImageAsync($"overhead{imageString}", frame.X, frame.Y, frame.W, frame.H, Animation.PosX, Animation.PosY, frame.W * Animation.Scale, frame.H * Animation.Scale);
         }
+
+        
+
         #endregion
         public async ValueTask DisposeAsync()
         {
-            timer.Elapsed -= HandleAnimationLoop;
-            timer.Stop();
-            timer.Dispose();
-            await module.InvokeVoidAsync("dispose");
-            await module.DisposeAsync();
+            _timer.Elapsed -= HandleAnimationLoop;
+            _timer.Stop();
+            _timer.Dispose();
+            await _module.InvokeVoidAsync("dispose");
+            await _module.DisposeAsync();
         }
     }
 }

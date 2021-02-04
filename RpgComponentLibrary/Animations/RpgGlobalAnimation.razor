@@ -1,19 +1,14 @@
 ﻿@inherits RpgAnimationBase
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <h6>Overhead commands</h6>
-            <p>Move (a - left, w - up, s - down, d - right )</p>
-            <button class="btn btn-primary" @onclick="Reset">Reset</button>
-        </div>
 
+<div style="height: @($"{CanvasSpecs.H + 20}px"); width: @($"{CanvasSpecs.W + 20}px")">
+
+    <div class="rpgui-animation-container @Enum.GetName(CanvasBackgound)?.ToLower()">
+        <Canvas @ref="_canvas" height="@CanvasSpecs.H" width="@CanvasSpecs.W"></Canvas>
     </div>
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm">
-            <div style="margin-left: auto; margin-right: auto">
-                <Canvas @ref="canvas" style="border: 1px solid black" width="@CanvasSpecs.W" height="@CanvasSpecs.H"></Canvas>
-            </div>
-        </div>
-    </div>
+
 </div>
+<img @onload="OnImageLoad" id="@BackgroundImage.Key" hidden src="@BackgroundImage.Value" />
+@foreach (var image in CollisionBlocks)
+{
+    <img @onload="OnImageLoad" id="@image.Name" hidden src="@image.ImageUrl" />
+}

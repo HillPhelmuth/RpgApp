@@ -1,7 +1,7 @@
 // This is a JavaScript module that is just handles the keyboard events ('keydown' and 'keyup') Adds an event listener over the whole browser window so if canvas element loses focus, the animation keys will still work.
 let dotNetInstance = null;
 export function showPrompt(message) {
-  return prompt(message, 'Type anything here');
+  return prompt(message, 'Collision!');
 }
 export function setEventListeners(instance) {
     dotNetInstance = instance;

@@ -152,19 +152,25 @@
                     <p>Checkbox 2 is @(isChecked2 ? "checked":"unchecked")</p>
                 </div>
             </div>
-            <div class="col-rpg" style="width:400px">
-                <div class="rpgui-container framed" style="height: auto; width: 600px">
+            <div class="col-rpg" style="width:500px">
+                <div class="rpgui-container framedgolden2" style="height: auto; width: 500px">
                     <h1>RpgCombaAnimation.razor</h1>
                     <RpgSelectDropdown Label="Animation Class (only warrior and mage)" Width="70" TItem="ClassType" @bind-SelectedValue="classType" OptionsList="@(Enum.GetValues(typeof(ClassType)).Cast<ClassType>().ToArray())" />
                     <RpgSelectDropdown Label="Animation Background" Width="70" TItem="CanvasBackgound" @bind-SelectedValue="canvasBackgound" OptionsList="@(Enum.GetValues(typeof(CanvasBackgound)).Cast<CanvasBackgound>().ToArray())" />
                     <RpgButton Width="30" Label="Update animation" OnClick="@(() =>ChangeAnimationCanvas(classType,canvasBackgound))"></RpgButton>
                     <hr class="golden" />
                     <div class="rpg-btn-group">
-                        <RpgButton Width="30" Label="Attack 1" RpgButtonStyle="RpgButtonStyle.Golden" OnClick="@(() => RunAnimation("Attack1"))"></RpgButton>
-                        <RpgButton Width="30" Label="Attack 2" RpgButtonStyle="RpgButtonStyle.Silver" OnClick="@(() => RunAnimation("Attack2"))"></RpgButton>
+                        <RpgButton Width="30" Label="Attack1" RpgButtonStyle="RpgButtonStyle.Golden" OnClick="@(() => RunAnimation("Attack1"))"></RpgButton>
+                        <RpgButton Width="30" Label="Attack2" RpgButtonStyle="RpgButtonStyle.Silver" OnClick="@(() => RunAnimation("Attack2"))"></RpgButton>
                         <RpgButton Width="30" Label="Die" RpgButtonStyle="RpgButtonStyle.Standard" OnClick="@(() => RunAnimation("Dead"))"></RpgButton>
                     </div>
                     <RpgCombatAnimation Animation="combatAnimation" CombatActions="combatActions" CanvasBackgound="canvasBackgound" />
+                </div>
+            </div>
+            <div class="col-rpg" style="width:850px">
+                <div class="rpgui-container framedgolden2" style="height: auto; width: 850px">
+                    <h1>RpgGlobalAnimation.razor</h1>
+                    <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="moveAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collitionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision" />
                 </div>
             </div>
             <div class="rpg-log">

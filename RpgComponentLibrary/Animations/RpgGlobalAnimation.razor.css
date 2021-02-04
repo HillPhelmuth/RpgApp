@@ -21,8 +21,9 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         /* background */
-        background-color: rgba(79, 74, 79, 0.4);
-        /*background: url("img/background-image.png") repeat repeat;*/
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
         background-clip: padding-box;
         background-origin: padding-box;
         background-position: center;
@@ -43,8 +44,9 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         /* background */
-        background-color: rgba(131, 75, 47, 0.5);
-        /*background: url("img/background-image-golden.png") repeat repeat;*/
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
         background-clip: padding-box;
         background-origin: padding-box;
         background-position: center;
@@ -64,9 +66,9 @@
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        /* background rgba(210, 125, 45, 0.5); */
-        background-color: rgba(210, 125, 45, 0.5);
-        /*background: url("img/background-image-golden2.png") repeat repeat;*/
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
         background-clip: padding-box;
         background-origin: padding-box;
         background-position: center;
@@ -87,9 +89,9 @@
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        /* background rgba(78, 74, 78, 0.4);*/
-        background-color: rgba(78, 74, 78, 0.4);
-        /*background: url("img/background-image-grey.png") repeat repeat;*/
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
         background-clip: padding-box;
         background-origin: padding-box;
         background-position: center;

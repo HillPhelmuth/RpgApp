@@ -4,6 +4,18 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Animations\CanvasCSharp.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Animations\CanvasCSharp.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Animations\CanvasCSharp.razor.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadDown.json" />

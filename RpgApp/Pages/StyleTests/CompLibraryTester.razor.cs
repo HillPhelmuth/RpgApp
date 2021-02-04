@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazor.ModalDialog;
 using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
@@ -17,6 +18,8 @@ namespace RpgApp.Client.Pages.StyleTests
     {
         [Inject]
         private AppStateManager AppState { get; set; }
+        [Inject]
+        public IModalDialogService ModalService { get; set; }
         private double life;
         private double mana;
         private double stamina;
@@ -31,7 +34,12 @@ namespace RpgApp.Client.Pages.StyleTests
             SetCombatAnimationData();
             return base.OnInitializedAsync();
         }
-
+        // This is the event handler for the a variety of actions
+        private void AddToLog(string info)
+        {
+            TestLog.Add(info);
+            StateHasChanged();
+        }
         #region RpgItemsMenu.razor
 
         private List<KeyValuePair<string, Equipment>> _imagesEquipPairs = new();
@@ -43,12 +51,6 @@ namespace RpgApp.Client.Pages.StyleTests
         private List<KeyValuePair<string, Skill>> AddImages(List<Skill> skills)
         {
             return skills.Select(sk => sk.AddImagePath()).ToList();
-        }
-        // This is the event handler for the RpgItemsMenu Action template button
-        private void AddToLog(string info)
-        {
-            TestLog.Add(info);
-            StateHasChanged();
         }
 
         #endregion
@@ -130,7 +132,6 @@ namespace RpgApp.Client.Pages.StyleTests
         private double doubleInput;
 
         #endregion
-
         #region RpgCheckbox.razor
 
         private bool isChecked1;
@@ -167,6 +168,49 @@ namespace RpgApp.Client.Pages.StyleTests
 
         #region RpgGlobalAnimation.razor
 
+        private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 3, 4);
+        private List<CollisionBlock> collitionsBlocks = new()
+        {
+            new CollisionBlock("TargeCollide", "_content/RpgComponentLibrary/img/icons/foreign/x.png", 64, 64, 400, 300),
+            new CollisionBlock("HitHome", "home-48.png", 48, 54, 725, 525)
+        };
+        //54x48
+        private CanvasSpecs canvasSpecs = new(600, 800);
+        private KeyValuePair<string, string> background = new("village1", "/css/Images/Village1.png");
+        private bool hasCollided;
+        private bool stopTimer;
+        private void HandleMove((double x, double y) pos)
+        {
+            AddToLog($"moved to {pos.x}-{pos.y}");
+            //var isCollide = collitionsBlocks.Any(blk => pos.x + (moveAnimation.FrameWidth() * moveAnimation.Scale) > blk.X && pos.x < blk.X + blk.W && pos.y + (moveAnimation.FrameHeight() * moveAnimation.Scale) > blk.Y && pos.y < blk.Y + blk.H);
+
+            //if (!isCollide || hasCollided) return;
+            //stopTimer = true;
+            //hasCollided = true;
+            //await InvokeAsync(StateHasChanged);
+            //var result = await ModalService.ShowMessageBoxAsync("Collision!", "You collided with a collision Block! Continue Animation?");
+            //// hasCollided = true;
+            //if (result == MessageBoxDialogResult.OK || result == MessageBoxDialogResult.None)
+            //{
+            //    stopTimer = false;
+            //    await InvokeAsync(StateHasChanged);
+            //}
+        }
+
+        private List<string> collisionList = new();
+        private async void HandleCollision(string name)
+        {
+            if (collisionList.Contains(name)) return;
+            collisionList.Add(name);
+            var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! Continue Animation?");
+            // hasCollided = true;
+            if (result == MessageBoxDialogResult.OK || result == MessageBoxDialogResult.None)
+            {
+                stopTimer = false;
+                await InvokeAsync(StateHasChanged);
+            }
+
+        }
         #endregion
     }
 }
