@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Animations\AnimationMoveActions.cs" />
     <Compile Remove="Animations\CanvasCSharp.razor.cs" />
   </ItemGroup>
 

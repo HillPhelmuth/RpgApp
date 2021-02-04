@@ -26,8 +26,7 @@ namespace RpgComponentLibrary.Animations
         private bool _areImagesLoaded;
         private int TimerInterval => 1000 / Fps;
         private Func<CollisionBlock, bool> CollidePredicate => blk => Animation.PosX + (Animation.FrameWidth() * Animation.Scale) > blk.X && Animation.PosX < blk.X + blk.W && Animation.PosY + (Animation.FrameHeight() * Animation.Scale) > blk.Y && Animation.PosY < blk.Y + blk.H;
-        [Parameter]
-        public AnimationMoveActions MoveActions { get; set; }
+        
         [Parameter]
         public List<CollisionBlock> CollisionBlocks { get; init; } = new();
         [Parameter]
