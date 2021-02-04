@@ -1,0 +1,98 @@
+﻿.rpgui-animation-container {
+    /* position style and default z */
+    /*position: absolute;*/
+    z-index: 10;
+    width: auto;
+    height: auto;
+}
+
+    /* game div with background image*/
+    .rpgui-animation-container.framed {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image.png");
+        border-image-repeat: repeat;
+        border-image-slice: 6 6 6 6;
+        border-image-width: 18px;
+        border-width: 15px;
+        /*padding: 12px;*/
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with golden background image*/
+    .rpgui-animation-container.framedgolden {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-golden.png");
+        border-image-repeat: repeat;
+        border-image-slice: 4 4 4 4;
+        border-image-width: 18px;
+        border-width: 15px;
+        /*padding: 12px;*/
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        /* background */
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with golden2 background image*/
+    .rpgui-animation-container.framedgolden2 {
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-golden2.png");
+        border-image-repeat: repeat;
+        border-image-slice: 8 8 8 8;
+        border-image-width: 18px;
+        border-width: 15px;
+        /*padding: 12px;*/
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }
+
+    /* game div with soft grey background image*/
+    .rpgui-animation-container.framedgrey {
+        position: relative;
+        /* border */
+        border-style: solid;
+        border-image-source: url("img/border-image-grey.png");
+        border-image-repeat: repeat;
+        border-image-slice: 3 3 3 3;
+        border-image-width: 7px;
+        border-width: 7px;
+        /*padding: 12px;*/
+        /* internal border */
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background-color: transparent;
+        background: url('Images/Village1.png') no-repeat center center;
+        background-size: cover;
+        background-clip: padding-box;
+        background-origin: padding-box;
+        background-position: center;
+    }

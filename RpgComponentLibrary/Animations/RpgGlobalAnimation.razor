@@ -1,0 +1,14 @@
+﻿@inherits RpgAnimationBase
+
+<div style="height: @($"{CanvasSpecs.H + 20}px"); width: @($"{CanvasSpecs.W + 20}px")">
+
+    <div class="rpgui-animation-container @Enum.GetName(CanvasBackgound)?.ToLower()">
+        <Canvas @ref="_canvas" height="@CanvasSpecs.H" width="@CanvasSpecs.W"></Canvas>
+    </div>
+
+</div>
+<img @onload="OnImageLoad" id="@BackgroundImage.Key" hidden src="@BackgroundImage.Value" />
+@foreach (var image in CollisionBlocks)
+{
+    <img @onload="OnImageLoad" id="@image.Name" hidden src="@image.ImageUrl" />
+}

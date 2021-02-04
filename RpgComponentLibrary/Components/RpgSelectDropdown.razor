@@ -1,9 +1,9 @@
 ﻿@typeparam TItem
 <label>@Label</label>
-<p @ref="_selectHeader" @onclick="@(()=> showList = !showList)" style="width: 100%;position:absolute" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @DisplaySelectedValue</p>
+<p @ref="_selectHeader" @onclick="@(()=> showList = !showList)" style="width: @($"{Width}%");position:absolute" class="rpgui-dropdown-imp rpgui-dropdown-imp-header"><label>▼</label> @DisplaySelectedValue</p>
 @if (showList)
 {
-<div style="width:90%;position:absolute">
+<div style="width:@($"{Width * .9}%") ;position:absolute">
     <ul class="rpgui-dropdown-imp" style="width: @_menuWidth; display: block;">
 
         @foreach (var option in OptionsList)

@@ -1,8 +1,8 @@
 ﻿
-<button @onclick="@OnClick" @onmousedown="@OnMouseDown" @onmouseup="@OnMouseUp" @ondblclick="@OnDoubleClick" class="rpgui-button @_rpgCssClass" type="button" style="width: 100%">
+<button @onclick="@OnClick" @onmousedown="@OnMouseDown" @onmouseup="@OnMouseUp" @ondblclick="@OnDoubleClick" class="rpgui-button @_rpgCssClass" type="button" style="width: @($"{Width}%")">
     @if (Label != null)
     {
-        <p>@Label</p>
+        <span>@Label</span>
     }
 <p>@ChildContent</p>
    

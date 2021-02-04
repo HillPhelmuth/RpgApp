@@ -25,7 +25,8 @@ namespace RpgComponentLibrary.Components
 
         [Parameter]
         public bool CanRender { get; set; } = true;
-
+        [Parameter] 
+        public int Width { get; set; } = 100;
         protected override bool ShouldRender()
         {
             return CanRender;
