@@ -154,7 +154,7 @@
             </div>
             <div class="col-rpg" style="width:500px">
                 <div class="rpgui-container framedgolden2" style="height: auto; width: 500px">
-                    <h1>RpgCombaAnimation.razor</h1>
+                    <h1>RpgCombatAnimation.razor</h1>
                     <RpgSelectDropdown Label="Animation Class (only warrior and mage)" Width="70" TItem="ClassType" @bind-SelectedValue="classType" OptionsList="@(Enum.GetValues(typeof(ClassType)).Cast<ClassType>().ToArray())" />
                     <RpgSelectDropdown Label="Animation Background" Width="70" TItem="CanvasBackgound" @bind-SelectedValue="canvasBackgound" OptionsList="@(Enum.GetValues(typeof(CanvasBackgound)).Cast<CanvasBackgound>().ToArray())" />
                     <RpgButton Width="30" Label="Update animation" OnClick="@(() =>ChangeAnimationCanvas(classType,canvasBackgound))"></RpgButton>
