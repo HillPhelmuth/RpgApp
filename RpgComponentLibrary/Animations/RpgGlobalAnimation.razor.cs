@@ -25,8 +25,8 @@ namespace RpgComponentLibrary.Animations
         private Timer _timer;
         private bool _areImagesLoaded;
         private int TimerInterval => 1000 / Fps;
-        private Func<CollisionBlock, bool> CollidePredicate => blk => Animation.PosX + (Animation.FrameWidth() * Animation.Scale) > blk.X && Animation.PosX < blk.X + blk.W && Animation.PosY + (Animation.FrameHeight() * Animation.Scale) > blk.Y && Animation.PosY < blk.Y + blk.H;
-        
+        private Func<CollisionBlock, bool> IsCollideFunc => blk => Animation.PosX + (Animation.FrameWidth() * Animation.Scale) > blk.X && Animation.PosX < blk.X + blk.W && Animation.PosY + (Animation.FrameHeight() * Animation.Scale) > blk.Y && Animation.PosY < blk.Y + blk.H;
+        private readonly Dictionary<string, int> _collisionsPerBlock = new();
         [Parameter]
         public List<CollisionBlock> CollisionBlocks { get; init; } = new();
         [Parameter]
@@ -57,7 +57,10 @@ namespace RpgComponentLibrary.Animations
         {
             if (firstRender)
             {
-
+                foreach (var block in CollisionBlocks)
+                {
+                    _collisionsPerBlock[block.Name] = 0;
+                }
                 _context2D = await _canvas.GetContext2DAsync();
                 _timer = new Timer(TimerInterval);
                 InitOverhead();
@@ -135,9 +138,10 @@ namespace RpgComponentLibrary.Animations
         private int imagesLoaded = 0;
         private void OnImageLoad(ProgressEventArgs args)
         {
-            Console.WriteLine($"Type: {args.Type}, Computable: {args.LengthComputable}, Progress: {args.Loaded}/{args.Total}");
-            var done = args.LengthComputable && args.Total == args.Loaded;
-            if (done) imagesLoaded++;
+            //var done = args.LengthComputable && args.Total == args.Loaded;
+            //if (done) imagesLoaded++;
+            imagesLoaded++;
+            Console.WriteLine($"Images Loaded:{imagesLoaded}\r\n Type: {args.Type}, Computable: {args.LengthComputable}, Progress: {args.Loaded}/{args.Total}");
             if (!_timer.Enabled) _timer.Start();
 
         }
@@ -184,12 +188,17 @@ namespace RpgComponentLibrary.Animations
             {
                 await OnMove.InvokeAsync((Animation.PosX, Animation.PosY));
                 
-                if (CollisionBlocks.Any(CollidePredicate))
+                if (CollisionBlocks.Any(IsCollideFunc))
                 {
-                    _timer.Stop();
-                    var collide = CollisionBlocks.FirstOrDefault(CollidePredicate);
-                    Console.WriteLine($"collided {collide.Name}");
-                    await OnCollide.InvokeAsync(collide.Name);
+                    var collide = CollisionBlocks.FirstOrDefault(IsCollideFunc);
+                    _collisionsPerBlock[collide.Name] += 1;
+                    if (_collisionsPerBlock[collide.Name] > collide.MaxCollisions)
+                    {
+                        _timer.Stop();
+                        Console.WriteLine($"collided with {collide.Name}");
+                        await OnCollide.InvokeAsync(collide.Name);
+                    }
+                    
                 }
             }
 

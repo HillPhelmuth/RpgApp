@@ -61,7 +61,8 @@ namespace RpgComponentLibrary.Animations
 
     public record CollisionBlock
     {
-        public CollisionBlock(string name,string imgSrcUrl, int height = 1, int width = 1, int xPosition = 0, int yPosition = 0)
+        public CollisionBlock(string name, string imgSrcUrl, int height = 1, int width = 1, int xPosition = 0,
+            int yPosition = 0, int maxCollitions = 1)  
         {
             H = height;
             W = width;
@@ -69,6 +70,7 @@ namespace RpgComponentLibrary.Animations
             Y = yPosition;
             Name = name;
             ImageUrl = imgSrcUrl;
+            MaxCollisions = maxCollitions;
         }
         public string Name { get; set; }
         public int H { get; set; }
@@ -76,6 +78,7 @@ namespace RpgComponentLibrary.Animations
         public int X { get; set; }
         public int Y { get; set; }
         public string ImageUrl { get; set; }
+        public int MaxCollisions { get; set; }
     }
 
 }
