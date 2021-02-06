@@ -19,10 +19,14 @@ namespace RpgApp.Client.Pages.Modals
 
         public async Task CreateNewPlayer(ClassType classType)
         {
+            var options = new ModalDialogOptions()
+            {
+                Style = "rpgui-content rpgui-modal-framed"
+            };
             CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType, AppState.AllSkills, AppState.AllEquipment);
             AppState.UpdateCurrentPlayer(CurrentPlayer);
             CurrentPlayer.Name = name;
-            ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!");
+            ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!", options);
             StateHasChanged();
             ModalDialogService.Close(true);
         }

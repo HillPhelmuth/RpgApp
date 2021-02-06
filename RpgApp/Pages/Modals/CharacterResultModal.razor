@@ -1,4 +1,4 @@
-﻿<div class="text-left">
+﻿@*<div class="text-left">
     <h3>Class: @CurrentPlayer.ClassType.ToString()</h3>
     Attributes
     <ul>
@@ -17,4 +17,26 @@
 </div>
 <div class="text-center">
     <button class="btn btn-primary" @onclick="@BeginWindow">Begin adventure</button>
-</div>
+</div>*@
+<div class="rpgui-container framedgolden" style="margin-left: auto; margin-right: auto; width: 100%; align-content:center">
+    <div class="text-left">
+        <h3>Class: @CurrentPlayer.ClassType.ToString()</h3>
+        Attributes
+        <ul>
+            <li>Agility: @CurrentPlayer.Agility</li>
+            <li>Intelligence: @CurrentPlayer.Intelligence</li>
+            <li>Speed: @CurrentPlayer.Speed</li>
+            <li>Strength: @CurrentPlayer.Strength</li>
+            <li>Toughness: @CurrentPlayer.Toughness</li>
+        </ul>
+        Stats
+        <ul>
+            <li>XP: @CurrentPlayer.Experience</li>
+            <li>Level: @CurrentPlayer.Level</li>
+            <li>Health: @CurrentPlayer.Health</li>
+        </ul>
+    </div>
+    <div class="align-middle" style="width: 15em; margin-left:auto;margin-right:auto">
+        <RpgButton OnClick="BeginWindow" Label="Begin adventure" />
+        </div>
+    </div>

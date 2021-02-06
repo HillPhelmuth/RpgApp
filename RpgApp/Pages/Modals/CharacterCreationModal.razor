@@ -1,8 +1,10 @@
 ﻿
 <div class="text-center rpgui-container framedgolden" style="margin-left: auto; margin-right: auto; width: 40%; align-content:center">
     @*Character Name:<br />
-    <input @bind="name" placeholder="Character Name" /><br />*@
-    <RpgTextInput Label="Character Name:" @bind-InputValue="name" Placeholder="Character Name"/>
+        <input @bind="name" placeholder="Character Name" /><br />*@
+    <div class="align-middle" style="width: 15em; margin-left:auto;margin-right:auto">
+        <RpgTextInput Label="Character Name:" @bind-InputValue="name" Placeholder="Character Name" />
+    </div>
     @*Character Class:<br />
         <select @bind="CharClass">
             <option>choose...</option>
@@ -10,9 +12,13 @@
             <option value="@ClassType.Mage">Mage</option>
             <option value="@ClassType.Ranger">Ranger</option>
         </select><br />*@
-    <RpgSelectDropdown Label="Character Class:" TItem="ClassType" @bind-SelectedValue="CharClass"
-                       OptionsList="@(Enum.GetValues(typeof(ClassType)).Cast<ClassType>().ToArray())"/>
-    @*<button class="btn btn-primary" @onclick="@(() => CreateNewPlayer(CharClass))">Create</button>*@
-    <hr class="golden" />
-    <RpgButton OnClick="@(() => CreateNewPlayer(CharClass))" Label="Create"></RpgButton>
-</div>
+    <div class="align-middle" style="width: 15em; margin-left:auto;margin-right:auto">
+        <RpgSelectDropdown Label="Character Class:" TItem="ClassType" @bind-SelectedValue="CharClass"
+                           OptionsList="@(Enum.GetValues(typeof(ClassType)).Cast<ClassType>().ToArray())" />
+        </div>
+        @*<button class="btn btn-primary" @onclick="@(() => CreateNewPlayer(CharClass))">Create</button>*@
+        <hr class="golden" />
+        <div class="align-middle" style="width: 15em; margin-left:auto;margin-right:auto">
+            <RpgButton OnClick="@(() => CreateNewPlayer(CharClass))" Label="Create"></RpgButton>
+        </div>
+    </div>
