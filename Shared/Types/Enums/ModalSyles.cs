@@ -52,7 +52,7 @@ namespace RpgApp.Shared.Types.Enums
         /// <param name="size">set size of modal using string const options (ex: FramedGrey(ModalSize.Large))
         /// or strings directly (ex: FramedGrey("large"))</param>
         /// <returns>css class string for modal display</returns>
-        public static string FramedGrey(string size)
+        public static string GreyFramed(string size)
         {
             var modalsize = $"modal-{size}";
             return $"{ModelGrey} {modalsize}";
