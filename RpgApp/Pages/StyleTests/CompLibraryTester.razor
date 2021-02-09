@@ -116,6 +116,14 @@
                 </RpgTabGroup>
             </div>
             <div class="col-rpg">
+                <RpgContainer Frame="Frame.Framed" Width="70">
+                    <h1>RpgInfoBox.razor inside RpgContainer.razor</h1>
+                    <RpgInfoBox Frame="Frame.FramedGolden2" DisplayObject="Player" DisplayPropertiesOrder="@Attributes">
+                        
+                    </RpgInfoBox>
+                </RpgContainer>
+            </div>
+            <div class="col-rpg">
                 <div class="rpgui-container framed" style="height: auto; width: 300px">
                     <h1>RpgSlider.razor with RpgProgressBar.razor</h1>
                     <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100"/>

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+//using Newtonsoft.Json;
 using RpgComponentLibrary.Services;
 
 namespace RpgComponentLibrary.Components
@@ -68,6 +70,13 @@ namespace RpgComponentLibrary.Components
             if (property == null)
                 return $"Property {propName} not found in type {nameof(item)}";
             return property.GetValue(item)?.ToString();
+        }
+        public static Dictionary<string, object> ToDictionary(this object obj)
+        {
+           // var json = JsonConvert.SerializeObject(obj);
+           var json = JsonSerializer.Serialize(obj);
+            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+            return dictionary;
         }
         private static string FormatToPercentWidth(this double num)
         {

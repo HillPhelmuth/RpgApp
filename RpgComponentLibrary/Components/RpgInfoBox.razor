@@ -1,0 +1,20 @@
+﻿@typeparam TObject
+
+
+<div class="rpgui-container @Enum.GetName(Frame)?.ToLower()">
+    <div>@HeaderTemplate</div>
+    <hr class="golden" />
+    <div class="rpg-item-list">
+        <ul>
+            @foreach (var item in _displayItems.OrderBy(x => x.Order))
+            {
+                <li>
+                    <strong>@item.PropertyName</strong> : @item.PropertyValue
+                </li>
+            }
+            <li>
+                
+            </li>
+        </ul>
+    </div>
+</div>

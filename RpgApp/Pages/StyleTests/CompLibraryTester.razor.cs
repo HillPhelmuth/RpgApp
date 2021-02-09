@@ -26,13 +26,14 @@ namespace RpgApp.Client.Pages.StyleTests
         private bool showProgress = true;
         private bool showMenu = true;
         private List<string> TestLog = new();
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             _imagesEquipPairs = AddImages(AppState.AllEquipment);
             _imagesSkillPairs = AddImages(AppState.AllSkills);
             classType = ClassType.Warrior;
             SetCombatAnimationData();
-            return base.OnInitializedAsync();
+            Player = await CreateCharacter.CreateNewCharacter(classType);
+            await base.OnInitializedAsync();
         }
         // This is the event handler for the a variety of actions
         private void AddToLog(string info)
@@ -165,7 +166,6 @@ namespace RpgApp.Client.Pages.StyleTests
             StateHasChanged();
         }
         #endregion
-
         #region RpgGlobalAnimation.razor
 
         private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 3, 4);
@@ -199,6 +199,20 @@ namespace RpgApp.Client.Pages.StyleTests
             }
 
         }
+        #endregion
+
+        #region RpgInfoBox.razor
+
+        private Player Player { get;set; }
+
+        private Dictionary<int, string> Attributes = new()
+        {
+            {1, "Name"},
+            {2, "Level"},
+            {3, "MaxAbilityPoints"},
+            {4, "AbilityPoints"}
+        };
+
         #endregion
     }
 }

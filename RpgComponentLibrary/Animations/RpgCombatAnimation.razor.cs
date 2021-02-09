@@ -17,7 +17,7 @@ namespace RpgComponentLibrary.Animations
         private Context2D _context2D;
         
         private Timer _timer;
-        private int TimerInterval => 1000 / Fps;
+        private int FrameInterval => 1000 / Fps;
         [Parameter] 
         public AnimationCombatActions CombatActions { get; set; } = new();
         protected override async Task OnParametersSetAsync()
@@ -41,11 +41,10 @@ namespace RpgComponentLibrary.Animations
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                   
                     throw;
                 }
               
-                _timer = new Timer(TimerInterval);
+                _timer = new Timer(FrameInterval);
                 _timer.Stop();
                 _context2D = await _canvas.GetContext2DAsync();
                 _timer.Elapsed += HandleAnimationLoop;
