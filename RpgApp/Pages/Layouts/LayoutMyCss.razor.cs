@@ -11,6 +11,7 @@ using Microsoft.JSInterop;
 using RpgApp.Client.Pages.Modals;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
+using RpgApp.Shared.Types.Enums;
 
 namespace RpgApp.Client.Pages.Layouts
 {
@@ -154,7 +155,11 @@ namespace RpgApp.Client.Pages.Layouts
         }
         public async Task ShowMenu()
         {
-            var result = await ModalService.ShowDialogAsync<MenuModal>("Menu");
+            var options = new ModalDialogOptions()
+            {
+                Style = ModalSyles.Framed(ModalSize.ExtraSmall)
+            };
+            var result = await ModalService.ShowDialogAsync<MenuModal>("Menu", options);
             StateHasChanged();
         }
 
