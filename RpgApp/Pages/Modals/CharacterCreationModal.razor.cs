@@ -21,7 +21,7 @@ namespace RpgApp.Client.Pages.Modals
         {
             var options = new ModalDialogOptions()
             {
-                Style = ModalSyles.GoldenFramed2(ModalSize.Medium)
+                Style = ModalStyles.GoldenFramed2(ModalSize.Medium)
             };
             CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType, AppState.AllSkills, AppState.AllEquipment);
             AppState.UpdateCurrentPlayer(CurrentPlayer);

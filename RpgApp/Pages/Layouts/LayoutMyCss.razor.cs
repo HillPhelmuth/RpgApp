@@ -157,7 +157,7 @@ namespace RpgApp.Client.Pages.Layouts
         {
             var options = new ModalDialogOptions()
             {
-                Style = ModalSyles.Framed(ModalSize.ExtraSmall)
+                Style = ModalStyles.Framed(ModalSize.Small)
             };
             var result = await ModalService.ShowDialogAsync<MenuModal>("Menu", options);
             StateHasChanged();

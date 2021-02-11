@@ -3,12 +3,14 @@
 {
 
     <div class="game-screen" @ref="gameboardReference" @onkeyup="@(KeyboardMove)" tabindex="0">
-       
-        <div class="menu">
-            <MatButton Raised="true" OnClick="ShowMenu">Menu</MatButton>
-        </div>
-        <div class="inventory">
-            <MatButton Raised="true" OnClick="ToggleCss">Toggle Village background</MatButton>
+
+        <div class="rpgui-container framed rpgui-draggable" style="height:400px; width:380px">
+            <div class="menu-btn" style="width: 15em; margin-left:auto;margin-right:auto">
+                <RpgButton OnClick="ShowMenu" Label="Menu" RpgButtonStyle="RpgButtonStyle.Standard"></RpgButton>
+            </div>
+            <div class="village-btn" style="width: 15em; margin-left:auto;margin-right:auto">
+                <RpgButton OnClick="ToggleCss" Label="Toggle Village" RpgButtonStyle="RpgButtonStyle.Standard"></RpgButton>
+            </div>
         </div>
 
         <div class="@gridCss" @onkeypress="@KeyboardMove">

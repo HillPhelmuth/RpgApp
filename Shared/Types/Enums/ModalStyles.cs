@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RpgApp.Shared.Types.Enums
 {
-    public class ModalSyles
+    public class ModalStyles
     {
         private const string ModalFramed = "rpgui-content rpgui-modal framed";
         private const string ModalGolden = "rpgui-content rpgui-modal framedgolden";
