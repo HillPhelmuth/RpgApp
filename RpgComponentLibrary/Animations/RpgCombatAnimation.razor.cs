@@ -20,6 +20,8 @@ namespace RpgComponentLibrary.Animations
         private int TimerInterval => 1000 / Fps;
         [Parameter] 
         public AnimationCombatActions CombatActions { get; set; } = new();
+        [Parameter]
+        public EventCallback<string> OnAnimationComplete { get; set; }
         protected override async Task OnParametersSetAsync()
         {
             Animation ??= new AnimationModel { Scale = 3 };
@@ -71,8 +73,10 @@ namespace RpgComponentLibrary.Animations
             var frames = Animation.CurrentSprite.Frames;
             if (Animation.Index >= frames.Count)
             {
+                var animationName = Animation.CurrentSprite.Name;
                 Animation.Index = 0;
                 Animation.CurrentSprite = Animation.Sprites[idleSprites];
+                await OnAnimationComplete.InvokeAsync(animationName);
             }
 
             var imageName = Animation.CurrentSprite?.Name ?? idleSprites;
@@ -107,5 +111,14 @@ namespace RpgComponentLibrary.Animations
         }
 
        
+    }
+
+    public class AnimationEndArgs : EventArgs
+    {
+        public AnimationEndArgs(string ended)
+        {
+            Ended = ended;
+        }
+        public string Ended { get; set; }
     }
 }

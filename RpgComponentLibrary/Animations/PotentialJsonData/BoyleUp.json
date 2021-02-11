@@ -1,0 +1,33 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 1,
+      "x": 0,
+      "y": 17,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 2,
+      "x": 0,
+      "y": 34,
+      "w": 16,
+      "h": 17
+
+    }
+  ],
+  "name": "BoyleUp",
+  "imageName": "BoyleUp.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACY0lEQVRIx+2WS2gTURSGv2krfWEzsZimFErwEROQFFLIquJS6CLjxpVoN1qkVClk4cJlpSAoFJUqutOFFFeNUGiXsZsGKRQE4wMxltI0m6a60GDxuKipdybzQuui0APDnDlzzz9nDv/97wEbS+uMp3XGrb6daU4v0joZ9Tlb4Y7duqa6xA5GZzaFs0HtthoXkaoR0Mh+4b4ab1QfjACXtAYeHOruGdRDXRztS+5clfL64Ku5F4OxZlbfVlmy/QVDR2r+2MMnpsomr1zc8Wcqf/IcAdxMBWjgH80E0NnunWBdYwLoj5ALtkGwrT6xFu+PkHPlwdQAEoqnePo8z/FkCoD3S3kunEtRfpNnZMGZOwBMDyVERMTQkZrV/OmhhHeTRaRgB7BRLMhGsSCeTNQ0Lbb++ZMAlFeKO/Fn52P4ojLAcCJiugNUt6C5iZKvzeREKJVArhWYe8J3t/eeANlNWn0z0a5UQ0eMADd8A6R1MiKSsXTqpohkrCJT18R0B6NaA/cu37rL6od3poU9x6I8vn4N+clVVVQct/PI5CMzxceG94IeHD7onWBdYwJI9jLf2W4vLLV4spd5Tz0AyH+E7r5TAKwtvyR15HdzLXpg14PFUDxFNAwTszkmZnNEwxCKpwAW/ehBwklQRCThh8rLLvjLnpvpa6nItx/bvioo5ZUirQd8HK5TA6zNvSZs9/kzJymNLNC9q4Kyu0z8G2u0C55ooQnIZSucVv39CWV/QtlDE0ptEnFQpIInE9VJxCooXb2RmJ/jvVTd2hYUdUJR/f8/oahTiabR4tYzzaupajV2FfwCrDpaLckIDKMAAAAASUVORK5CYII="
+
+}

@@ -1,0 +1,33 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 1,
+      "x": 0,
+      "y": 17,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 2,
+      "x": 0,
+      "y": 34,
+      "w": 16,
+      "h": 17
+
+    }
+  ],
+  "name": "BoyleRight",
+  "imageName": "BoyleRight.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACB0lEQVRIx+2WP2gUQRTGfxOFxH/saqVpgoogWIoEwnmdV3m3WBykiVbWNultUhhCChEjSKpACFayQQJHmsjZXIpUkXDXRLZI0njZVcOpcHkWlw236252Z1ewyde8mcfMx8y8eR8fxMAyEctEwuMwzsYR/HYZihqHoU44wX7/3Ha5nJqgYrCrFFf7cyLsLXtcS7yCZfIFgpsBwoQ+BiJyI2hgIGnB2M1gTF2F0Ru9eOlcMCafoEsRoLUH5vkMV7C/Uxeh1D6g9HC2BsDdETgUSjpvg4jYU+Nl2a7bsl23BV2IiHx6/06mn1RFRKpam+cKLMgRLBOZK7CgW8aJtemngXkcQWQZt3Zg6+08ra9Dx/M4nPnrKxvMeD8Z8zrQ2lifVFDyOnB7kIvNX6ymuYLrD5ZdZqPyqdrZF5K+dlZavVAx6GRuJstkX6mgCoUFJpagYrALmBFrzVQEccKRWQ8Kt4IxtR74AnJhMBgTT9A9ZBTg8068iJxI8OEb63Qpej8oWq8+AnDvOiA9odFp59rzRw/EadTEadSy6UFjxZap8bKISDkTga8HucqYhNgyLi4t5iNYefkiH8FBc/PffOXcBLaLOnUopw7l/zoUEcnnUPpQ1apC2JG8ua/Kuu088fpZz6HcGT52KI+1HIqzOQ9A84pmFSyDGad99A4w6bTBaffyad9Ay6H8ASoY+huihQR9AAAAAElFTkSuQmCC"
+
+}

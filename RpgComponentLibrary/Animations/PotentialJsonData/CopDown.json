@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CopDown",
+  "imageName": "CopDown.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByklEQVRIx7VWu07DMBQ9jtqJH/BUKY26sdIhZYSt2ZH4AKYmMMBas9KBPiY+AImdbnSEIiVDP6ACS0z5AUYUhsStmzqPpu5dfH3tc8/JtWOb4EDWwKAv939we38InppuAQ0M+nx5BrP1xuT433IBszXbKU8ZflJWAF+esyIBMWnEvF5TOT6afAMgrCjHLvxEp4AGHiLhp3PEWFHNO6KrAESXAEFebueqi1CFn+gSkCYfTb5XIoSfV4Sq/MY6uAYLYq/X3PBVc2UTc65da9XKvqqy+/Ib+gTsb1X4DZ0C5C0iE8m+PEeHGYcQ4HNaKqajAFsXmd214XMK26EYjj/imNOBz+Ox+XSeK8Lu2gg4RcAphuMvAEDAKeqclsbvwl9L70HbsRAk1RJtPWlth+LEDDNWgTAgYp5rIeAx6fx1LQAAPNdKBJDMQ6B+3EHAoeT3XGzxk9QNyADg8uZX/ZO5FtpmCLM1yzjH4xxZ+OfHo0KszylGycqp8AA2ctQ23xoL0VVWqG2GLO9dIuXIOs9ZEbZthrn4NL/ySr/ovq8uJbH8AOBeEVLmZBg/RZEqXgUvtiEAvExPSanX6Hz6ydJfvYvJpFVMxqe0bNk/8E0wSgd9ZUUAAAAASUVORK5CYII="
+}

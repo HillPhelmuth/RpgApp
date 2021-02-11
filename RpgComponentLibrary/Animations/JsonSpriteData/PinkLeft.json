@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    }
+  ],
+  "name": "PinkLeft1",
+  "imageName": "PinkLeft.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAASCAMAAAAquK2IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAB+UExURQAAAJY8AP3bz5Y7APzbz5c+A/zZzJxFDPfSxKNQGpU8APDHtea4oZM6AJQ8ANmkh5U7AMqMaNyojfzazrdvQq9PO/zbzqFOF/LJuJ9DFeN3uZo/AP+/v+J2tuJ2ud90r6BDF5c/ANlwoqdJKdJqkMhjebFQQL1aXcpkfuV3ufDOVuMAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADNSURBVDhPfZDBDoMwDEOr5rodQJzDRFVN/v8fXBIySArCSKgvtlNEuRNVElWnGw0BPYuInC8LxoC6uw4eFog++joCtjFw9mXwMoyFffLn7FtgToNKddaJ4+hbYJrCQLgGvvgWODcKL3VuD74NIhdBPPl7wM8mQixcfeEUKMycCoNP2IYCmN8nE9axIPhwg3wPY42FhrVvsbBIw48iQgc4+p0B+FmF3lpioLVQkLooJIDvNyE4DXrX/DmwBZEVe3cSEdkVTtcbwfLoTyjlB/KvFN2ItSVAAAAAAElFTkSuQmCCn7kRhrlaGh03Kl5Z7VFS+gMk7RbOq1MkcAAAAABJRU5ErkJgguu+AwooqdWV1eT//vYFJiMXyRdXJyVeoC4KSuCsa+zaNXA5JWuDm89R3uWAE+SUYan6ROZdUkHDL8PMYIxW/skwslbWm+lhVF/3DiD21HfX2JEgdLQ84IzYEB5UJsivNYtRfd0BxLTpmYfzc6Gtd8Fmc3BWIE5Z9gyhqjWBGf1id8Brs4HX6XDD46mDZEtF7MOHxmE5SH8iufj1aQ/eYk+N7gB4IMVfnSS/sf4MWVvD1dxBZRTZA+nYFosem4BpDksidVBX4l6Zfam16A6AB5KvJkz+Ws+WnGGekgYQL14Ue7x8O0Im2E4/GEDqoCYie+QfkhLdAYT48LqqHRwtgnl2jbAXe1S4a8nMoNWRPTpbY/WcyqE7wKe5xJAwjlQM8VqS2cHYHnahrvYAGZKfL4NKB+s9bh/ti1M5dAeYenOBzCriVt9jV0WxvBH09wTwHwP3Xfxaxf45AAAAAElFTkSuQmCC"
+}

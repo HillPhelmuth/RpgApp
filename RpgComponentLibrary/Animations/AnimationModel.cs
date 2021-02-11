@@ -17,7 +17,6 @@ namespace RpgComponentLibrary.Animations
             Scale = scale;
             MoveSpeed = moveSpeed;
             CurrentSprite = sprites.Values.FirstOrDefault(x => x.Name == currentSpriteName);
-
         }
         public int Index { get; set; }
         public double PosX { get; set; }
@@ -62,7 +61,7 @@ namespace RpgComponentLibrary.Animations
     public record CollisionBlock
     {
         public CollisionBlock(string name, string imgSrcUrl, int height = 1, int width = 1, int xPosition = 0,
-            int yPosition = 0, int maxCollitions = 1)  
+            int yPosition = 0, int maxCollitions = 1)
         {
             H = height;
             W = width;
@@ -79,6 +78,11 @@ namespace RpgComponentLibrary.Animations
         public int Y { get; set; }
         public string ImageUrl { get; set; }
         public int MaxCollisions { get; set; }
+
+        public override string ToString()
+        {
+            return $"\r\nBlock {Name}\r\nSize: {H}x{W} Location: {X},{Y}\r\nImageUrl: {ImageUrl}";
+        }
     }
 
 }

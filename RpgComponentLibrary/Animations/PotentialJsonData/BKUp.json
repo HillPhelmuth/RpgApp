@@ -1,0 +1,33 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 1,
+      "x": 0,
+      "y": 17,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 2,
+      "x": 0,
+      "y": 34,
+      "w": 16,
+      "h": 17
+
+    }
+  ],
+  "name": "BKUp",
+  "imageName": "BKUp.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACAUlEQVRIx+2Wv2sUQRTHP7M54ZSAJ2lWi5AmCyk8TSXI/gP2koMTrPwBG6201CpphOsuWaKNgkQSC7ELBEGUi5Aqt0lAl0tzTXKde1hcLsSbFCHkdnb2h8RC4R4s7Jt577sz8+Z99ytQzL3JDIA3LdHZyzviOUn2e6f+pP9d9dV4EQFobEh6vccAGEYVoN8fGp8M5eRUgO9fPgBUleFq3IojAF/fzPAnZnBGGwAoAPfeyWJaghpjKDX10gBy4N1fktacjaXdwsHwaGzyyVy+3fSFZFV3kVo7t9fN8eXrWoAfd5stgIm3YzhrjGl7Yd7m55YjCzqAXo7CqynRTqzCdI1LsSd+SPDXyxhppo+f9+TKLrMAt660ngGs7JqzAO6N+v5CJj4Q4ikAUlaOo079VD7Y/rQEUFGGK5m3sLb4YtDO/z+hdEbiOaUzUkwnlEbJo1uwIsndgkWj5EVIJwRw7lcTAL/sczA8Gnr8sh+K0faCayM3HZm456IrcGqneaEVSAiMbhB/YN0ASZgTIt3o2nQ2HZmP+fq+U+N8YhnVgLS5yAoeLkrt7/na/HGo842BQhnwwT+oUHIAczaW90gy1MumUPovoAEgJKv5dtPPqlC0V9m12Tshk4nXpqkDaJTqHF4wWwtlcTm2Fx68lxd1QgLgqisCVYAYWVRIkno5cxmPAGQ52LqSlTUdAAAAAElFTkSuQmCC"
+
+}

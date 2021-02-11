@@ -11,6 +11,7 @@ using RpgApp.Shared.Services;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 using RpgApp.Shared.Types.PlayerExtensions;
+using RpgComponentLibrary.Animations;
 
 namespace RpgApp.Client.Pages.CombatTests
 {
@@ -60,11 +61,35 @@ namespace RpgApp.Client.Pages.CombatTests
         [Parameter]
         public List<string> Messages { get; set; } = new List<string>();
         private string cssString = "";
-      
+
+        
+        #region Animation
+
+        private AnimationCombatActions combatActions = new();
+        private AnimationModel combatAnimation;
+        
+        private CanvasSpecs canvasSpecs = new (300, 350);
+        
+        private void SetCombatAnimationData()
+        {
+            var spriteSet = AppState.CurrentPlayer?.ClassType == ClassType.Mage
+                ? SpriteSets.WizardSprites
+                : SpriteSets.WarriorSprites;
+            combatAnimation = new AnimationModel(spriteSet, "Idle", 3);
+           
+        }
+        private Task RunAnimation(string animation)
+        {
+           combatActions.TriggerAnimation(animation);
+           return Task.CompletedTask;
+        }
+
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             CurrentPlayer = AppState.CurrentPlayer;
-
+            SetCombatAnimationData();
             cssString = CurrentPlayer.ClassType switch
             {
                 ClassType.Warrior => "warrior-img",
@@ -104,14 +129,28 @@ namespace RpgApp.Client.Pages.CombatTests
         }
         private async Task Attack(string key)
         {
+            if (string.IsNullOrEmpty(key)) return;
+            targetMonster = key;
             Console.WriteLine("Attack!");
+            var rng = new Random();
+            await RunAnimation($"Attack{rng.Next(1, 3)}");
+            //await TriggerAttack(key);
+            //CurrentPlayer.UpdateDuringCombat(_combatPlayer);
+            //await InvokeAsync(StateHasChanged);
+        }
 
+        private string targetMonster;
+        private async void TriggerAttack(string animArgs)
+        {
+            if (string.IsNullOrEmpty(targetMonster)) return;
+            if (!animArgs.Contains("Attack", StringComparison.OrdinalIgnoreCase)) return;
+            var key = targetMonster;
             var dice = _combatPlayer.DamageDice;
             await CombatService.PlayerAttack(dice, key);
             if (AllMonsters[key].Health <= 0) AllMonsters[key].isDead = true;
-            //CurrentPlayer.UpdateDuringCombat(_combatPlayer);
-            await InvokeAsync(StateHasChanged);
         }
+
+        private Skill selectedSkill = new();
         private async Task UseSkill(Skill skill)
         {
             isSkillMenu = false;
@@ -159,9 +198,15 @@ namespace RpgApp.Client.Pages.CombatTests
 
         }
 
+        private List<Task> AnimationEventList = new();
         private async void HandlePlayerHit(bool isPlayer, string monsterId)
         {
             isPlayerHit = isPlayer;
+            if (isPlayer)
+            {
+                await RunAnimation("Dead");
+            }
+
             if (!monsterId.Contains("Monster"))
                 return;
             AllMonsters[monsterId].IsHit = true;
@@ -171,6 +216,10 @@ namespace RpgApp.Client.Pages.CombatTests
             await InvokeAsync(StateHasChanged);
         }
 
+        private async Task PlayerHit(bool isPlayer)
+        {
+
+        }
         private void OnMonsterHit(string monsterId) => AllMonsters[monsterId].IsHit = false;
         private void OnPlayerHit() => isPlayerHit = false;
         private void HandleNewMessage(string message)

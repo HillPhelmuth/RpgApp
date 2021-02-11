@@ -1,7 +1,12 @@
-﻿<img id="overheadUp" hidden src="@contentUrl/overhead/OverheadUpImg.png" />
-<img id="overheadLeft" hidden src="@contentUrl/overhead/OverheadLeftImg.png" />
-<img id="overheadDown" hidden src="@contentUrl/overhead/OverheadDownImg.png" />
-<img id="overheadRight" hidden src="@contentUrl/overhead/OverheadRightImg.png" />
+﻿<img id="GreenUp" hidden src="@contentUrl/overhead/OverheadUpImg.png" />
+<img id="GreenLeft" hidden src="@contentUrl/overhead/OverheadLeftImg.png" />
+<img id="GreenDown" hidden src="@contentUrl/overhead/OverheadDownImg.png" />
+<img id="GreenRight" hidden src="@contentUrl/overhead/OverheadRightImg.png" />
+
+@*<img id="PinkUp1" hidden src="@contentUrl/overhead/PinkUp.png" />
+    <img id="PinkLeft1" hidden src="@contentUrl/overhead/PinkLeft.png" />
+    <img id="PinkDown1" hidden src="@contentUrl/overhead/PinkDown.png" />
+    <img id="PinkRight1" hidden src="@contentUrl/overhead/PinkRight.png" />*@
 
 <img id="KnightAttack1" hidden src="@contentUrl/Knight/KnightAttack1.png" />
 <img id="KnightAttack2" hidden src="@contentUrl/Knight/KnightAttack2.png" />
@@ -12,17 +17,37 @@
 <img id="WizardAttack2" hidden src="@contentUrl/Wizard/WizardAttack2.png" />
 <img id="WizardIdle" hidden src="@contentUrl/Wizard/WizardIdle.png" />
 <img id="WizardDead" hidden src="@contentUrl/Wizard/WizardDead.png" />
+<img id="WizardHit" hidden src="@contentUrl/Wizard/WizardDead.png" />
 
 <img id="WarAttack1" hidden src="@contentUrl/War/WarAttack1.png" />
 <img id="WarAttack2" hidden src="@contentUrl/War/WarAttack2.png" />
 <img id="WarIdle" hidden src="@contentUrl/War/WarIdle.png" />
 <img id="WarDead" hidden src="@contentUrl/War/WarDead.png" />
-
-
+<img id="WarHit" hidden src="@contentUrl/War/WarDead.png" />
+@foreach (var boyle in SpriteSets.BoyleSprites.Values)
+{
+    <img id="@boyle.Name" hidden src="@boyle.ImgUrl" />
+}
+@foreach (var pink in SpriteSets.PinkSprites.Values)
+{
+    <img id="@pink.Name" hidden src="@pink.ImgUrl" />
+}
+@foreach (var boyle in SpriteSets.KingSprites.Values)
+{
+    <img id="@boyle.Name" hidden src="@boyle.ImgUrl" />
+}
+@foreach (var pink in SpriteSets.CheerSprites.Values)
+{
+    <img id="@pink.Name" hidden src="@pink.ImgUrl" />
+}
+@foreach (var pink in SpriteSets.CopSprites.Values)
+{
+<img id="@pink.Name" hidden src="@pink.ImgUrl" />
+}
 @*<img id="WarAttack1" hidden src="@contentUrl/War/WarAttack1.png" />
-<img id="WarAttack2" hidden src="@contentUrl/War/WarAttack2.png" />
-<img id="WarIdle" hidden src="@contentUrl/War/WarIdle.png" />
-<img id="WarDead" hidden src="@contentUrl/War/WarDead.png" />*@
+    <img id="WarAttack2" hidden src="@contentUrl/War/WarAttack2.png" />
+    <img id="WarIdle" hidden src="@contentUrl/War/WarIdle.png" />
+    <img id="WarDead" hidden src="@contentUrl/War/WarDead.png" />*@
 @code {
 
     private string contentUrl = "_content/RpgComponentLibrary/SpriteSheets";

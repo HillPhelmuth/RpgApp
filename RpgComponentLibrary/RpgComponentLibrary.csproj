@@ -11,6 +11,29 @@
 
   <ItemGroup>
     <Content Remove="Animations\CanvasCSharp.razor" />
+    <Content Remove="Animations\JsonSpriteData\WarHit.json" />
+    <Content Remove="Animations\JsonSpriteData\WizardHit.json" />
+    <Content Remove="Animations\PotentialJsonData\BKDown.json" />
+    <Content Remove="Animations\PotentialJsonData\BKLeft.json" />
+    <Content Remove="Animations\PotentialJsonData\BKRight.json" />
+    <Content Remove="Animations\PotentialJsonData\BKUp.json" />
+    <Content Remove="Animations\PotentialJsonData\BoyleDown.json" />
+    <Content Remove="Animations\PotentialJsonData\BoyleLeft.json" />
+    <Content Remove="Animations\PotentialJsonData\BoyleRight.json" />
+    <Content Remove="Animations\PotentialJsonData\BoyleUp.json" />
+    <Content Remove="Animations\PotentialJsonData\CheerDown.json" />
+    <Content Remove="Animations\PotentialJsonData\CheerLeft.json" />
+    <Content Remove="Animations\PotentialJsonData\CheerRight.json" />
+    <Content Remove="Animations\PotentialJsonData\CheerUp.json" />
+    <Content Remove="Animations\PotentialJsonData\CopDown.json" />
+    <Content Remove="Animations\PotentialJsonData\CopLeft.json" />
+    <Content Remove="Animations\PotentialJsonData\CopRight.json" />
+    <Content Remove="Animations\PotentialJsonData\CopUp.json" />
+    <Content Remove="Animations\PotentialJsonData\PinkDown.json" />
+    <Content Remove="Animations\PotentialJsonData\PinkLeft.json" />
+    <Content Remove="Animations\PotentialJsonData\PinkRight.json" />
+    <Content Remove="Animations\PotentialJsonData\PinkUp.json" />
+    <Content Remove="wwwroot\SpriteSheets\Potentials\PinkSheet.sprite" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,12 +48,55 @@
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadUp.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack1.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack2.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WarHit.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarDead.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarIdle.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WizardAttack1.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WizardAttack2.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\WizardHit.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WizardDead.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WizardIdle.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\PinkDown.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\JsonSpriteData\PinkLeft.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\JsonSpriteData\PinkRight.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\JsonSpriteData\PinkUp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\PotentialJsonData\BKDown.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\BKLeft.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\BKRight.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\BKUp.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\BoyleDown.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\PotentialJsonData\BoyleLeft.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\PotentialJsonData\BoyleRight.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\PotentialJsonData\BoyleUp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Animations\PotentialJsonData\CheerDown.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CheerLeft.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CheerRight.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CheerUp.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CopDown.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CopLeft.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CopRight.json" />
+    <EmbeddedResource Include="Animations\PotentialJsonData\CopUp.json" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\SpriteSheets\Potentials\PinkSheet.sprite" />
   </ItemGroup>
 
   
@@ -41,6 +107,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
     <PackageReference Include="Excubo.Blazor.Canvas" Version="2.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\SpriteSheets\pink\" />
   </ItemGroup>
 
 </Project>

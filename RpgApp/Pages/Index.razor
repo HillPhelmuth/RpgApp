@@ -5,22 +5,22 @@
 @using RpgApp.Client.Pages.StyleTests
 @inject HttpClient Http
 
-<MatTabGroup @bind-ActiveIndex="indexTab">
+<RpgTabGroup @bind-ActiveIndex="indexTab">
    
-        <MatTab Label="Generate Character">
+        <RpgTab Label="Generate Character">
             <GamePlayPrimary />
-        </MatTab>
-        <MatTab Label="Data Query Testing">
+        </RpgTab>
+        <RpgTab Label="Data Query Testing">
             <TestQueries />
-        </MatTab>
-        <MatTab Label="MyLayout">
+        </RpgTab>
+        <RpgTab Label="MyLayout">
             <LayoutMyCss />
-        </MatTab>
-    <MatTab Label="Test Styles">
+        </RpgTab>
+    <RpgTab Label="Test Styles">
         @*<div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>*@
         <CompLibraryTester/>
-    </MatTab>
-        <MatTab Label="Test Page">
+    </RpgTab>
+        <RpgTab Label="Test Page">
             @if (AppState.CurrentPlayer == null)
             {
                 <MatH3 Style="color:red">Error!</MatH3>
@@ -31,11 +31,11 @@
                 <TestPage />
             }
 
-        </MatTab>
-        <MatTab Label="D&D API Dev Tools">
+        </RpgTab>
+        <RpgTab Label="D&D API Dev Tools">
             @*<CheatCreate/>*@ <MatH3>Moving to it's own project</MatH3>
-        </MatTab>
-</MatTabGroup>
+        </RpgTab>
+</RpgTabGroup>
 @code
 {
     protected int indexTab;

@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CopUp",
+  "imageName": "CopUp.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAABKklEQVRIx2NkwALkGLrrGRgYGB4xlDYisxlIAHIMXf8RPMYGUvSTYj8TNkGYYphm0hzeXf/39nk0ff8b/t4+X0+seaTYz4jNAfdvuzAoqu5uQBa/f9u1QVF1D96YgFj4vyE/Vwmr/MTJ9wjGBqn2M1LTAcjJBt0MiF5YCJcxUisAGKnlAJjlxCU07IFAjv2M1HIAaqYlJp2XMVIjAJiQMxrx1pOilhZmItQyMQxxMOqBUQ8MHg8wNtBGLdEeoMwBkGKNEWclhCjbcVWE5NnPiK0RhbtIg2jE1xT4e/t8fXThV6z6l/ZzNzCrGjYSasSRYj/WKj3C5wjWSmnFFhtGYsJn0sz/WPXnpTMSpZ8U+1kIGWbta92AMIC4CD62+ShF6RrZzqObj+JNWgCXeqbE3x9PIwAAAABJRU5ErkJggg=="
+}

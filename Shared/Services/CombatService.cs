@@ -130,14 +130,27 @@ namespace RpgApp.Shared.Services
             await Task.WhenAll(notify, skillTask);
 
         }
+
+        #region Skill Tasks
+
         private async Task PlayerSkillAttack(Effect effect, string damageDice = "1D4")
         {
+            if (_allMonsters.All(x => x.Value.isDead))
+            {
+                await NotifyNewMessage($"monster {string.Join(", ", _allMonsters.Values.Select(x => x.Name))} have been killed");
+                return;
+            }
+
             var random = new Random();
             string targetId = "";
-            var targets = effect.Area ?? 1;
+            var targets = Math.Max(effect.Area ?? 0, 1);
             for (var i = 0; i < targets; i++)
             {
                 targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
+                while (_allMonsters[targetId].isDead)
+                {
+                    targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
+                }
                 await NotifyNewMessage($"Attacking random monster: {targetId}");
 
                 (decimal modifier, int damageDealt) = DealDamage(damageDice, targetId);
@@ -194,6 +207,9 @@ namespace RpgApp.Shared.Services
             await EvaluatePlayerTurn();
 
         }
+
+        #endregion
+
         public Task PlayerFlee()
         {
             // Create Run await logic

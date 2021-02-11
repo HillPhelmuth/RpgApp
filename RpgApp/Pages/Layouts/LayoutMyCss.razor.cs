@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using Microsoft.JSInterop;
 using RpgApp.Client.Pages.Modals;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
+using RpgComponentLibrary.Animations;
 using RpgApp.Shared.Types.Enums;
 
 namespace RpgApp.Client.Pages.Layouts
@@ -40,18 +43,125 @@ namespace RpgApp.Client.Pages.Layouts
         {
             CurrentPlayer = AppState.CurrentPlayer;
             AppState.PropertyChanged += UpdateState;
+            InitializeMap();
             return base.OnInitializedAsync();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        //protected override async Task OnAfterRenderAsync(bool firstRender)
+        //{
+        //    if (firstRender)
+        //    {
+        //        //await JsRuntime.InvokeVoidAsync("TurnBasedRpg.SetFocusToElement", gameboardReference);
+        //        StateHasChanged();
+        //    }
+        //}
+
+        #region Global animation controls
+        private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 4, 5);
+        private List<CollisionBlock> collitionsBlocks = new();
+        private CanvasSpecs canvasSpecs = new(600, 1100);
+        private KeyValuePair<string, string> background = new("village1", "/css/Images/Village1.png");
+        private bool hasCollided;
+        private bool stopTimer;
+        private string currentMap = "Home";
+        private TopViewAvatar avatarView;
+        private void SetMapCollisionns(int monsterCount)
         {
-            if (firstRender)
+            var rng = new Random();
+            collitionsBlocks.Add(new CollisionBlock("Heal", "_content/RpgComponentLibrary/img/icons/foreign/heart.png", 64, 64, 400, 300));
+            
+            for (var i = 0; i < monsterCount; i++)
             {
-                await JsRuntime.InvokeVoidAsync("TurnBasedRpg.SetFocusToElement", gameboardReference);
-                StateHasChanged();
+                var x = rng.Next(0, 1100);
+                var y = rng.Next(0, 600);
+                collitionsBlocks.Add(new CollisionBlock($"Attack{i}", "_content/RpgComponentLibrary/img/icons/foreign/x.png", 64, 64, x, y));
             }
         }
 
+        private void HandleSprites(TopViewAvatar avatar)
+        {
+            moveAnimation = ChangeSprites(avatar);
+        }
+        private AnimationModel ChangeSprites(TopViewAvatar avatar)
+        {
+            return avatar switch
+            {
+                TopViewAvatar.Green => new AnimationModel(SpriteSets.OverheadSprites, "Right", 4, 5),
+                TopViewAvatar.Boyle => new AnimationModel(SpriteSets.BoyleSprites, "Right", 4, 5),
+                TopViewAvatar.Pink => new AnimationModel(SpriteSets.PinkSprites, "Right", 4, 5),
+                TopViewAvatar.BurgerKing => new AnimationModel(SpriteSets.KingSprites, "Right", 4,5),
+                TopViewAvatar.ChearLeader => new AnimationModel(SpriteSets.CheerSprites, "Right", 4, 5),
+                TopViewAvatar.Cop => new AnimationModel(SpriteSets.CopSprites, "Right", 4, 5),
+                _ => new AnimationModel(SpriteSets.OverheadSprites, "Right", 4, 5),
+            };
+        }
+        private void InitializeMap()
+        {
+            collitionsBlocks.Add(new CollisionBlock("Dungeon", "dungeon-54.png", 54, 54, 1000, 525));
+            SetMapCollisionns(10);
+        }
+        
+        
+        private void HandleMove((double x, double y) pos)
+        {
+            moveUpdates.Add($"moved to {pos.x}-{pos.y}");
+
+        }
+
+        private List<string> collisionList = new();
+        private async void HandleCollision(string name)
+        {
+            Console.WriteLine($"Collision at: {name} From: {string.Join(' ', collitionsBlocks.Select(x => x.ToString()).ToArray())}");
+            if (collisionList.Contains(name)) return;
+            collisionList.Add(name);
+            if (name.Contains("Attack", StringComparison.OrdinalIgnoreCase))
+            {
+                TriggerCombat();
+            }
+            else if (name.Contains("Heal", StringComparison.OrdinalIgnoreCase) || name == "Heal")
+            {
+                AppState.CurrentPlayer.Health = AppState.CurrentPlayer.MaxHealth;
+                AppState.CurrentPlayer.AbilityPoints = AppState.CurrentPlayer.MaxAbilityPoints;
+                stopTimer = true;
+                StateHasChanged();
+                 var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! You have been HEALED", MessageBoxButtons.OK);
+                 if (result == MessageBoxDialogResult.None || result != MessageBoxDialogResult.None)
+                 {
+                    stopTimer = false;
+                 }
+            }
+            else if (name.Contains("Dungeon", StringComparison.OrdinalIgnoreCase))
+            {
+                stopTimer = true;
+                StateHasChanged();
+                var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! You have been moved the Dungeon", MessageBoxButtons.OK);
+                if (result == MessageBoxDialogResult.None || result != MessageBoxDialogResult.None)
+                {
+                    stopTimer = false;
+                }
+                ToggleCss();
+                collitionsBlocks = new List<CollisionBlock>
+                {
+                    new CollisionBlock("Home", "home-48.png", 54, 54, 50, 25)
+                };
+                SetMapCollisionns(20);
+                currentMap = "Dungeon";
+            }
+            else if (name.Contains("Home", StringComparison.OrdinalIgnoreCase))
+            {
+                collitionsBlocks = new List<CollisionBlock>();
+                InitializeMap();
+            }
+
+            var collision = collitionsBlocks.Find(x => x.Name == name);
+            collitionsBlocks.Remove(collision);
+            await InvokeAsync(StateHasChanged);
+          
+
+        }
+        #endregion
+
+        #region Old Grid Shit
 
         private void MovePlayer(Direction direction)
         {
@@ -115,9 +225,12 @@ namespace RpgApp.Client.Pages.Layouts
             moveUpdates.Add(moveInfo);
             if (moveUpdates.Count > 5)
                 moveUpdates.RemoveAt(0);
-            
+
             await InvokeAsync(StateHasChanged);
         }
+
+        #endregion
+
 
         private void TriggerCombat()
         {
@@ -127,9 +240,14 @@ namespace RpgApp.Client.Pages.Layouts
             StateHasChanged();
         }
 
-        private void ToggleCss()
+        private void ToggleCss(string name = "Dungeon")
         {
-            gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
+            currentMap = currentMap == "Home" ? "Dungeon" : "Home";
+            background = currentMap == "Dungeon"
+                ? new("dungeon1", "/css/Images/Dungeon1.png")
+                : new("village1", "/css/Images/Village1.png");
+            
+            //gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
         }
         private async void HandleCombatEnded(bool isVictory)
         {

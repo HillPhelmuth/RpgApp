@@ -1,0 +1,33 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 1,
+      "x": 0,
+      "y": 17,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 2,
+      "x": 0,
+      "y": 34,
+      "w": 16,
+      "h": 17
+
+    }
+  ],
+  "name": "BoyleDown",
+  "imageName": "BoyleDown.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACE0lEQVRIx+2WP0wTcRTHP4dMGOz5J+ZguWKMYBQXaFi6QkhMehsbW0m0sRPKLBsDxkmIlakbY42JTRwYYCKhA9FwQU1uooQAtp3cnsNZ/N2v96cMJkr4JS/53uv7vfvd63uf/OC/X0bUD7kUdfX5fZOBsLge3eGYeCLiGQaWaiLiOSaeHt8b2JzCBexCZpg3224gsJAZttsxlSYjoZ/gmEhbpx88CiTwvuye6Urjz77eqBqoG+JWRw0yQ77F6cgEYzbcuOobhOsxOybBzX5ySUfWYzr6YCXrF/KwCVbK96m6sBXdOwC41bK41bI8SSNhOrGqG0t52VjKi2Mi7aXovB5/RXdM/Ky9PN6v8f0IWqcn7Hz6yNfaNq3TE8anHjuJs7CaZd49ZNk77jyd2kCxw6R2ZFKCf5gHjskP7fjXu5qFXIq6iNQBUzURqeuQ6eSBDwxrbtSmtBtkx9yobRmGH1NpkE7kweDde4EEB9/2z8cDdcO5eDBxx7c4HZkgMwRmn28QrnWoBBKYfUwlHVmPieTBUQtuX/N9qtZ50BPykpnJxXUOGjC5uI6qgZnEqopIWWOAqsuJ/wIwG5N/NrYTATZfF9n73bClheKZv7RQ5P5AF8O0mmW++pnlsNdPP+T50y1eXTCgXN5QLm8oF/WGIiL5MCK1by6JQDEMY+3ti2fvdKDsfVjrfhbCeJC+BSPWXwDKL+6uNhrpv/4gAAAAAElFTkSuQmCC"
+
+}

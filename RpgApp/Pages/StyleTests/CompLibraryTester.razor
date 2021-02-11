@@ -104,7 +104,7 @@
                 <RpgTabGroup>
                     @foreach (var monster in AppState.AllMonsters)
                     {
-                        <RpgTab Text="@monster.Name">
+                        <RpgTab Label="@monster.Name">
                             <div class="rpgui-container framed">
                                 <p>Description: @monster.Description</p>
                                 <p>Difficulty: @monster.DifficultyLevel</p>
@@ -118,10 +118,10 @@
             <div class="col-rpg">
                 <div class="rpgui-container framed" style="height: auto; width: 300px">
                     <h1>RpgSlider.razor with RpgProgressBar.razor</h1>
-                    <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100"/>
-                    <RpgProgressBar Label="Life Meter" DataValue="slideLife" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Red"/>
-                    <RpgSlider Label="Mana Setter" @bind-DataValue="slideMana" MinValue="0" MaxValue="100" IsGolden="true"/>
-                    <RpgProgressBar Label="Mana Meter" DataValue="slideMana" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Blue"/>
+                    <RpgSlider Label="Life Setter" @bind-DataValue="slideLife" MinValue="0" MaxValue="100" />
+                    <RpgProgressBar Label="Life Meter" DataValue="slideLife" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Red" />
+                    <RpgSlider Label="Mana Setter" @bind-DataValue="slideMana" MinValue="0" MaxValue="100" IsGolden="true" />
+                    <RpgProgressBar Label="Mana Meter" DataValue="slideMana" MinValue="0" MaxValue="100" ProgressBarColor="ProgressBarColor.Blue" />
                 </div>
             </div>
             <div class="col-rpg">
@@ -167,12 +167,15 @@
                     <RpgCombatAnimation Animation="combatAnimation" CombatActions="combatActions" CanvasBackgound="canvasBackgound" />
                 </div>
             </div>
-            <div class="col-rpg" style="width:850px">
-                <div class="rpgui-container framedgolden2" style="height: auto; width: 850px">
+            <div class="col-rpg" style="width:650px">
+                <div class="rpgui-container framedgolden2" style="height: auto; width: 650px">
                     <h1>RpgGlobalAnimation.razor</h1>
-                    <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="moveAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collitionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision" />
+                    <div @ondblclick="ToggleAnimation">
+                        <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="currentAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collitionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision"/>
+                    </div>
                 </div>
             </div>
+            
             <div class="rpg-log">
                 <div class="rpgui-container framedgolden" style="min-width: 90vw; max-height:520px; overflow-y:scroll">
                     <h1>Menu Logs</h1>
