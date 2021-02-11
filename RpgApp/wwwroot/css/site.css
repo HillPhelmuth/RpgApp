@@ -2,6 +2,8 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color:black;
+    color:white;
 }
 
 a, .btn-link {
@@ -208,16 +210,16 @@ app {
     border:3px solid black;
     left:0;
     top:0;
-    position:absolute
+    /*position:absolute*/
 }
 .inventory {
-    height: 40vh;
+    height: 10vh;
     width: 20vw;
-    background-color: lightslategray;
+   /* background-color: lightslategray;
     border: 3px solid black;
-    left: 0;
-    bottom: 0;
-    position:absolute
+    left: 0;*/
+    /*bottom: 0;*/
+    /*position:absolute*/
 }
 .nav-controls {
     height:20vh;
@@ -226,7 +228,7 @@ app {
     border: 3px solid black;
     bottom:0;
     right:0;
-    position:absolute
+    /*position:absolute*/
 }
 .game-screen {
     height:100vh;
@@ -234,82 +236,26 @@ app {
     position: relative;
     overflow: hidden;
 }
-.primary-grid {
+.rpgui-animation-overhead {
     height: 80vh;
     width: 80vw;
-/*    background-color: forestgreen;*/
     top: 0;
     right: 0;
     position: absolute;
-    display: flex;
-    flex-direction: row;
 }
-    .primary-grid::after {
-        content: '';
-        background: url('Images/Village1.png') no-repeat center center;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        min-height: 512px;
-        z-index: -1;
-        opacity: 0.35;
-    }
-.primary-grid1 {
-    height: 80vh;
-    width: 80vw;
-    background-color: forestgreen;
-    top: 0;
-    right: 0;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-}
-.column {
-        width: 6.66vw;
-        height: 100%
-    }
-.gridpiece {
-    height:6.66vh;
-    width:6.66vw;
-    border-radius:5px;
-    border:2px solid black;
-    margin:auto;
-}
-.gridpiece .located {
-    background-color: blue;
-}
-.other-stuff {
-    height: 20vh;
-    width: 40vw;
-    background-color: black;
-    color: white;
-    border: 3px solid black;
-    bottom: 0;
-    right:40vw;
-    position: absolute
-}
-.backgroundIcon {
-    position: relative;
-    font-weight: 600
+.rpgui-left-panel {
+    height:80vh;
+    width:20vh;
+    left:0;
 }
 
-    .backgroundIcon::after {
-        content: '';
-        background: url('Images/Village1.png') no-repeat center center;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        min-height: 512px;
-        z-index: -1;
-        opacity: 0.15;
-        background-clip: padding-box;
-        background-origin: padding-box;
-        background-position: center;
-    }
+.other-stuff {
+    min-height: 10vh;
+    max-height:30vh;
+    overflow-y: scroll;
+    width: 20vw;
+}
+
 .pirate-img {
     content: url('Images/priate-256.png');
     height: auto;

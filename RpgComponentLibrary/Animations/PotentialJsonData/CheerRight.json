@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CheerRight",
+  "imageName": "CheerRight.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVRIx71WsW7CQAx9FzGGhUwVX8IQlc4s/QzmpILxfEOHIKVz/wMxpzQSfAlbywDZ3SWhSUrIOUDfdLL0/Hw+22eFJgyMBgDstamcbeERn86sSMy31HesHUlQ5ygmKKab+KpBNZIU0x87K7LKYjn7OQI/w1vqAt+krIK21D//AmfIgZ+dtbch8DMAQOhnv6XUBoG+c5cASghzvrgHLPWduwSQCxXiQdnHjRPgXAoAAOLUlQew16bwEacuQj8jAPavJ9B3GgMAoGeP6I8mhVVcPv3RBP3RBMPXBwzDdyNKgKV+40TQUVKZJGb+pCTB/xe/d8mJWaxRZKILbsXnLw0zF5J1lLCOEoZHDI94F09ln5BHXPEhRa6ro4QPm2Wj/tke2MVTHfoZaDYumzuN0LDDBKoHe9yuGvWbxigdtyvQ4uOqC1wBKpdenLoy/cNmyYfN8roSGBjNOaQ7UPD8wvCooHO9oVuFdZRUyR5xl0XsdAHp8laq/7Yk9C51P83GZBbrzqVzKsGB0V3WCBN9tn6AP8RWGK2Z8kRnAAAAAElFTkSuQmCC"
+}

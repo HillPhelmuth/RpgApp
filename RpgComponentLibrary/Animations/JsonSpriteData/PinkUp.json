@@ -1,0 +1,28 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    }
+  ],
+  "name": "PinkUp1",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAASCAMAAAAquK2IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABgUExURQAAAJY8AJY7APzbz5xFDPfSxJU8AKNQGvDHta1fLpU7AKFOF/3bz38/AOJ2tv+/v+N4uZc+A5E2AOJ2ueN3ud90r5o/CuN2uaBDF6dJKZM6AOJ1t7FQQMhjeZQ8AL1aXXeiYXEAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVDhPfY/hCoMwDIRLqLhh96NLhZVN9v5vuUuadFrcDrF+uctRw7kIss9zHQOUhNN+cvDHAFFOU0q5Z8YCovkCzRYQMz6WiAUfHHwJ5Pl6BbeJcM4k+c573wKS6QFM9L0r+PotYNrzocAkrA1j4z8+aVxMfUHlvky8wTiZfviBbizENw9MLH9YJufBD3fmFWK+N6Yn0bpiwwKjH0qJEQ+zJXBSjFgoijhbwFgWiCqeUttCBYtKVaTK4vYCLLzU39jvXDaVX4l408DLFwK9RcwdcQnobQuhsAYcoRb4FjTsgYbdhsbJKQqH8AEWkBLJx1gxWAAAAABJRU5ErkJggqZUh1mIRKBp4+caeR2i9Y346Fazz4zY9ZewSm4FoX/yIsX1Z45nuf/x8xTXnz6W3ZI+TH9lA4Ub5gLzxJ++usTtU233QJ5zbFicyhug+xEJ/XTO4HbjDufMr/0o8mtn0uT62Jih/Yl1JVic6dH2XYNLrx4hEmNDHNZcnzJHrDd98XIZ0txwgTGacoRWxp0jwJoi5u6r1KE1CpQN2OVy+vW7EbIAvpXmaQbQ2nKOx7+W5tPX8jBDbgWRf+TAgHYgck0ZrIm1sQf2Esj5uDaMk8nxfA0mkjB0cO/FQTIr7I9dwMtwbNQY4g4NQku5Ht4XHsDbT/eHe3PgW6PQb2JsEHPd6LTazxkr4vs5YxvQagTsLD/sSpopMhWmckaWvTvnydQStvcf/xNXW2DQ4sMD8Av0QYa7ZaKg5QAAAABJRU5ErkJggg=="
+}

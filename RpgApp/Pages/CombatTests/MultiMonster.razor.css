@@ -1,0 +1,5 @@
+﻿.rpg-btn-group {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

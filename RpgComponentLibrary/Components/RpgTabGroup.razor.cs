@@ -11,6 +11,10 @@ namespace RpgComponentLibrary.Components
     {
         [Parameter]
         public RenderFragment ChildContent { get; set; }
+        [Parameter]
+        public int ActiveIndex { get; set; }
+        [Parameter]
+        public EventCallback<int> ActiveIndexChanged { get; set; }
         public RpgTab ActivePage { get; set; }
         private List<RpgTab> _pages = new();
         internal void AddPage(RpgTab tabPage)
@@ -22,6 +26,11 @@ namespace RpgComponentLibrary.Components
         }
         private string GetButtonClass(RpgTab page) => page == ActivePage ? "" : "silver";
 
-        private void ActivatePage(RpgTab page) => ActivePage = page;
+        private void ActivatePage(RpgTab page)
+        {
+            ActivePage = page;
+            ActiveIndex = _pages.IndexOf(ActivePage);
+            ActiveIndexChanged.InvokeAsync(ActiveIndex);
+        }
     }
 }

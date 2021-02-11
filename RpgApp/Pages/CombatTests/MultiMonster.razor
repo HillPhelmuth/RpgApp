@@ -1,91 +1,127 @@
 ﻿@page "/multiMonster"
 <div class="mat-layout-grid" style="line-height:1.2rem">
-    <div class="mat-layout-grid-inner">
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4" style="font-size: .9rem; line-height: 1.2rem; overflow: scroll; height: auto;min-height:200px; max-height: 400px">
-            <MatH3>Actions</MatH3>
-            @foreach (var message in Messages)
-            {
-                @((MarkupString)message)
-            }
-
-        </div>
+    <div class="mat-layout-grid-inner rpgui-content">
         <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
-            <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="isPlayerDefeated">
-                <MatH3 Class="text-center">You</MatH3>
-                <MatCard Style="width:100%">
-                    <div style="height:auto">
-                        <MatHeadline4 class="demo-mat-card-clean-margin">
-                            Player : @CurrentPlayer.Name
-                        </MatHeadline4>
-                        <MatSubtitle2 class="demo-mat-card-clean-margin">
-                            Type: @CurrentPlayer.ClassType.ToString()
-                        </MatSubtitle2>
-                    </div>
-                    <MatCardContent>
-                        <MatCardMedia Style="height:auto; min-height:100px">
-                            <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="isPlayerHit" OnAnimationEnd="OnPlayerHit">
-                                <div class="@cssString"></div>
-                            </Animation>
-                        </MatCardMedia>
-                        <MatBody2 Style="height:auto">
-                            <MatH5>HP: @CurrentPlayer.Health / @CurrentPlayer.MaxHealth</MatH5>
-                            <MatH5>AP: @CurrentPlayer.AbilityPoints / @CurrentPlayer.MaxAbilityPoints</MatH5>
-                        </MatBody2>
-                    </MatCardContent>
-                    <MatCardActions>
-                        <MatCardActionButtons>
-
-                            <MatButton OnClick="OpenMenu">Skill</MatButton>
-                            @if (isSkillMenu)
-                            {
-                                <MatList SingleSelection="true">
-                                    @foreach (var skill in CurrentPlayer.Skills.Distinct())
-                                    {
-                                        <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
-                                    }
-                                </MatList>
-                            }
-                            <MatButton OnClick="Flee">Flee</MatButton>
-                        </MatCardActionButtons>
-                        <MatCardActionIcons>
-                        </MatCardActionIcons>
-                    </MatCardActions>
-                </MatCard>
-            </Animation>
-        </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
-            <MatH3>Monsters</MatH3>
-            @foreach ((string key, var monster) in AllMonsters ?? new Dictionary<string, Monster>())
-            {
-                if (!monster.isDead)
+            @*<MatH3>Actions</MatH3>
+                @foreach (var message in Messages)
                 {
-                    <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
-                        <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">
-                            <MatCard>
-                                <div>
-                                    <MatHeadline6>
-                                        @monster.Name
-                                    </MatHeadline6>
-                                    <MatSubtitle2>
-                                        @monster.Description
-                                    </MatSubtitle2>
-                                </div>
-                                <MatCardContent>
+                    @((MarkupString)message)
+                }*@
+            <div class="rpgui-container framedgolden" style="max-height:520px; overflow-y:scroll">
+                <h1>Action Logs</h1>
+                <ol>
+                    @foreach (var message in Messages)
+                    {
+                        <li>@((MarkupString)message)</li>
+                    }
+                </ol>
+            </div>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+            <div class="rpgui-content rpgui-container framed">
+                <div class="text-center">
+                    <h1>@CurrentPlayer.Name</h1>
+                    <h3>@CurrentPlayer.ClassType.ToString()</h3>
+                </div>
+                <RpgProgressBar Label="Life" MinValue="0" MaxValue="CurrentPlayer.MaxHealth" ProgressBarColor="ProgressBarColor.Red" DataValue="@CurrentPlayer.Health" />
+                <RpgProgressBar Label="Ability" MinValue="0" MaxValue="CurrentPlayer.MaxAbilityPoints" ProgressBarColor="ProgressBarColor.Blue" DataValue="@CurrentPlayer.AbilityPoints" />
 
-                                    <MatBody2 Style="height: auto">
-                                        <MatH5>HP: @monster.Health / @monster.MaxHealth</MatH5>
-                                        <MatH5>Difficulty: @monster.DifficultyLevel Damage: @monster.DamageDice</MatH5>
-                                    </MatBody2>
-                                </MatCardContent>
-                                <MatCardActions>
-                                    <MatCardActionButtons>
-                                        <MatButton OnClick="@(() => Attack(key))" Raised="true">Attack This Monster</MatButton>
-                                    </MatCardActionButtons>
-                                </MatCardActions>
-                            </MatCard></Animation>
-                    </Animation>
+                <RpgCombatAnimation Animation="combatAnimation" CombatActions="combatActions" CanvasBackgound="CanvasBackgound.FramedGolden2" CanvasSpecs="canvasSpecs" OnAnimationComplete="TriggerAttack" />
+                <hr class="golden" />
+                <RpgSelectDropdown Width="100" TItem="Skill" @bind-SelectedValue="selectedSkill" OptionsList="AppState.CurrentPlayer.Skills" DisplayPropertyName="Name" />
+                <RpgButton Label="@(string.IsNullOrEmpty(selectedSkill.Name)? "Select Skill": selectedSkill.Name)" Width="50" OnClick="@(() => UseSkill(selectedSkill))" />
+                <RpgButton Label="Flee" Width="50" RpgButtonStyle="RpgButtonStyle.Silver" OnClick="Flee" />
+
+            </div>
+            @*<Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="isPlayerDefeated">
+                    <MatH3 Class="text-center">You</MatH3>
+                    <MatCard Style="width:100%">
+                        <div style="height:auto">
+                            <MatHeadline4 class="demo-mat-card-clean-margin">
+                                Player : @CurrentPlayer.Name
+                            </MatHeadline4>
+                            <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                Type: @CurrentPlayer.ClassType.ToString()
+                            </MatSubtitle2>
+                        </div>
+                        <MatCardContent>
+                            <MatCardMedia Style="height:auto; min-height:100px">
+                                <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="isPlayerHit" OnAnimationEnd="OnPlayerHit">
+                                    <div class="@cssString"></div>
+                                </Animation>
+                            </MatCardMedia>
+                            <MatBody2 Style="height:auto">
+                                <MatH5>HP: @CurrentPlayer.Health / @CurrentPlayer.MaxHealth</MatH5>
+                                <MatH5>AP: @CurrentPlayer.AbilityPoints / @CurrentPlayer.MaxAbilityPoints</MatH5>
+                            </MatBody2>
+                        </MatCardContent>
+                        <MatCardActions>
+                            <MatCardActionButtons>
+
+                                <MatButton OnClick="OpenMenu">Skill</MatButton>
+                                @if (isSkillMenu)
+                                {
+                                    <MatList SingleSelection="true">
+                                        @foreach (var skill in CurrentPlayer.Skills.Distinct())
+                                        {
+                                            <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
+                                        }
+                                    </MatList>
+                                }
+                                <MatButton OnClick="Flee">Flee</MatButton>
+                            </MatCardActionButtons>
+                            <MatCardActionIcons>
+                            </MatCardActionIcons>
+                        </MatCardActions>
+                    </MatCard>
+                </Animation>*@
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+            <div class="rpgui-container framed">
+                @*<MatH3>Monsters</MatH3>*@
+                <h1>Monsters</h1>
+                @foreach ((string key, var monster) in AllMonsters ?? new Dictionary<string, Monster>())
+                {
+                    if (!monster.isDead)
+                    {
+                        <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
+                            <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">
+                                <div class="text-center">
+                                    <h1>@monster.Name</h1>
+                                    <h3>@monster.Description</h3>
+                                </div>
+                                <p>Difficulty: @monster.DifficultyLevel</p>
+                                <p>Damage: @monster.DamageDice  Speed: @monster.Speed</p>
+                                <RpgProgressBar MinValue="0" MaxValue="@monster.MaxHealth" DataValue="@monster.Health" />
+                                <hr class="golden" />
+                                <RpgButton OnClick="@(() => Attack(key))" Label="Attack This Monster" />
+                                @*<MatCard>
+                                        <div>
+                                            <MatHeadline6>
+                                                @monster.Name
+                                            </MatHeadline6>
+                                            <MatSubtitle2>
+                                                @monster.Description
+                                            </MatSubtitle2>
+                                        </div>
+                                        <MatCardContent>
+
+                                            <MatBody2 Style="height: auto">
+                                                <MatH5>HP: @monster.Health / @monster.MaxHealth</MatH5>
+                                                <MatH5>Difficulty: @monster.DifficultyLevel Damage: @monster.DamageDice</MatH5>
+                                            </MatBody2>
+                                        </MatCardContent>
+                                        <MatCardActions>
+                                            <MatCardActionButtons>
+                                                <MatButton OnClick="@(() => Attack(key))" Raised="true">Attack This Monster</MatButton>
+                                            </MatCardActionButtons>
+                                        </MatCardActions>
+                                    </MatCard>*@
+                            </Animation>
+                        </Animation>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 

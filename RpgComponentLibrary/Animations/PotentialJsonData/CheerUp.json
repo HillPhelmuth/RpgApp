@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CheerUp",
+  "imageName": "CheerUp.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB5UlEQVRIx8WWsU4CQRCG/0EaGgu0Mb6FpQlw9Fr7Bia2mByFCTtrQnEUPoBvYK3UgIV2voVaQSEkNiZjwe16eyzcniFhEnJ7O/vNDDuzs0fwSV0rAMBMaWccKoYhYTsnxME2Svjf8xqotSPnacbf40mQcxIGIXLmCRFqbQTZKOGf1gbgk5BdPGDZqJ8yBW1AoP/KyqJ1cJFuW1LSf2XrAQjxv3T/lMrWA5gp3WksVqY7jUVYIyjp39ajiCg6uLUK1W06i3XybN9l2gMROcFk+febT9z/XDj8ZfWBj/tHQXwZ/04GVLfJRTWYN+zjTaBZOe4fBfNl/FetjkiLCAAwANaDSc54iwGA44jzu7dL3smAk8K4tTLmONrcQAr4/BqfGB+hPHl7uBD7avDr6YQBYP/03NvLVTISs9bHmzndbXv5r5dHAYD9szcvb8src5e4ZyBuLf/tTOlsCvVgApn2MH8dYv46XLt7140FrtNuk+cxU9rq14ixL9MefLyNz3cGTH0tn6LoUFsjKcTpb1MAbDtKhjdzH3dXRW3Y6FnFrRXe6HW3qBWLiEpGgrpWqGulkpFIesKC7rId838GMmfDeS/Jlw1AJSPJflNt4qvePA7GTvogxDp5Dt6APJ9viUWyvLQoiP8FxOJ6hHLzUWkAAAAASUVORK5CYII="
+}

@@ -1,52 +1,49 @@
 ﻿
 @if (!isCombatActive)
 {
+    <div class="rpgui-content" style="width:100vw; height: 100vh; position: relative; overflow: hidden; background-color:black">
+        <div class="game-screen" @ref="gameboardReference" @onkeyup="@(KeyboardMove)" tabindex="0">
 
-    <div class="game-screen" @ref="gameboardReference" @onkeyup="@(KeyboardMove)" tabindex="0">
-       
-        <div class="menu">
-            <MatButton Raised="true" OnClick="ShowMenu">Menu</MatButton>
-        </div>
-        <div class="inventory">
-            <MatButton Raised="true" OnClick="ToggleCss">Toggle Village background</MatButton>
-        </div>
-
-        <div class="@gridCss" @onkeypress="@KeyboardMove">
-            @for (int i = 0; i < 12; i++)
-            {
-                <div class="column">
-                    @for (int j = 0; j < 12; j++)
+            <div class="rpgui-left-panel">
+                <div class="menu">
+                    <div class="rpgui-container framedgrey">
+                        <MatButton Raised="true" OnClick="ShowMenu">Menu</MatButton>
+                    </div>
+                </div>
+                <hr class="golden" />
+                <div class="inventory">
+                    <div class="rpgui-container framedgolden">
+                        <RpgButton OnClick="@(() => ToggleCss(currentMap))">Toggle Village background</RpgButton>
+                        <hr class="golden" />
+                        <RpgSelectDropdown TItem="TopViewAvatar" @bind-SelectedValue="avatarView" OptionsList="@(Enum.GetValues(typeof(TopViewAvatar)).Cast<TopViewAvatar>().ToArray())" />
+                        <h2>@Enum.GetName(avatarView)</h2>
+                        <RpgButton OnClick="@(() => HandleSprites(avatarView))" Label="Change Avatar"/>
+                    </div>
+                </div>
+                <hr class="golden" />
+                <div class="other-stuff rpgui-container framedgolden2" style="margin-top:25rem">
+                    @foreach (var info in moveUpdates)
                     {
-                        int row = i;
-                        int col = j;
-                        <PlayerLocation Row="row" Col="col" PlayerLocChanged="HandlePlayerLocChanged"></PlayerLocation>
+                        <p>@info</p>
                     }
                 </div>
-            }
-
-        </div>
-        <div class="nav-controls">
-            <div class="mat-layout-grid" style="padding:3px">
-                <div class="mat-layout-grid-inner" style="padding:3px">
-                    <div class="mat-layout-grid-cell">
-                        <MatButton Raised="true" OnClick="@(() => MovePlayer(Direction.Left))" Style="margin-top: 3rem; margin-bottom:-1rem" Icon="arrow_back" TrailingIcon="arrow_back">left</MatButton>
-                    </div>
-                    <div class="mat-layout-grid-cell">
-                        <MatButton Raised="true" OnClick="@(() => MovePlayer(Direction.Up))" Style="margin-bottom:auto; margin-top:-.1rem" Icon="arrow_upward" TrailingIcon="arrow_upward">Up</MatButton>
-                        <MatButton Raised="true" OnClick="@(() => MovePlayer(Direction.Down))" Style="margin-top:4rem; margin-bottom:-2rem" Icon="arrow_downward" TrailingIcon="arrow_downward">Down</MatButton>
-                    </div>
-                    <div class="mat-layout-grid-cell">
-                        <MatButton Raised="true" OnClick="@(() => MovePlayer(Direction.Right))" Style="margin-top: 3rem; margin-bottom:-1rem" Icon="arrow_forward" TrailingIcon="arrow_forward">Right</MatButton>
-                    </div>
+            </div>
+            <hr class="golden" />
+            <div class="rpgui-animation-overhead">
+                <div class="rpgui-container framedgrey">
+                    <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="moveAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collitionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision" />
                 </div>
             </div>
+           
         </div>
-        <div class="other-stuff">
+       
+        @*<hr class="golden" />
+        <div class="other-stuff rpgui-container framedgolden2">
             @foreach (var info in moveUpdates)
             {
                 <p>@info</p>
             }
-        </div>
+        </div>*@
     </div>
 }
 @if (isCombatActive)
