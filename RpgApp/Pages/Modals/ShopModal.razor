@@ -1,19 +1,13 @@
-﻿<div class="text-left">
-    @foreach (var item in shopInventory)
-    {
-        <h3>@item.Name</h3>
-        <ul>
-            <li>@item.GoldCost Gold</li>
-            <li>@item.Description</li>
-            <ol>
-                Effects:
-                @foreach (var effect in item.Effects)
-                {
-                    <li>@effect.Type.ToString()</li>
-                    <li>@effect.Value</li>
-                }
-            </ol>
-        </ul>
-        <RpgButton OnClick="@(() => BuyEquipment(item))" Label="Buy" Width="10" RpgButtonStyle="RpgButtonStyle.Silver"></RpgButton>
-    }
-</div>
+﻿@using Frame = RpgComponentLibrary.Components.Frame
+<RpgItemsMenu ImageItemActions="_imagesEquipPairs" MenuColumns="1" MenuFrame="Frame.FramedGrey" Context="item" TItem="Equipment">
+    <MenuHeader>
+        <h1>Shop</h1>
+    </MenuHeader>
+    <ToolTipTemplate>
+        @item.AsDisplayString()
+    </ToolTipTemplate>
+    <ActionTemplate>
+        <label>@item.Name</label>
+        <RpgButton OnClick="@(() => BuyEquipment(item))" Label="Purchase"></RpgButton>
+    </ActionTemplate>
+</RpgItemsMenu>
