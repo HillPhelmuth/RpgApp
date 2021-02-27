@@ -10,12 +10,18 @@ using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
+using RpgApp.Shared.Types.PlayerExtensions;
 
 namespace RpgApp.Client.Pages.Modals
 {
     public partial class ShopModal
     {
-        List<Equipment> shopInventory = new List<Equipment>();
+        private List<Equipment> shopInventory = new List<Equipment>();
+        private List<KeyValuePair<string, Equipment>> _imagesEquipPairs = new();
+        private List<KeyValuePair<string, Equipment>> AddImages(List<Equipment> equipment)
+        {
+            return equipment.Select(eq => eq.AddImagePath()).ToList();
+        }
         [Inject]
         public AppStateManager AppState { get; set; }
         [Inject]
@@ -25,6 +31,7 @@ namespace RpgApp.Client.Pages.Modals
         {
             var apiResponse = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={30}");
             shopInventory = apiResponse;
+            _imagesEquipPairs = AddImages(AppState.AllEquipment);
             foreach (var item in shopInventory.Where(item => item.Effects == null))
             {
                 item.Effects = new List<Effect> { new Effect { Type = EffectType.Status, Value = "none" } };
