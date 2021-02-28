@@ -1,0 +1,32 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 100,
+      "h": 100
+
+    },
+    {
+      "index": 1,
+      "x": 100,
+      "y": 0,
+      "w": 100,
+      "h": 100
+
+    },
+    {
+      "index": 2,
+      "x": 200,
+      "y": 0,
+      "w": 100,
+      "h": 100
+
+    }
+  ],
+  "name": "ArcHit",
+  "imageName": "ArcHit.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAABkCAMAAAAL3/3yAAAAQlBMVEUAAAC5tap1RyHfqHtcmGcseCRDHBM6akNhKh0fVRqTXzNXeDPz0LP59/EgPiYhZBrHoYIgEgeToSMAAABAJQ4pGApfvbKyAAAAAXRSTlMAQObYZgAAAutJREFUeNrs0jkVwDAMBcFf2hJ/vqGgKpdnIOzbAAAAAAAAAACftMLDscRirTDVa5zLwJ1bal28mNmi2yoQBAeEzngZybrb///q7QF8QpJXV/rJe5nqAS8o4jjKwXHmiw9ZNnSRFCFYV+UoFCdf/DhoWUnhj8ZRyrZtkKyuaqNlDYrxR6MwJf4JppSj9MkqBypLiK1sB300HqW7UphSSilzHx5D1tcXImvZHGgnIsUVAZUy1lGK2ZSlENtwUwosy+QqGVcwHL+KomXQskrKcljWv+U/zxSGExGleFFQWVeZFFbW33/7dV2uIBz1Hcq+R0xZhCthrtZjBh6N1lrAspR4vfYes7+MyBbblIUOcPOI2QpRikx5U17SFSFlEYisLbxlApb13QrB8RlT+oQxslydZK4rcFmOybJFll49oG2Yq4jEyBZ4NLZ3Kc6U0hZb5Cp82/dhazkaOVlrKaAsBZHl40Mk4pUXIlBZxpTiM61VUJZn0lJs2Ql2NOb8zupfQCn5ykNWq7CshGxdFrUNl/k1qpQ05ZJVn5a2bpbBINzRqLTv+YVK8VqzdW+PB/dPqVV/Q7ABVoRoc36RUvx8VDE65kHJ8tGIp6wHJ8urs78UJCtteRu2IFnnYLRuC5Llfk5ZXilZD8mqY4B1mZA1Chm2OgU5Gv08T0HaaJ2RdQ5Z5s1zs2gNoKwO8Yrs9lN5TFme4zs/rwhZ5l2WcbKqj1RElqerlJWV5GZH/jebrk5BdoVwJVlVMVcsIaCs2YdsAbL2vc7BstudkWXnArE7JEtLeTx8pK/q87Lyrc/NJ1n3+yKLgVhCtASEUl15EwFZ+bKLLMRVhyzXGFcJGa4G8Zmq0HUwrhKyuOIgtf648pSrzyPsHcrVCrmDEGVhSNWnEev1eQ1m3BhV/cNqXcfHXdmanXH1y/WxCLhzQtbP1+cUkwxd/yMMQhZv647b+p1BfQP6vz04FgAAAAAY5G89in0VAAAAAAAAAAAAbAIh4CaKswEw8wAAAABJRU5ErkJggg=="
+}

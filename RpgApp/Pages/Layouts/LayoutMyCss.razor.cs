@@ -15,6 +15,7 @@ using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgComponentLibrary.Animations;
 using RpgApp.Shared.Types.Enums;
+using RpgComponentLibrary.Components;
 
 namespace RpgApp.Client.Pages.Layouts
 {
@@ -57,8 +58,8 @@ namespace RpgApp.Client.Pages.Layouts
         //}
 
         #region Global animation controls
-        private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 4, 5);
-        private List<CollisionBlock> collitionsBlocks = new();
+        private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 3, 4);
+        private List<CollisionBlock> collisionsBlocks = new();
         private CanvasSpecs canvasSpecs = new(600, 1100);
         private KeyValuePair<string, string> background = new("village1", "/css/Images/Village1.png");
         private bool hasCollided;
@@ -68,13 +69,13 @@ namespace RpgApp.Client.Pages.Layouts
         private void SetMapCollisionns(int monsterCount)
         {
             var rng = new Random();
-            collitionsBlocks.Add(new CollisionBlock("Heal", "_content/RpgComponentLibrary/img/icons/foreign/heart.png", 64, 64, 400, 300));
-            
+            collisionsBlocks.Add(new CollisionBlock("Heal", "_content/RpgComponentLibrary/img/icons/foreign/heart.png", 64, 64, 400, 300));
+
             for (var i = 0; i < monsterCount; i++)
             {
                 var x = rng.Next(0, 1100);
                 var y = rng.Next(0, 600);
-                collitionsBlocks.Add(new CollisionBlock($"Attack{i}", "_content/RpgComponentLibrary/img/icons/foreign/x.png", 64, 64, x, y));
+                collisionsBlocks.Add(new CollisionBlock($"Attack{i}", "_content/RpgComponentLibrary/img/icons/foreign/x.png", 64, 64, x, y));
             }
         }
 
@@ -86,22 +87,22 @@ namespace RpgApp.Client.Pages.Layouts
         {
             return avatar switch
             {
-                TopViewAvatar.Green => new AnimationModel(SpriteSets.OverheadSprites, "Right", 4, 5),
-                TopViewAvatar.Boyle => new AnimationModel(SpriteSets.BoyleSprites, "Right", 4, 5),
-                TopViewAvatar.Pink => new AnimationModel(SpriteSets.PinkSprites, "Right", 4, 5),
-                TopViewAvatar.BurgerKing => new AnimationModel(SpriteSets.KingSprites, "Right", 4,5),
-                TopViewAvatar.ChearLeader => new AnimationModel(SpriteSets.CheerSprites, "Right", 4, 5),
-                TopViewAvatar.Cop => new AnimationModel(SpriteSets.CopSprites, "Right", 4, 5),
-                _ => new AnimationModel(SpriteSets.OverheadSprites, "Right", 4, 5),
+                TopViewAvatar.Green => new AnimationModel(SpriteSets.OverheadSprites, "Right", 3, 4),
+                TopViewAvatar.Boyle => new AnimationModel(SpriteSets.BoyleSprites, "Right", 3, 4),
+                TopViewAvatar.Pink => new AnimationModel(SpriteSets.PinkSprites, "Right", 3, 4),
+                TopViewAvatar.BurgerKing => new AnimationModel(SpriteSets.KingSprites, "Right", 4, 5),
+                TopViewAvatar.ChearLeader => new AnimationModel(SpriteSets.CheerSprites, "Right", 3, 4),
+                TopViewAvatar.Cop => new AnimationModel(SpriteSets.CopSprites, "Right", 3, 4),
+                _ => new AnimationModel(SpriteSets.OverheadSprites, "Right", 3, 4),
             };
         }
         private void InitializeMap()
         {
-            collitionsBlocks.Add(new CollisionBlock("Dungeon", "dungeon-54.png", 54, 54, 1000, 525));
+            collisionsBlocks.Add(new CollisionBlock("Dungeon", "dungeon-54.png", 54, 54, 1000, 525));
             SetMapCollisionns(10);
         }
-        
-        
+
+
         private void HandleMove((double x, double y) pos)
         {
             moveUpdates.Add($"moved to {pos.x}-{pos.y}");
@@ -111,7 +112,7 @@ namespace RpgApp.Client.Pages.Layouts
         private List<string> collisionList = new();
         private async void HandleCollision(string name)
         {
-            Console.WriteLine($"Collision at: {name} From: {string.Join(' ', collitionsBlocks.Select(x => x.ToString()).ToArray())}");
+            Console.WriteLine($"Collision at: {name} From: {string.Join(' ', collisionsBlocks.Where(x => x.Name == name).Select(x => x.ToString()).ToArray())}");
             if (collisionList.Contains(name)) return;
             collisionList.Add(name);
             if (name.Contains("Attack", StringComparison.OrdinalIgnoreCase))
@@ -124,39 +125,39 @@ namespace RpgApp.Client.Pages.Layouts
                 AppState.CurrentPlayer.AbilityPoints = AppState.CurrentPlayer.MaxAbilityPoints;
                 stopTimer = true;
                 StateHasChanged();
-                 var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! You have been HEALED", MessageBoxButtons.OK);
-                 if (result == MessageBoxDialogResult.None || result != MessageBoxDialogResult.None)
-                 {
-                    stopTimer = false;
-                 }
+                var result = await ShowMessageModal("Collision!", $"You collided with a {name} collision Block! You have been HEALED");
+                stopTimer = false;
             }
             else if (name.Contains("Dungeon", StringComparison.OrdinalIgnoreCase))
             {
                 stopTimer = true;
                 StateHasChanged();
-                var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! You have been moved the Dungeon", MessageBoxButtons.OK);
-                if (result == MessageBoxDialogResult.None || result != MessageBoxDialogResult.None)
-                {
-                    stopTimer = false;
-                }
+                var result = await ShowMessageModal("Collision!", $"You collided with a {name} collision Block! You have been to the moved the Dungeon");
+                stopTimer = false;
+
                 ToggleCss();
-                collitionsBlocks = new List<CollisionBlock>
+                collisionsBlocks = new List<CollisionBlock>
                 {
-                    new CollisionBlock("Home", "home-48.png", 54, 54, 50, 25)
+                    new("Home", "home-48.png", 54, 54, 50, 25)
                 };
                 SetMapCollisionns(20);
                 currentMap = "Dungeon";
             }
             else if (name.Contains("Home", StringComparison.OrdinalIgnoreCase))
             {
-                collitionsBlocks = new List<CollisionBlock>();
+                collisionsBlocks = new List<CollisionBlock>();
                 InitializeMap();
             }
 
-            var collision = collitionsBlocks.Find(x => x.Name == name);
-            collitionsBlocks.Remove(collision);
+            if (name == "LeftEdge")
+                moveAnimation.PosX = canvasSpecs.W - 48;
+            else if (name == "RightEdge")
+                moveAnimation.PosX = 0;
+
+            var collision = collisionsBlocks.Find(x => x.Name == name);
+            collisionsBlocks.Remove(collision);
             await InvokeAsync(StateHasChanged);
-          
+
 
         }
         #endregion
@@ -240,20 +241,29 @@ namespace RpgApp.Client.Pages.Layouts
             StateHasChanged();
         }
 
-        private void ToggleCss(string name = "Dungeon")
+        private List<string> _backgroundKeys => _backgrounds.Keys.ToList();
+        private Dictionary<string, string> _backgrounds = new()
         {
-            currentMap = currentMap == "Home" ? "Dungeon" : "Home";
-            background = currentMap == "Dungeon"
-                ? new("dungeon1", "/css/Images/Dungeon1.png")
-                : new("village1", "/css/Images/Village1.png");
-            
+            { "dungeon", "/css/Images/Dungeon1.png" },
+            { "village", "/css/Images/Village1.png" },
+            { "outdoorDark", "/css/Images/OutDark.png" },
+            { "outDoor", "/css/Images/OutDoorMap.png" }
+        };
+        private void ToggleCss(string name = "village1")
+        {
+            background = _backgrounds.FirstOrDefault(x => x.Key == name);
+            //currentMap = currentMap == "Home" ? "Dungeon" : "Home";
+            //background = currentMap == "Dungeon"
+            //    ? new("dungeon1", "/css/Images/OutDoorMap.png")
+            //    : new("village1", "/css/Images/Village1.png");
+
             //gridCss = gridCss == "primary-grid" ? "primary-grid1" : "primary-grid";
         }
         private async void HandleCombatEnded(bool isVictory)
         {
             if (isVictory)
             {
-                await ModalService.ShowMessageBoxAsync("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
+                await ShowMessageModal("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
                 await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
             }
             else
@@ -265,6 +275,20 @@ namespace RpgApp.Client.Pages.Layouts
             isCombatActive = false;
             await InvokeAsync(StateHasChanged);
         }
+        private async Task<bool> ShowMessageModal(string alertTitle, string alertMessage)
+        {
+            var options = new ModalDialogOptions
+            {
+                Style = ModalStyles.Framed(ModalSize.Small),
+                Position = ModalDialogPositionOptions.Center
+            };
+            var parameters = new ModalDialogParameters
+            {
+                {"HtmlMarkupContent", $"<h1>{alertMessage}</h1>"}
+            };
+            var result = await ModalService.ShowDialogAsync<MessageBoxModal>(alertTitle, options, parameters);
+            return result.Success;
+        }
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "CurrentPlayer") return;
@@ -273,7 +297,7 @@ namespace RpgApp.Client.Pages.Layouts
         }
         public async Task ShowMenu()
         {
-            var options = new ModalDialogOptions()
+            var options = new ModalDialogOptions
             {
                 Style = ModalStyles.Framed(ModalSize.Small)
             };

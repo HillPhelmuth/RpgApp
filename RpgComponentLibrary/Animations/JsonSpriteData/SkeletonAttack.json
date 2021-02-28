@@ -1,0 +1,48 @@
+{
+	"frames": [
+
+		{
+			"index": 0,
+			"x": 0,
+			"y": 0,
+			"w": 64,
+			"h": 64
+
+		},
+		{
+			"index": 1,
+			"x": 64,
+			"y": 0,
+			"w": 64,
+			"h": 64
+
+		},
+		{
+			"index": 2,
+			"x": 128,
+			"y": 0,
+			"w": 64,
+			"h": 64
+
+		},
+		{
+			"index": 3,
+			"x": 192,
+			"y": 0,
+			"w": 64,
+			"h": 64
+
+		},
+		{
+			"index": 4,
+			"x": 256,
+			"y": 0,
+			"w": 64,
+			"h": 64
+
+		}
+	],
+	"name": "SkeletonAttack",
+	"imageName": "SkeletonAttack.png",
+	"imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAABACAMAAABcOV4sAAAAKlBMVEUAAACJ1K5SRj8rIR2Kd2LCoYAkFScgLjc5SlA2pI4hW2NBHTFXcnd1JDjXu+K2AAAAAXRSTlMAQObYZgAAA1hJREFUeNrtmId68zoMQ0GQsjLf/3W9miHH/YLIrXuHzr/HIWHIzUKj0Wg0Go1Go9FoNBqNRqPReI9hJw6Xi+GPSCmCvzLATseTYYHNiPtNbC/nDDv+SQGDHb8zYOhv+PamvkJXTqBQSSCPYOJ0gu1dQArBrxtgx+nbS32avn4CS5XMmSwb37cAj0juJH58gM3Xb8u7T9LLE1gnBki64860cd8Cjp78qPvQB9jUoFnZn6aXJ7BO+NygC43/YgEMj6Ds6wNsYtmfqJcnsI4fExmlOTW+ewGTfTgcfnSA3Vj0p+8vBqyRSC60qfGdCyDpjnw4XLYPeNefifpywjpBDtIhe6HtXwBARv6ZAUJ/gq71h6/+cgRU5ACXyyfP4incxwEZL1jVALuxqEPQ9f4QMTqZyR0iaoDDxaDBGNzkEcw5o+B4LB5SlAFRXrwt6xD26/2REYPkkSIgIOcHxirtqPlOTgfg9DLH4J+mJzV9ACOirG/Zh7bf7rx98Ir5+iEg5gfGMqcGToo+EimCDjLwwIqXVdIAgPYAKwUq++2BlD8ihAbF/IwgmTFzAuydDzA8uTsBRtwfQ614WSUOKO8docHX/faE9vA/uCkgIOQHyUPO8ssijv50iLwfAIDpuU3xQX8aUFy6UODK/qI+BR+gcAcq+VGi3EGzxPCBxyNzPJ2BAVAGLNuTGlzut2egQTI8ICAUUCI8hrm//C6TOUPEXX3StCfW91sBPsFrG3Rf+61+B/ImdXD3rsOIUF/p28jd/w4red5vL+BDPOH77fr16x9ILgdcu4FzV7Ff900Gn3IW0tfmN2nAubuePz9Cx0f+b9UHCtul/PUDfBwQqEL3TaB+e2Bz/mro3fnaxRb/2imXYG+o3D6uD2J7/kr4VWBs8TuIvn0DImq3A9cgge356xOg6xgb/CEA9QS24IwBRn36cxAKen6dCMdIx5Tq/bECplTnd8CsV6fvSEzsn/9+53aovf7ZBmoH4Iu6Akt3//wIxxdMW/TtA5jq7ZQIASl//dsZxiYd5O77nY8GCfxBfnBbgXQI/h77GcTu+ZcR6uXZj+376/UI7p+/vIlTqpJVX99f/zW4f34WD0KpRlZ8fX+9HiQ25280Go1Go9FoNBqNRqPRaDQa/2967osbdOWma5AAAAAASUVORK5CYII="
+}

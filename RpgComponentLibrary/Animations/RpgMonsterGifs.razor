@@ -1,0 +1,11 @@
+﻿<div class="rpgui-gif-container">
+    @if (IsAttackGif)
+    {
+        <img width="@Width" height="@Height" src="_content/RpgComponentLibrary/Gifs/@($"{MonsterGifSet}Attack.gif")" />
+    }
+    else
+    {
+        <img width="@Width" height="@Height" src="_content/RpgComponentLibrary/Gifs/@($"{MonsterGifSet}Idle.gif")" />
+    }
+
+</div>

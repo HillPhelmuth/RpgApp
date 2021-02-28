@@ -149,7 +149,13 @@ namespace RpgApp.Client.Pages.StyleTests
         {
             combatAnimation = new AnimationModel
             {
-                Sprites = classType == ClassType.Mage ? SpriteSets.WizardSprites : SpriteSets.WarriorSprites,
+                Sprites = classType switch
+                {
+                    ClassType.Mage => SpriteSets.WizardSprites,
+                    ClassType.Warrior => SpriteSets.WarriorSprites,
+                    ClassType.Ranger => SpriteSets.ArcherSprites,
+                    _ => SpriteSets.WarriorSprites
+                },
                 Scale = 3
             };
             combatAnimation.CurrentSprite = combatAnimation.Sprites["Idle"];

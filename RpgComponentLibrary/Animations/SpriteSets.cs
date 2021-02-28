@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RpgComponentLibrary.Animations
 {
@@ -11,22 +12,34 @@ namespace RpgComponentLibrary.Animations
         private static Dictionary<string, SpriteDataModel> _burgerKingSets;
         private static Dictionary<string, SpriteDataModel> _cheerleaderSets;
         private static Dictionary<string, SpriteDataModel> _copSets;
-        private static Dictionary<string, SpriteDataModel> _combatSprites;
         private static Dictionary<string, SpriteDataModel> _warriorSprites;
         private static Dictionary<string, SpriteDataModel> _wizardSprites;
+        private static Dictionary<string, SpriteDataModel> _archerSprites;
         public static Dictionary<string, SpriteDataModel> OverheadSprites => GetOverheadSprites();
-        public static Dictionary<string, SpriteDataModel> CombatSprites => GetCombatSprites();
         public static Dictionary<string, SpriteDataModel> WarriorSprites => GetWarriorSprites();
         public static Dictionary<string, SpriteDataModel> WizardSprites => GetWizardSprites();
+        public static Dictionary<string, SpriteDataModel> ArcherSprites => GetArcherSprites();
         public static Dictionary<string, SpriteDataModel> PinkSprites => GetPinkTopviewSprites();
         public static Dictionary<string, SpriteDataModel> BoyleSprites => GetBoyleSprites();
         public static Dictionary<string, SpriteDataModel> KingSprites => GetKingSprites();
         public static Dictionary<string, SpriteDataModel> CheerSprites => GetCheerLeaderSprites();
         public static Dictionary<string, SpriteDataModel> CopSprites => GetCopSprites();
+        public static Dictionary<string, SpriteDataModel> SkeletonSprites => GetSkeletonSprites();
 
-        public static Dictionary<string, SpriteDataModel> GetOverhead(string color)
+        public static List<SpriteDataModel> AllSpriteAssets()
         {
-            return color == "Pink" ? PinkSprites : OverheadSprites;
+            var sprites = new List<SpriteDataModel>();
+            sprites.AddRange(OverheadSprites.Values);
+            sprites.AddRange(WarriorSprites.Values);
+            sprites.AddRange(WizardSprites.Values);
+            sprites.AddRange(ArcherSprites.Values);
+            sprites.AddRange(PinkSprites.Values);
+            sprites.AddRange(BoyleSprites.Values);
+            sprites.AddRange(KingSprites.Values);
+            sprites.AddRange(CheerSprites.Values);
+            sprites.AddRange(CopSprites.Values);
+            return sprites;
+
         }
         private static Dictionary<string, SpriteDataModel> GetOverheadSprites()
         {
@@ -94,23 +107,7 @@ namespace RpgComponentLibrary.Animations
             };
             return _copSets;
         }
-        private static Dictionary<string, SpriteDataModel> GetCombatSprites()
-        {
-            _combatSprites ??= new Dictionary<string, SpriteDataModel>
-            {
-                ["WizardAttack1"] = AnimationHelper.GetSpriteData("WizardAttack1"),
-                ["WizardAttack2"] = AnimationHelper.GetSpriteData("WizardAttack2"),
-                ["WizardDead"] = AnimationHelper.GetSpriteData("WizardDead"),
-                ["WizardIdle"] = AnimationHelper.GetSpriteData("WizardIdle"),
-                ["WarAttack1"] = AnimationHelper.GetSpriteData("WarAttack1"),
-                ["WarAttack2"] = AnimationHelper.GetSpriteData("WarAttack2"),
-                ["WarIdle"] = AnimationHelper.GetSpriteData("WarIdle"),
-                ["WarDead"] = AnimationHelper.GetSpriteData("WarDead")
-                
-            };
-            return _combatSprites;
-        }
-
+        
         private static Dictionary<string, SpriteDataModel> GetWarriorSprites()
         {
             _warriorSprites ??= new Dictionary<string, SpriteDataModel>
@@ -134,6 +131,39 @@ namespace RpgComponentLibrary.Animations
                 ["Hit"] = AnimationHelper.GetSpriteData("WizardHit")
             };
             return _wizardSprites;
+        }
+        private static Dictionary<string, SpriteDataModel> GetArcherSprites()
+        {
+            _archerSprites ??= new Dictionary<string, SpriteDataModel>
+            {
+                ["Attack1"] = AnimationHelper.GetSpriteData("ArcAttack1"),
+                ["Attack2"] = AnimationHelper.GetSpriteData("ArcAttack2"),
+                ["Dead"] = AnimationHelper.GetSpriteData("ArcDead"),
+                ["Idle"] = AnimationHelper.GetSpriteData("ArcIdle"),
+                ["Hit"] = AnimationHelper.GetSpriteData("ArcHit")
+            };
+            return _archerSprites;
+        }
+        private static Dictionary<string, SpriteDataModel> _skeletons;
+        
+        private static Dictionary<string, SpriteDataModel> GetSkeletonSprites()
+        {
+            _skeletons ??= new Dictionary<string, SpriteDataModel>
+            {
+                ["Attack"] = AnimationHelper.GetSpriteData("SkeletonAttack"),
+                ["Dead"] = AnimationHelper.GetSpriteData("SkeletonDead"),
+                ["Idle"] = AnimationHelper.GetSpriteData("SkeletonIdle")
+            };
+            return _skeletons;
+        }
+    }
+
+    public static class SheetExtentions
+    {
+        public static int Width(this SpriteDataModel sheet) => sheet.Frames.Sum(x => x.W);
+        public static int Height(this SpriteDataModel sheet)
+        {
+            return sheet.Frames.Select(x => x.H).FirstOrDefault();
         }
     }
 }

@@ -9,7 +9,7 @@ span {
     visibility: hidden;
     position: absolute;
     width: 160px;
-    bottom: 100%;
+    bottom: 50%;
     left: 50%;
     margin-left: -80px;
     background-color: #363636;

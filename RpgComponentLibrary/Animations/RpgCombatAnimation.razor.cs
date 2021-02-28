@@ -26,7 +26,7 @@ namespace RpgComponentLibrary.Animations
         {
             Animation ??= new AnimationModel { Scale = 3 };
             CanvasSpecs ??= new CanvasSpecs(400, 400);
-            Animation.Sprites ??= SpriteSets.CombatSprites;
+            Animation.Sprites ??= SpriteSets.WarriorSprites;
             Animation.CurrentSprite ??= Animation.Sprites["Idle"];
             
             await base.OnParametersSetAsync();
@@ -79,7 +79,7 @@ namespace RpgComponentLibrary.Animations
                 await OnAnimationComplete.InvokeAsync(animationName);
             }
 
-            var imageName = Animation.CurrentSprite?.Name ?? idleSprites;
+            var imageName = Animation.CurrentSprite.Name;
             var frame = frames[Animation.Index];
             try
             {

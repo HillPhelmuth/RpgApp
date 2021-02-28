@@ -6,12 +6,14 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
+using RpgApp.Client.Pages.Modals;
 using RpgApp.Shared;
 using RpgApp.Shared.Services;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 using RpgApp.Shared.Types.PlayerExtensions;
 using RpgComponentLibrary.Animations;
+using RpgComponentLibrary.Components;
 
 namespace RpgApp.Client.Pages.CombatTests
 {
@@ -40,43 +42,44 @@ namespace RpgApp.Client.Pages.CombatTests
             get => _monsterCount;
             set
             {
-                if (value < 1)
-                    _monsterCount = 1;
-                else if (value > 3)
-                    _monsterCount = 3;
-                else
-                    _monsterCount = value;
-
+                _monsterCount = value switch
+                {
+                    < 1 => 1,
+                    > 3 => 3,
+                    _ => value
+                };
             }
         }
 
-        public Dictionary<string, Monster> AllMonsters = new Dictionary<string, Monster>(3)
+        public Dictionary<string, Monster> AllMonsters = new(3)
         {
             {"Monster 1", new Monster{isDead = true}},{"Monster 2",new Monster{isDead = true}},{"Monster 3",new Monster{isDead = true}}
         };
        
-        private bool isPlayerHit;
-        private bool isSkillMenu;
+        //private bool isPlayerHit;
+        //private bool isSkillMenu;
         private bool isPlayerDefeated;
         [Parameter]
-        public List<string> Messages { get; set; } = new List<string>();
-        private string cssString = "";
-
+        public List<string> Messages { get; set; } = new();
         
         #region Animation
 
         private AnimationCombatActions combatActions = new();
+        
         private AnimationModel combatAnimation;
         
-        private CanvasSpecs canvasSpecs = new (300, 350);
+        private CanvasSpecs canvasSpecs = new (300, 325);
         
         private void SetCombatAnimationData()
         {
-            var spriteSet = AppState.CurrentPlayer?.ClassType == ClassType.Mage
-                ? SpriteSets.WizardSprites
-                : SpriteSets.WarriorSprites;
+            var spriteSet = AppState.CurrentPlayer?.ClassType switch
+            {
+                ClassType.Mage => SpriteSets.WizardSprites,
+                ClassType.Warrior => SpriteSets.WarriorSprites,
+                ClassType.Ranger => SpriteSets.ArcherSprites,
+                _ => SpriteSets.WarriorSprites
+            };
             combatAnimation = new AnimationModel(spriteSet, "Idle", 3);
-           
         }
         private Task RunAnimation(string animation)
         {
@@ -90,14 +93,7 @@ namespace RpgApp.Client.Pages.CombatTests
         {
             CurrentPlayer = AppState.CurrentPlayer;
             SetCombatAnimationData();
-            cssString = CurrentPlayer.ClassType switch
-            {
-                ClassType.Warrior => "warrior-img",
-                ClassType.Mage => "mage-img",
-                ClassType.Ranger => "ranger-img",
-                _ => ""
-            };
-
+            
             var monsters = AppState.AllMonsters.Where(x => x.DifficultyLevel <= 1).ToList();
 
             var count = Math.Min(monsters.Count, MonsterCount);
@@ -112,6 +108,7 @@ namespace RpgApp.Client.Pages.CombatTests
             CombatService.OnCombatEnded += HandleCombatEnded;
             CombatService.OnNewMessage += HandleNewMessage;
             CombatService.OnPlayerHit += HandlePlayerHit;
+            CombatService.OnMonsterAttack += HandleMonsterAttack;
         }
 
         private async Task BeginCombat()
@@ -153,13 +150,13 @@ namespace RpgApp.Client.Pages.CombatTests
         private Skill selectedSkill = new();
         private async Task UseSkill(Skill skill)
         {
-            isSkillMenu = false;
+            //isSkillMenu = false;
             await InvokeAsync(StateHasChanged);
             await CombatService.PlayerUseSkill(skill);
             CurrentPlayer.UpdateDuringCombat(_combatPlayer);
             await InvokeAsync(StateHasChanged);
         }
-        public void OpenMenu() => isSkillMenu = true;
+        //public void OpenMenu() => isSkillMenu = true;
         private async Task Flee()
         {
             //Not Implemented
@@ -178,8 +175,10 @@ namespace RpgApp.Client.Pages.CombatTests
         private async Task HandleCombatEnded(bool isPlayerDead)
         {
             isPlayerDefeated = _combatPlayer?.Health <= 0;
-            var totalExp = AllMonsters.Values.Sum(x => x.ExpProvided);
-            var totalGold = AllMonsters.Values.Sum(x => x.GoldProvided);
+            if (isPlayerDefeated)
+                await RunAnimation("Dead");
+            int totalExp = AllMonsters.Values.Sum(x => x.ExpProvided);
+            int totalGold = AllMonsters.Values.Sum(x => x.GoldProvided);
             CurrentPlayer = CurrentPlayer.ApplyCombatResults(_combatPlayer);
             string alertTitle = isPlayerDefeated ? "You Lose!" : "You Win!";
             string alertMessage = isPlayerDefeated ? "You get nothing and start over"
@@ -192,19 +191,32 @@ namespace RpgApp.Client.Pages.CombatTests
             {
                 {"Monster 1", new Monster{isDead = true}},{"Monster 2",new Monster{isDead = true}},{"Monster 3",new Monster{isDead = true}}
             };
-            await ModalDialogService.ShowMessageBoxAsync(alertTitle, alertMessage);
+            await ShowMessageModal(alertTitle, alertMessage);
 
             await OnCombatEnded.InvokeAsync(!isPlayerDefeated);
 
         }
 
+        private async Task ShowMessageModal(string alertTitle, string alertMessage)
+        {
+            var options = new ModalDialogOptions()
+            {
+                Style = ModalStyles.Framed(ModalSize.Small), Position = ModalDialogPositionOptions.Center
+            };
+            var parameters = new ModalDialogParameters
+            {
+                {"HtmlMarkupContent", $"<h1>{alertMessage}</h1>"}
+            };
+            await ModalDialogService.ShowDialogAsync<MessageBoxModal>(alertTitle, options, parameters);
+        }
+
         private List<Task> AnimationEventList = new();
         private async void HandlePlayerHit(bool isPlayer, string monsterId)
         {
-            isPlayerHit = isPlayer;
+            //isPlayerHit = isPlayer;
             if (isPlayer)
             {
-                await RunAnimation("Dead");
+                await RunAnimation("Hit");
             }
 
             if (!monsterId.Contains("Monster"))
@@ -216,12 +228,14 @@ namespace RpgApp.Client.Pages.CombatTests
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task PlayerHit(bool isPlayer)
+        private void HandleMonsterAttack(string monster)
         {
-
+            AllMonsters[monster].isAttack = true;
+            StateHasChanged();
+            //AllMonsters[monster].isAttack = false;
         }
         private void OnMonsterHit(string monsterId) => AllMonsters[monsterId].IsHit = false;
-        private void OnPlayerHit() => isPlayerHit = false;
+        //private void OnPlayerHit() => isPlayerHit = false;
         private void HandleNewMessage(string message)
         {
             Messages.Add($"<p>{message}</p>");
@@ -243,6 +257,7 @@ namespace RpgApp.Client.Pages.CombatTests
             CombatService.OnCombatEnded -= HandleCombatEnded;
             CombatService.OnPlayerHit -= HandlePlayerHit;
             CombatService.OnNewMessage -= HandleNewMessage;
+            CombatService.OnMonsterAttack -= HandleMonsterAttack;
             Console.WriteLine("MultiMonster.razor has been disposed");
         }
     }

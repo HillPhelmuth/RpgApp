@@ -21,19 +21,19 @@ namespace RpgComponentLibrary.Animations
     public partial class Frame
     {
         [JsonPropertyName("index")]
-        public long Index { get; set; }
+        public int Index { get; set; }
 
         [JsonPropertyName("x")]
-        public long X { get; set; }
+        public int X { get; set; }
 
         [JsonPropertyName("y")]
-        public long Y { get; set; }
+        public int Y { get; set; }
 
         [JsonPropertyName("w")]
-        public long W { get; set; }
+        public int W { get; set; }
 
         [JsonPropertyName("h")]
-        public long H { get; set; }
+        public int H { get; set; }
     }
 
     public enum TopViewAvatar

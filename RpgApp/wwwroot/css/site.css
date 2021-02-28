@@ -244,9 +244,12 @@ app {
     position: absolute;
 }
 .rpgui-left-panel {
-    height:80vh;
-    width:20vh;
-    left:0;
+    height: 80vh;
+    width: 20vw;
+    left: 0;
+    position: absolute;
+    display: grid;
+    grid-template-rows: auto auto auto;
 }
 
 .other-stuff {

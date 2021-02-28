@@ -1,0 +1,40 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 1,
+      "x": 64,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 2,
+      "x": 128,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 3,
+      "x": 192,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    }
+  ],
+  "name": "SkeletonIdle",
+  "imageName": "SkeletonIdle.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABACAMAAADCg1mMAAAAKlBMVEUAAABSRj8rIR2Kd2IkFSfCoYAgLjc5SlA2pI6J1K4hW2NBHTFXcnd1JDj9gDbVAAAAAXRSTlMAQObYZgAAAfRJREFUeNrtlYeOZCEMBN02vPz+/3cPJoHulExL3AbX7uSpVk0WCYIgCIIgCIIgCIIg6MnZDL84P1sFTAGv/898IxbIAl7n80XNsiroAlKn84fZNOumoAtInc4fBqZm4AtInc4fB09/XVe6gNf5fD8AVGVZ12slC3idzx8dscU/wRfwOp8v2cyyqdaJhS2g9fn5sGJnNcOyLMYWsPr8fIECjwJ9nOMKYKQ+PV+gFctm0EcOUyCAkfrsfHl6mmuBiABMgW+A1/l8QV2oCYZXgVEFAjNSn5ovb00LMrAAbQW+AV7n8wvFe9EWiIK2QOhsvr+/kERVUxoNaGfXBVZ/0i9Sd+ankfx+4U6FM9UA+AP6J7AsLIXdpye/3g+keyS/LzjTfXoDmt6ewA+7S0+3X+8H0qvflV9oBVoHzBXQ9PYENjaH3h6AR68DVH8PykBKJs6CfwMaG+dvRL8/H9B0JjEjA0waG+dvVL/fFykDGHoALQBm8/2+f0wXM5UyIIKc5cPhCah++nuA8495/WZSSCLSD8jhC0gyUsD7fL+Yygv0A7s/QJCn+3y/KN4LQNOP7di9AQLM9vn+Aj4FZvKi+NvhDRBM9/n+ttAH7Nvj75f4op+BnPtn8Lf4+AwILHefoW/vU+zy3f0gCIIgCIIgCIIg+N38AVs8E+GrmTKVAAAAAElFTkSuQmCC"
+}

@@ -42,10 +42,7 @@ namespace RpgApp.Client.Pages.DataTests
                 selectedPlayer.AbilityPoints = selectedPlayer.MaxAbilityPoints;
                 AppState.UpdateCurrentPlayer(selectedPlayer);
                 Console.WriteLine($"Player: {JsonSerializer.Serialize(selectedPlayer)}");
-                //var jsonSetting = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
-
-                //Console.WriteLine(
-                //    $"Selected Player: {JsonConvert.SerializeObject(selectedPlayer, Formatting.Indented, jsonSetting)}");
+               
             }
 
             StateHasChanged();
@@ -56,11 +53,11 @@ namespace RpgApp.Client.Pages.DataTests
         private List<Equipment> EquipmentQueryResult { get; set; } = new();
         private int equipGold;
         private bool isEquipQuery = false;
-        public async void GetEquipFilterByGp(int value)
+        public async void GetEquipFilterByGp(double value)
         {
-            EquipmentQueryResult = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={value}");
+            EquipmentQueryResult = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={(int)value}");
             isEquipQuery = true;
-            equipGold = value;
+            equipGold = (int)value;
             StateHasChanged();
         }
 
@@ -70,11 +67,11 @@ namespace RpgApp.Client.Pages.DataTests
         private List<Skill> SkillQueryResult { get; set; } = new();
         private int skillGold;
         private bool isSkillQuery = false;
-        public async void GetSkillFilterByGp(int value)
+        public async void GetSkillFilterByGp(double value)
         {
-            SkillQueryResult = await HttpClient.GetFromJsonAsync<List<Skill>>($"{AppConstants.ApiUrl}/GetSomeSkills?goldMax={value}");
+            SkillQueryResult = await HttpClient.GetFromJsonAsync<List<Skill>>($"{AppConstants.ApiUrl}/GetSomeSkills?goldMax={(int)value}");
             isSkillQuery = true;
-            skillGold = value;
+            skillGold = (int)value;
             StateHasChanged();
         }
 

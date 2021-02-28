@@ -5,45 +5,46 @@
         <div class="game-screen" @ref="gameboardReference" @onkeyup="@(KeyboardMove)" tabindex="0">
 
             <div class="rpgui-left-panel">
-                <div class="menu">
-                    <div class="rpgui-container framedgrey">
-                        <MatButton Raised="true" OnClick="ShowMenu">Menu</MatButton>
+                <div class="rpgui-container framedgolden">
+                    <div class="menu-btn" style="width: 15em; margin-left:auto;margin-right:auto">
+                        <RpgButton OnClick="ShowMenu" Label="Menu" RpgButtonStyle="RpgButtonStyle.Standard"></RpgButton>
                     </div>
-                </div>
-                <hr class="golden" />
-                <div class="inventory">
-                    <div class="rpgui-container framedgolden">
+                    <div class="village-btn" style="width: 15em; margin-left: auto; margin-right: auto">
+                        <RpgSelectDropdown TItem="string" OptionsList="@(_backgrounds.Keys.ToList())" OnSelectItem="ToggleCss"/>
                         <RpgButton OnClick="@(() => ToggleCss(currentMap))">Toggle Village background</RpgButton>
-                        <hr class="golden" />
+                    </div>
+                    <hr class="golden" />
+                </div>
+
+                <div class="rpgui-container framedgolden2">
+                    <div class="rpgui-container framedgolden">
                         <RpgSelectDropdown TItem="TopViewAvatar" @bind-SelectedValue="avatarView" OptionsList="@(Enum.GetValues(typeof(TopViewAvatar)).Cast<TopViewAvatar>().ToArray())" />
                         <h2>@Enum.GetName(avatarView)</h2>
-                        <RpgButton OnClick="@(() => HandleSprites(avatarView))" Label="Change Avatar"/>
+                        <RpgButton OnClick="@(() => HandleSprites(avatarView))" Label="Change Avatar" />
                     </div>
+                    <hr class="golden" />
                 </div>
-                <hr class="golden" />
-                <div class="other-stuff rpgui-container framedgolden2" style="margin-top:25rem">
+                <div class="rpgui-container framed">
                     @foreach (var info in moveUpdates)
                     {
                         <p>@info</p>
                     }
                 </div>
             </div>
-            <hr class="golden" />
+
             <div class="rpgui-animation-overhead">
-                <div class="rpgui-container framedgrey">
-                    <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="moveAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collitionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision" />
-                </div>
+                <RpgGlobalAnimation CanvasBackgound="CanvasBackgound.Framed" Animation="moveAnimation" CanvasSpecs="canvasSpecs" CollisionBlocks="collisionsBlocks" Fps="10" OnMove="HandleMove" BackgroundImage="background" StopTimer="stopTimer" OnCollide="HandleCollision" />
             </div>
-           
+
         </div>
-       
+
         @*<hr class="golden" />
-        <div class="other-stuff rpgui-container framedgolden2">
-            @foreach (var info in moveUpdates)
-            {
-                <p>@info</p>
-            }
-        </div>*@
+            <div class="other-stuff rpgui-container framedgolden2">
+                @foreach (var info in moveUpdates)
+                {
+                    <p>@info</p>
+                }
+            </div>*@
     </div>
 }
 @if (isCombatActive)

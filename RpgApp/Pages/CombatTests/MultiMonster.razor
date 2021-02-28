@@ -1,12 +1,9 @@
 ﻿@page "/multiMonster"
-<div class="mat-layout-grid" style="line-height:1.2rem">
-    <div class="mat-layout-grid-inner rpgui-content">
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
-            @*<MatH3>Actions</MatH3>
-                @foreach (var message in Messages)
-                {
-                    @((MarkupString)message)
-                }*@
+@using RpgComponentLibrary.Services
+<div style="line-height:1.2rem">
+    <div class="rpgui-content rpgui-grid">
+        <div class="rpg-col">
+
             <div class="rpgui-container framedgolden" style="max-height:520px; overflow-y:scroll">
                 <h1>Action Logs</h1>
                 <ol>
@@ -17,7 +14,7 @@
                 </ol>
             </div>
         </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+        <div class="rpg-col">
             <div class="rpgui-content rpgui-container framed">
                 <div class="text-center">
                     <h1>@CurrentPlayer.Name</h1>
@@ -33,50 +30,9 @@
                 <RpgButton Label="Flee" Width="50" RpgButtonStyle="RpgButtonStyle.Silver" OnClick="Flee" />
 
             </div>
-            @*<Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="isPlayerDefeated">
-                    <MatH3 Class="text-center">You</MatH3>
-                    <MatCard Style="width:100%">
-                        <div style="height:auto">
-                            <MatHeadline4 class="demo-mat-card-clean-margin">
-                                Player : @CurrentPlayer.Name
-                            </MatHeadline4>
-                            <MatSubtitle2 class="demo-mat-card-clean-margin">
-                                Type: @CurrentPlayer.ClassType.ToString()
-                            </MatSubtitle2>
-                        </div>
-                        <MatCardContent>
-                            <MatCardMedia Style="height:auto; min-height:100px">
-                                <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="isPlayerHit" OnAnimationEnd="OnPlayerHit">
-                                    <div class="@cssString"></div>
-                                </Animation>
-                            </MatCardMedia>
-                            <MatBody2 Style="height:auto">
-                                <MatH5>HP: @CurrentPlayer.Health / @CurrentPlayer.MaxHealth</MatH5>
-                                <MatH5>AP: @CurrentPlayer.AbilityPoints / @CurrentPlayer.MaxAbilityPoints</MatH5>
-                            </MatBody2>
-                        </MatCardContent>
-                        <MatCardActions>
-                            <MatCardActionButtons>
 
-                                <MatButton OnClick="OpenMenu">Skill</MatButton>
-                                @if (isSkillMenu)
-                                {
-                                    <MatList SingleSelection="true">
-                                        @foreach (var skill in CurrentPlayer.Skills.Distinct())
-                                        {
-                                            <MatListItem OnClick="@(() => UseSkill(skill))">@skill.Name</MatListItem>
-                                        }
-                                    </MatList>
-                                }
-                                <MatButton OnClick="Flee">Flee</MatButton>
-                            </MatCardActionButtons>
-                            <MatCardActionIcons>
-                            </MatCardActionIcons>
-                        </MatCardActions>
-                    </MatCard>
-                </Animation>*@
         </div>
-        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4">
+        <div class="rpg-col">
             <div class="rpgui-container framed">
                 @*<MatH3>Monsters</MatH3>*@
                 <h1>Monsters</h1>
@@ -84,41 +40,24 @@
                 {
                     if (!monster.isDead)
                     {
-                        <Animation Effect="@Effect.Hinge" Speed="@Speed.Slow" Enabled="monster.isDead">
-                            <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">
-                                <div class="text-center">
-                                    <h1>@monster.Name</h1>
-                                    <h3>@monster.Description</h3>
-                                </div>
-                                <p>Difficulty: @monster.DifficultyLevel</p>
-                                <p>Damage: @monster.DamageDice  Speed: @monster.Speed</p>
-                                <RpgProgressBar MinValue="0" MaxValue="@monster.MaxHealth" DataValue="@monster.Health" />
-                                <hr class="golden" />
-                                <RpgButton OnClick="@(() => Attack(key))" Label="Attack This Monster" />
-                                @*<MatCard>
-                                        <div>
-                                            <MatHeadline6>
-                                                @monster.Name
-                                            </MatHeadline6>
-                                            <MatSubtitle2>
-                                                @monster.Description
-                                            </MatSubtitle2>
-                                        </div>
-                                        <MatCardContent>
 
-                                            <MatBody2 Style="height: auto">
-                                                <MatH5>HP: @monster.Health / @monster.MaxHealth</MatH5>
-                                                <MatH5>Difficulty: @monster.DifficultyLevel Damage: @monster.DamageDice</MatH5>
-                                            </MatBody2>
-                                        </MatCardContent>
-                                        <MatCardActions>
-                                            <MatCardActionButtons>
-                                                <MatButton OnClick="@(() => Attack(key))" Raised="true">Attack This Monster</MatButton>
-                                            </MatCardActionButtons>
-                                        </MatCardActions>
-                                    </MatCard>*@
-                            </Animation>
+                        <Animation Effect="@Effect.ShakeY" Speed="@Speed.Fast" IterationCount="1" Enabled="monster.IsHit" OnAnimationEnd="@(() => OnMonsterHit(key))">
+                            <h1>@monster.Name</h1>
+                            <Tooltip>
+                                <Content>
+                                    <div class="text-center" style="line-height: 1.1rem">
+                                        <h3>@monster.Description</h3>
+                                        <h3>D-@monster.DifficultyLevel</h3>
+                                    </div>
+                                </Content>
+                                <ChildContent>
+                                    <RpgMonsterGifs @bind-IsAttackGif="@monster.isAttack" Height="96" Width="115" />
+                                </ChildContent>
+                            </Tooltip>
+                            <RpgProgressBar MinValue="0" MaxValue="@monster.MaxHealth" DataValue="@monster.Health" />
+                            <RpgButton OnClick="@(() => Attack(key))" Label="Attack This Monster" />
                         </Animation>
+                        <hr class="golden" />
                     }
                 }
             </div>

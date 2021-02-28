@@ -5,12 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\SpriteSheets\Potentials\**" />
+    <Content Remove="wwwroot\SpriteSheets\Potentials\**" />
+    <EmbeddedResource Remove="wwwroot\SpriteSheets\Potentials\**" />
+    <None Remove="wwwroot\SpriteSheets\Potentials\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Animations\AnimationMoveActions.cs" />
     <Compile Remove="Animations\CanvasCSharp.razor.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Animations\CanvasCSharp.razor" />
+    <Content Remove="Animations\JsonSpriteData\ArcAttack1.json" />
+    <Content Remove="Animations\JsonSpriteData\ArcAttack2.json" />
+    <Content Remove="Animations\JsonSpriteData\ArcDead.json" />
+    <Content Remove="Animations\JsonSpriteData\ArcHit.json" />
+    <Content Remove="Animations\JsonSpriteData\ArcIdle.json" />
+    <Content Remove="Animations\JsonSpriteData\SkeletonAttack.json" />
+    <Content Remove="Animations\JsonSpriteData\SkeletonDead.json" />
+    <Content Remove="Animations\JsonSpriteData\SkeletonIdle.json" />
     <Content Remove="Animations\JsonSpriteData\WarHit.json" />
     <Content Remove="Animations\JsonSpriteData\WizardHit.json" />
     <Content Remove="Animations\PotentialJsonData\BKDown.json" />
@@ -33,7 +48,6 @@
     <Content Remove="Animations\PotentialJsonData\PinkLeft.json" />
     <Content Remove="Animations\PotentialJsonData\PinkRight.json" />
     <Content Remove="Animations\PotentialJsonData\PinkUp.json" />
-    <Content Remove="wwwroot\SpriteSheets\Potentials\PinkSheet.sprite" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,10 +56,18 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Include="Animations\JsonSpriteData\ArcAttack1.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\ArcAttack2.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\ArcDead.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\ArcHit.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\ArcIdle.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadDown.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadLeft.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadRight.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\OverheadUp.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\SkeletonAttack.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\SkeletonDead.json" />
+    <EmbeddedResource Include="Animations\JsonSpriteData\SkeletonIdle.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack1.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarAttack2.json" />
     <EmbeddedResource Include="Animations\JsonSpriteData\WarHit.json" />
@@ -92,11 +114,6 @@
     <EmbeddedResource Include="Animations\PotentialJsonData\CopLeft.json" />
     <EmbeddedResource Include="Animations\PotentialJsonData\CopRight.json" />
     <EmbeddedResource Include="Animations\PotentialJsonData\CopUp.json" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <None Include="wwwroot\SpriteSheets\Potentials\PinkSheet.sprite" />
   </ItemGroup>
 
   

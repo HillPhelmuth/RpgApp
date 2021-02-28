@@ -145,10 +145,8 @@ namespace RpgComponentLibrary.Animations
         private int imagesLoaded = 0;
         private void OnImageLoad(ProgressEventArgs args)
         {
-            //var done = args.LengthComputable && args.Total == args.Loaded;
-            //if (done) imagesLoaded++;
             imagesLoaded++;
-            Console.WriteLine($"Images Loaded:{imagesLoaded}\r\n Type: {args.Type}, Computable: {args.LengthComputable}, Progress: {args.Loaded}/{args.Total}");
+            Console.WriteLine($"Images Loaded:{imagesLoaded}");
             if (!_timer.Enabled) _timer.Start();
 
         }
@@ -161,28 +159,24 @@ namespace RpgComponentLibrary.Animations
             if (Animation.KeyPresses["w"])
             {
                 Animation.CurrentSprite = Animation.Sprites["Up"];
-                //imageString = "Up";
                 Move(0, -Animation.MoveSpeed);
                 hasMoved = true;
             }
             else if (Animation.KeyPresses["s"])
             {
                 Animation.CurrentSprite = Animation.Sprites["Down"];
-               // imageString = "Down";
                 Move(0, Animation.MoveSpeed);
                 hasMoved = true;
             }
 
             if (Animation.KeyPresses["a"])
             {
-                //imageString = "Left";
                 Animation.CurrentSprite = Animation.Sprites["Left"];
                 Move(-Animation.MoveSpeed, 0);
                 hasMoved = true;
             }
             else if (Animation.KeyPresses["d"])
             {
-                //imageString = "Right";
                 Animation.CurrentSprite = Animation.Sprites["Right"];
                 Move(Animation.MoveSpeed, 0);
                 hasMoved = true;
