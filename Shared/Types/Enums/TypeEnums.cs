@@ -18,7 +18,7 @@
         Heal,
         Status
     }
-    
+
     public enum Rarity
     {
         VeryCommon,

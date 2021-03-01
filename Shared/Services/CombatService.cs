@@ -157,7 +157,7 @@ namespace RpgApp.Shared.Services
                 var playerHitTask = NotifyPlayerHit(false, targetId);
                 await Task.WhenAll(messageTask, playerHitTask);
             }
-            
+
             if (_allMonsters.Values.All(x => x.isDead))
             {
                 await NotifyNewMessage(
@@ -294,7 +294,7 @@ namespace RpgApp.Shared.Services
             return Task.CompletedTask;
         }
         #region old BeginCombat Signiture
-        [Obsolete(message:"This is the old method. Use the overload BeginCombat(CombatPlayer player, Dictionary<string, Monster> monsters)")]
+        [Obsolete(message: "This is the old method. Use the overload BeginCombat(CombatPlayer player, Dictionary<string, Monster> monsters)")]
         public Task BeginCombat(ref CombatPlayer player, ref Monster monster)
         {
             _combatPlayer = null;

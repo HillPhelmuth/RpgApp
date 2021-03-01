@@ -8,11 +8,12 @@
 span {
     visibility: hidden;
     position: absolute;
-    width: 160px;
-    bottom: 100%;
+    /*width: 160px;*/
+    width:240px;
+    bottom: 80%;
     left:50%;
     margin-left: -80px;
-    margin-bottom: -50px;
+    margin-bottom: -25px;
     background-color: #363636;
     color: #fff;
     text-align: center;

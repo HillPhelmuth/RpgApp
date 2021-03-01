@@ -18,6 +18,32 @@ namespace RpgApp.Shared.Types
         //[JsonPropertyName("id")]
         [JsonIgnore]
         public int Id { get; set; }
+        public string ImageId
+        {
+            get
+            {
+                if (this.Name.Contains("sword", StringComparison.OrdinalIgnoreCase))
+                    return "sword";
+                if (Name.Contains("armor", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/armor";
+                if (Name.Contains("shield", StringComparison.OrdinalIgnoreCase))
+                    return "shield";
+                if (Name.Contains("dagger", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/dagger";
+                if (Name.Contains("potion", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/potionRed";
+                if (Name.Contains("book", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/tome";
+                if (Name.Contains("boots", StringComparison.OrdinalIgnoreCase))
+                    return "shoes-slot";
+                if (Name.Contains("wand", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/wand";
+                if (Name.Contains("bow", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/bow";
+                return "foreign/gemBlue";
+            }
+
+        }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -67,7 +93,7 @@ namespace RpgApp.Shared.Types
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Equipment) obj);
+            return Equals((Equipment)obj);
         }
 
         public override int GetHashCode()

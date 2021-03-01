@@ -37,7 +37,7 @@ namespace RpgApp.Shared
                 OnPropertyChanged();
             }
         }
-        
+
         private Dictionary<string, Monster> _combatMonsters;
         public Dictionary<string, Monster> CombatMonsters
         {

@@ -41,7 +41,7 @@
                 <hr />
                 @if (showMenu)
                 {
-                    <RpgItemsMenu ImageItemActions="_imagesEquipPairs" MenuColumns="5" MenuFrame="Frame.FramedGrey" Context="item" TItem="Equipment">
+                    <RpgItemsMenu Items="AppState.AllEquipment" ImageMapperFunc="@((eq)=> eq.ImageId)" MenuColumns="5" MenuFrame="Frame.FramedGrey" Context="item" TItem="Equipment">
                         <MenuHeader>
                             <h1>This is a menu header TEMPLATE</h1>
                             <h2>This menu is for Equipment with random images</h2>
@@ -63,7 +63,7 @@
                 @if (showMenu)
                 {
 
-                    <RpgItemsMenu ImageItemActions="_imagesSkillPairs" MenuColumns="5" MenuFrame="Frame.FramedGolden2" Context="item" TItem="Skill">
+                    <RpgItemsMenu Items="AppState.AllSkills" ImageMapperFunc="@(skl => skl.AddImage())" MenuColumns="5" MenuFrame="Frame.FramedGolden2" Context="item" TItem="Skill">
                         <MenuHeader>
                             <h1>This is a menu header TEMPLATE</h1>
                             <h2>This menu is for Skills with random images</h2>
