@@ -79,6 +79,23 @@ namespace RpgComponentLibrary.Components
             _indexImageItems = imagesWithIndex;
             return base.OnParametersSetAsync();
         }
+
+        private void OpenTemplate(MenuItemTemplate itemTemplate)
+        {
+            foreach (var item in _indexImageItems)
+            {
+                item.IsOpen = false;
+            }
+
+            itemTemplate.IsOpen = !itemTemplate.IsOpen;
+        }
+        private void CloseActions()
+        {
+            foreach (var item in _indexImageItems)
+            {
+                item.IsOpen = false;
+            }
+        }
     }
 
     public enum Frame

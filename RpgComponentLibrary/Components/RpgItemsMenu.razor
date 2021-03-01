@@ -1,23 +1,23 @@
 ﻿@typeparam TItem
 
-<div class="rpgui-container @Enum.GetName(MenuFrame)?.ToLower() @_draggale">
+<div class="rpgui-container @Enum.GetName(MenuFrame)?.ToLower() @_draggale" style="width:@_width">
     <div>@MenuHeader</div>
     <hr />
 
     <div class="@($"rpgui-icon-grid{MenuColumns}")">
         @foreach (var itemTemplate in _indexImageItems)
         {
-            <div class="rpgui-icon @itemTemplate.Image" @onclick="@(() => itemTemplate.IsOpen = !itemTemplate.IsOpen)">
+            <div class="rpgui-icon @itemTemplate.Image" @onclick="@(() => OpenTemplate(itemTemplate))">
                 <Tooltip>
-                    <Content>
-                        @ToolTipTemplate(itemTemplate.Item)
-                        <p style="font-size:80%">(click for options)</p>
-                    </Content>
                     <ChildContent>
                         <div>
                             <img style="z-index:-1" width="64" height="64" src="@($"_content/RpgComponentLibrary/img/icons/{itemTemplate.Image}.png")" alt="No Img Src found" />
                         </div>
                     </ChildContent>
+                    <Content>
+                        @ToolTipTemplate(itemTemplate.Item)
+                        <p style="font-size:80%">(click for options)</p>
+                    </Content>
                 </Tooltip>
 
             </div>

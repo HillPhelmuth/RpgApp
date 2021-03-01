@@ -9,9 +9,10 @@ span {
     visibility: hidden;
     position: absolute;
     width: 160px;
-    bottom: 50%;
-    left: 50%;
+    bottom: 100%;
+    left:50%;
     margin-left: -80px;
+    margin-bottom: -50px;
     background-color: #363636;
     color: #fff;
     text-align: center;
@@ -23,7 +24,7 @@ span {
     border-image-slice: 6 6 6 6;
     border-image-width: 18px;
     border-width: 10px;
-    z-index: 1;
+    z-index: 3;
 }
 
 span::after {

@@ -144,9 +144,9 @@ namespace RpgApp.Shared.Services
             for (int i = 0; i < targets; i++)
             {
                 string targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
-                while (_allMonsters[targetId].isDead)
+                if (_allMonsters[targetId].isDead)
                 {
-                    targetId = $"Monster {random.Next(1, _allMonsters.Count(x => !x.Value.isDead) + 1)}";
+                    targetId = _allMonsters.Where(x => !x.Value.isDead).Select(x => x.Key).FirstOrDefault();
                 }
                 await NotifyNewMessage($"Attacking random monster: {targetId}");
 
