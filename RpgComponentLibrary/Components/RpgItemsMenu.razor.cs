@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
@@ -7,8 +9,7 @@ namespace RpgComponentLibrary.Components
     public partial class RpgItemsMenu<TItem>
     {
         private List<MenuItemTemplate> _indexImageItems = new();
-        private int _spillOver;
-        private string _draggale = "";
+        private string _draggable = "";
         private string _width;
         private int _menuColumns = 3;
 
@@ -35,7 +36,9 @@ namespace RpgComponentLibrary.Components
         [Parameter]
         public RenderFragment<TItem> ToolTipTemplate { get; set; }
         [Parameter]
-        public IReadOnlyList<KeyValuePair<string, TItem>> ImageItemActions { get; set; }
+        public List<TItem> Items { get; set; }
+        [Parameter]
+        public Func<TItem, string> ImageMapperFunc { get; set; }
 
         [Parameter]
         public int MenuColumns
@@ -60,24 +63,25 @@ namespace RpgComponentLibrary.Components
 
         protected override Task OnParametersSetAsync()
         {
-            _width = $"{(MenuColumns * 64)+35}px";
-            _draggale = IsDraggable ? "rpgui-draggable" : "";
+            _width = $"{(MenuColumns * 64) + 35}px";
+            _draggable = IsDraggable ? "rpgui-draggable" : "";
             var imagesWithIndex = new List<MenuItemTemplate>();
             var i = 0;
-            foreach (var imageItem in ImageItemActions)
+            foreach (var item in Items)
             {
-                imagesWithIndex.Add(new MenuItemTemplate(i, imageItem.Key, false, imageItem.Value));
-                i++;
+                imagesWithIndex.Add(new MenuItemTemplate(i, ImageMapperFunc(item), false, item));
             }
-            //_spillOver = 0;
-            //while (i % MenuColumns != 0)
-            //{
-            //    _spillOver++;
-            //    i++;
-            //}
-
             _indexImageItems = imagesWithIndex;
             return base.OnParametersSetAsync();
+        }
+        private void OpenTemplate(MenuItemTemplate itemTemplate)
+        {
+            foreach (var item in _indexImageItems)
+            {
+                item.IsOpen = false;
+            }
+
+            itemTemplate.IsOpen = !itemTemplate.IsOpen;
         }
     }
 

@@ -67,7 +67,7 @@ namespace RpgApp.Server.Controllers
             Expression<Func<Skill, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
             return await _context.Skills.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
         }
-       
+
         [HttpGet("GetSkillById/{skillId}")]
         public async Task<Skill> GetSkillById(int skillId)
         {
@@ -93,9 +93,18 @@ namespace RpgApp.Server.Controllers
         public async Task UpdateOrAddPlayer([FromBody] Player player)
         {
             // Make sure we don't accidently add duplicates to the Db
-            player.Skills = player.Skills?.Distinct().ToList();
-            player.Inventory = player.Inventory?.Distinct().ToList();
-            _context.Players.Update(player);
+            var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
+            var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
+            if (player.ID == 0)
+            {
+                
+                player.Skills = new List<Skill>();
+                player.Inventory = new List<Equipment>();
+                await _context.Players.AddAsync(player);
+                player.Skills.AddRange(skills.Select(x => _context.Skills.FirstOrDefault(y => y.Name == x.Name)));
+                player.Inventory.AddRange(inventory.Select(x => _context.Equipment.FirstOrDefault(y => y.Name == x.Name)));
+            }
+            //_context.Players.Update(player);
             await _context.SaveChangesAsync();
         }
         [HttpPost("AddNewEquipment")]

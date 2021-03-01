@@ -51,7 +51,7 @@ namespace RpgApp.Client.Pages
         {
             var options = new ModalDialogOptions()
             {
-                Style = "rpgui-content rpgui-modal-framed"
+                Style = ModalStyles.Framed(ModalSize.ExtraLarge)
             };
             var result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character", options);
             StateHasChanged();

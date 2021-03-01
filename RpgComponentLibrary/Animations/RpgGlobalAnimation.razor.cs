@@ -39,17 +39,19 @@ namespace RpgComponentLibrary.Animations
         public KeyValuePair<string, string> BackgroundImage { get; set; }
         [Parameter]
         public bool StopTimer { get; set; }
-        //private readonly List<string> Logs = new();
-
-
+       
 
         protected override Task OnParametersSetAsync()
         {
             Animation ??= new() { Scale = 3, MoveSpeed = 4 };
-            Animation.Sprites ??= SpriteSets.OverheadSprites;
+            Animation.Sprites ??= SpriteSets.BoyleSprites;
             Animation.CurrentSprite ??= Animation.Sprites["Right"];
             CanvasSpecs ??= new CanvasSpecs(600, 800);
             Fps = Fps == 7 ? 10 : Fps;
+            foreach (var block in CollisionBlocks.Where(block => !_collisionsPerBlock.ContainsKey(block.Name)))
+            {
+                _collisionsPerBlock[block.Name] = 0;
+            }
             return base.OnParametersSetAsync();
         }
 
@@ -57,7 +59,7 @@ namespace RpgComponentLibrary.Animations
         {
             if (firstRender)
             {
-                foreach (var block in CollisionBlocks)
+                foreach (var block in CollisionBlocks.Where(block => !_collisionsPerBlock.ContainsKey(block.Name)))
                 {
                     _collisionsPerBlock[block.Name] = 0;
                 }
@@ -132,16 +134,19 @@ namespace RpgComponentLibrary.Animations
         }
         private async void HandleAnimationLoop(object _, ElapsedEventArgs e)
         {
+            if (StopTimer)
+            {
+                _timer.Stop();
+                return;
+            }
             await AnimationLoop();
         }
 
         private int imagesLoaded = 0;
         private void OnImageLoad(ProgressEventArgs args)
         {
-            //var done = args.LengthComputable && args.Total == args.Loaded;
-            //if (done) imagesLoaded++;
             imagesLoaded++;
-            Console.WriteLine($"Images Loaded:{imagesLoaded}\r\n Type: {args.Type}, Computable: {args.LengthComputable}, Progress: {args.Loaded}/{args.Total}");
+            Console.WriteLine($"Images Loaded:{imagesLoaded}");
             if (!_timer.Enabled) _timer.Start();
 
         }
@@ -154,33 +159,30 @@ namespace RpgComponentLibrary.Animations
             if (Animation.KeyPresses["w"])
             {
                 Animation.CurrentSprite = Animation.Sprites["Up"];
-                imageString = "Up";
                 Move(0, -Animation.MoveSpeed);
                 hasMoved = true;
             }
             else if (Animation.KeyPresses["s"])
             {
                 Animation.CurrentSprite = Animation.Sprites["Down"];
-                imageString = "Down";
                 Move(0, Animation.MoveSpeed);
                 hasMoved = true;
             }
 
             if (Animation.KeyPresses["a"])
             {
-                imageString = "Left";
                 Animation.CurrentSprite = Animation.Sprites["Left"];
                 Move(-Animation.MoveSpeed, 0);
                 hasMoved = true;
             }
             else if (Animation.KeyPresses["d"])
             {
-                imageString = "Right";
                 Animation.CurrentSprite = Animation.Sprites["Right"];
                 Move(Animation.MoveSpeed, 0);
                 hasMoved = true;
             }
 
+            imageString = Animation.CurrentSprite.Name;
             if (!hasMoved)
                 Animation.Index = 1;
             await InvokeAsync(StateHasChanged);
@@ -191,7 +193,7 @@ namespace RpgComponentLibrary.Animations
                 if (CollisionBlocks.Any(IsCollideFunc))
                 {
                     var collide = CollisionBlocks.FirstOrDefault(IsCollideFunc);
-                    _collisionsPerBlock[collide.Name] += 1;
+                    _collisionsPerBlock[collide.Name]++;
                     if (_collisionsPerBlock[collide.Name] > collide.MaxCollisions)
                     {
                         _timer.Stop();
@@ -212,10 +214,16 @@ namespace RpgComponentLibrary.Animations
             var frame = Animation.CurrentSprite.Frames[Animation.Index];
             var logMessage = $"sprite: {Animation.CurrentSprite.Name}\r\nframe specs: {JsonSerializer.Serialize(frame)}";
 
-            await _context2D.DrawImageAsync($"overhead{imageString}", frame.X, frame.Y, frame.W, frame.H, Animation.PosX, Animation.PosY, frame.W * Animation.Scale, frame.H * Animation.Scale);
+            try
+            {
+                await _context2D.DrawImageAsync(imageString, frame.X, frame.Y, frame.W, frame.H, Animation.PosX, Animation.PosY, frame.W * Animation.Scale, frame.H * Animation.Scale);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex}");
+                _timer.Stop();
+            }
         }
-
-        
 
         #endregion
         public async ValueTask DisposeAsync()
@@ -227,4 +235,5 @@ namespace RpgComponentLibrary.Animations
             await _module.DisposeAsync();
         }
     }
+
 }

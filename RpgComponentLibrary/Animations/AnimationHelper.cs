@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace RpgComponentLibrary.Animations
 {
-    public static class AnimationHelper
+    internal static class AnimationHelper
     {
         public static SpriteDataModel GetSpriteData(string sheetname)
         {
-            Console.WriteLine($"{sheetname}");
+            //Console.WriteLine($"{sheetname}");
             return DeserializeFromAssembly($"{sheetname}.json");
         }
         private static SpriteDataModel DeserializeFromAssembly(string filename)

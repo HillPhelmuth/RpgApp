@@ -66,7 +66,7 @@ namespace RpgApp.Shared.Types
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Skill) obj);
+            return Equals((Skill)obj);
         }
 
         public override int GetHashCode()

@@ -1,0 +1,48 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 1,
+      "x": 64,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 2,
+      "x": 128,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 3,
+      "x": 192,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    },
+    {
+      "index": 4,
+      "x": 256,
+      "y": 0,
+      "w": 64,
+      "h": 64
+
+    }
+  ],
+  "name": "SkeletonDead",
+  "imageName": "SkeletonDead.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAABACAMAAABcOV4sAAAAS1BMVEUAAACSioV3cG26rJ42pI6J1K4gLjeKd2JSRj8rIR0hW2M5SlDCoYAkFSdXcnejlKbhyrNBHTGfrba4yc/AnLB1JDj0o7fW8fa1//9+tWX1AAAAAXRSTlMAQObYZgAAAyBJREFUeNrt2Qe22zgMhWGwSBewaKuk7n+lQ+gwRVOJNA1z8KUXJO/9huhGzjnnnHPOOeecc879RrYtpRRoUJnupvlGLjjd3T1dAvrimcWY0hZjuCXDNH3z5P8n4Me41W/hln769e4VnDJ9lxBSTCmEGz4Nnc7DHwZaMGi/N2/IavoJH/eA13LNF7XfB1vBUjDluz/vfH/BtoTHYSqYqaDK+c5+Tb79YeCWYjwOTXh0X7sFp28LkfPlJyMLqcbbznuRo0q9AScBirSHId9u/IIhhqAbqM6c1ClL7ZeZf8J9wGABq1qwPY4J3QEZArAGXMgMAJ/5dIWHFkKs0eIWq3aH3F/wzEevl7lgQcWUaz8aXO1HuoJJyxlXkFlEaKlmaz/FOdPwQoxntKhawET9hOd5XuYZZNH6MQ2vVbv8LFgCMkRqQmbAErCIIPPwAcO5f0376TKHMC/L69V3IRYBWM6SMAa89gMwXNCv8q26gevaCs7V1LF8ECkQEW4noqGg9pM2CjCg4wN7v1ZvV9OrBCzMKAVgaUGpH1iqOj3PAFc0trfr+7e6gLaAFUpbI2NBZiGRudJ444saMFmfn3N7LC3t9GS007MLBCLMIjS+sNZrOJgDkohAzgKtYDs9uxSIgEVYxu8XzvMvJVM/xSAN+HzSV/oLAucOjt8vaj9zwEaez/0SMJNtB8cPGOktqW2jTx7US/Nd+pkKQpT+A+PSxVu/I+C7/QkmZZ1uRPan+ZUcA/O8PWATNuM5pp77Ow149dB5wxKz4c2q8vlRt7BcBn/CfI8UqQnh0/gjawJ7QPN822FG93wBwBXJ8louCX7CfO8R+OeXEep8flAflh2XgKZ5Jfs7BnrnoZhZP/9lAfhyhlrnRTrmzQGnfH6hLpDLAhrn203wZEbnPFBEmGWe9XVIZqh2BtjnARbZd8P8X8UvAbfNfgsAUgoDaAku85bXxJbqpc9j8uNf53EGIJorCDef52GZ5wpVx3zPazIU0mY/AyBaUMF+hjRnwdM05f+aBwSsIUoBNAXA4G+cF1Yd80YT+bxzzjnnnHPOOeeccyP6Ay2AI51lYvtQAAAAAElFTkSuQmCC"
+}

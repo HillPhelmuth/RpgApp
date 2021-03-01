@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CheerLeft",
+  "imageName": "CheerLeft.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAABl0lEQVRIx71Wu07DQBCcs1KSJqZB+ZIUVqBOw2ektpEpb68AyZZCzX8EaicgJV+SEorE/VL4IYN94dYJjOQij9mZWd+tVsEFI6MBAJ/aOP3fJwYAsCIAgGICK3LmC/QGRws0IRIv/EMx4RQ0fVj0VSepS9i1gz5xGOR4er9o//ZBysm0QN9rR2IKgxxd3zt1jRVFJb+zzm8Q6ntnN9DoUtSHL9T3zm6gRPjTRHWhz9wA75iBRfMcuxooQFGQU82XTCChvi0AAcBwMoOOp7IpBGAcPZvxwxWGkxmGk1mfF+isb50KOsm4+dnc3yiJg//iD6wtiK+hLovQdReEMOn6z/mdAXaLuT5sX6DjKUy6rgtJxSthKX+3mOvxo1t46x04bF9bRaUhoiDvO8moeRKiILfqWwNUE6DRgdPWgr4B0hXKZsr0dZJxBfjE4e0dS/eYmt+1WzmsJDrJWCcZ7zdL3m+W3EtcJxnDp+IRGqkD9FniygDffHTo26dQuiouYPJGUD2Oz8joqkZfmHQNiq+J0hUVg6A9Sb8AcroLXob/DVUAAAAASUVORK5CYII="
+}

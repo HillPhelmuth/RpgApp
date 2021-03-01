@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    }
+  ],
+  "name": "PinkDown1",
+  "imageName": "PinkDown.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAASCAMAAAAquK2IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAB+UExURQAAAJY8AJY7APzbz5xFDPfSxJU8AKNQGvDHta1fLua4odmkh/3bz8qMaLdvQtyojfLJuJU7AKFOF38/APzZzP+/v+N4uZc+A+R9upE2AOJ2ueN3ud90r6BDF9lwouN2uZM6AKdJKZQ8AOJ1t8hjebFQQL1aXeF3t8pkfuN3uMWzY3oAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEUSURBVDhPdZBtq8IwDIVLmIxdMiuKZEvrh8L0///EmzTp3tBDKZ5znmbB8F0g8p/fdQQA1eM+OfRnAIDwgkgrcx4A0N9EL7JEy+517+RBCw69AtQP/dAA9fQHale/7w2ItANiBIx6bwN2vQTjCDjqbcCICPWM/uDYB7g24GpARJzrieZPfYBbCy4+EfGO2Elk/tRXwI8H6PrRPzbgUQN4skTEzx99gDTxxHIMCDNzJmLm2fy5h8mUumyBoJyzXMl87jQRZd+xpFIFXH0oXKSUq5hPYD0X/+TMSxX4RODlPbyHJfkKDNa3lWSEfbF5+PBHxJ81sN4XECV93jYWObAODJwU2YBE8qekzYek2gaqJyAJQvgHde0d7wxPjnQAAAAASUVORK5CYIKsXhX3xK+0yc4fdPeclxWSOTSMsWQj2frWrzKj4nA/9+LT9/KY49+C9gOUUVUSHHe5KGNxaYFeDNdKvXT/I0pNScfVmet9VeZpfENzcsBCMvVjTwA/IqtNfh6upVLvQ+7ZqS4JDmPzyLHh4r0BGcgBxuCRnThgbdQw/hqOAQ/2ylPEzzQTiVDN66HGcLG3nUTLqs7CnylK37D8QloJvW/K9RfcptBIE6FVvaYGD0s24EcNeOOB+W/HWuVeWVo+wOUwDXb4R2siv5coL6eym2WNmbFRMiKR2GQrM/OjshXzZSEVaMD0xIPX7ja9VjA+LeZjryzp30KXQtTjcrv3bMsqoXgh7vC1HTeP97DdBsY/jXdJ76Z0jxbQMAYP221gbYyrNdUw3LQBe2S7xPYyjrcEje/TA9wj2rrFxxmRp60s7surIu7n4wpfsIq7Gn0DZb3ij1g1dx3BHjglfS9FHzxt5fu4K9GegMnQx+uxSJSVNriWzVvR9+LKj6omRP8BU4ifUAzpjGgAAAAASUVORK5CYII="
+}

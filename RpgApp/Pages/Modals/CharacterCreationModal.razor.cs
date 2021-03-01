@@ -16,13 +16,17 @@ namespace RpgApp.Client.Pages.Modals
         private Player CurrentPlayer { get; set; }
         private ClassType CharClass { get; set; }
         private string name;
-
+       
         public async Task CreateNewPlayer(ClassType classType)
         {
+            var options = new ModalDialogOptions()
+            {
+                Style = ModalStyles.GoldenFramed2(ModalSize.Medium)
+            };
             CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType, AppState.AllSkills, AppState.AllEquipment);
             AppState.UpdateCurrentPlayer(CurrentPlayer);
             CurrentPlayer.Name = name;
-            ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!");
+            ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!", options);
             StateHasChanged();
             ModalDialogService.Close(true);
         }

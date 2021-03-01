@@ -1,0 +1,30 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 18
+    }
+  ],
+  "name": "BKLeft",
+  "imageName": "BKLeft.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACZklEQVRIx+2WXUiTURjHf+9amFcOgjmomIy2iwTRGutDM8h1k0UgQiB0t0qm0U03gbvaLoRGN5MVrMCbdhFRINWFBZHgYjCRZBJzMpAi5yDY1dpwdbrQd+zjnTvbTQU+cDjP+5xz/jwf7/mfR6FKxsNCGGM+ADL2qYq1x2OKUr1fX20QAn9n1APA1qkpWpJfiaVJdS7XtfYqmgDJZSHgpgIhAFU/YO1rHALAWuQ17B7elVA9bzUBPoQ8WOxOUrH3DcPVaRnNvYNYz13B3DvYYhKTyyI4gFBndUh7AGCynayxBfs5LwWQScW5dv8pmVScnNFBzuhQa7YgBfDKe4MfX9cIBx+wPhplfTSKdBVmBrAVDDaePfSQHEs0zJdew6VEos5BIdiQCSGtz6V30HPp0thu72RikS6pXzlwsUOsurJ0PzGUbKuurOZtrDHceSvatrPktYAPGjgUuKwU9gyh3uF6azUAPTOKrx6A1loNgDuCZ8iUQQj8Q6YM5bo7gkfqNo4c+87IkW8b6Hbwy3UpgC8fXwIEygvTFB8szHqxnh0m+elNa3xgsTsx913AYnf+RT442n2mxjbTzyUpgM3EEsP3HrGZWKrcrDAvBTA37SKTijM37aokFNkqqKTy83BPiUx6ggpN5aBgsJG8/rm1MgrBRurqfMuEwsQiXcdfnK68ic0Qyq3nokNXJKsrZPndZtjzedf0QFckC3Bi1oRSzKMU881XASB+O1/K/opbNFcFVVbcgrTDizHmYzwshJQHQuAv/266Y9nvUPY7lP+vQ9HX6VBMNU97eyd3323JdyjVtn+3Q/kD3mNW305ogcgAAAAASUVORK5CYII="
+
+}

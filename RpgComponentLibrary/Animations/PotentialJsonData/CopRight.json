@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CopRight",
+  "imageName": "CopRight.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByUlEQVRIx7WWO2+CUBTH/zx2080uJGL8AA59iB1Y6qR7vwTgYlcva12KfonuOrVLm/iIOHRt0qgJS7uZfoCGDvQiCsK9Gk5CIDec8//dc859CDhgCnpdAPDQsaPfYDD6P+ATOubhXgCHsepL6QBAAQ2dF94ySmTubnQ6ZhkqPtwL/ODljS8B2fpSBoAOQLcMVWcFKOD29frqDNEHAObuRi+gkRmDV1+OhwjKbhlqbFxBL7USQeZ8OIPVjr8zWEVjZ1SST19IAIgF2AKk97KCBz+rQun+/Ppy0uz3nU4xy1DDijiDNWHJPo++yAKwfQuEBxwA2mY5fLNuBDz6Yt4Ap1SORV/MCyDaAv8wJA8dOS8ArakBAB77S7TNMpEqVTuPBMhZEO66iLYJRgCB0IWoteoAgOlwAl74aAKy9MU4wDaA1qpjsS4yAwQ9urvQ6ETYLPCl2iz64iGAqPDv53uXFWF/EtPhBLy++5NO0088VO6a4/BAsswyLkvfkCpVrsvY7PnLBwCnv8TT6OZoX8pQa5wLTOeAgl437N/RjNA+jF6wuHqZq4V2L3JUf5Gin7iIadk9dGynXztq+6PZA5ZH+3ro2BrGJK0N/wBs0/k187KctQAAAABJRU5ErkJggg=="
+}

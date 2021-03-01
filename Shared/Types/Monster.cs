@@ -17,6 +17,8 @@ namespace RpgApp.Shared.Types
         public bool IsHit { get; set; }
         [NotMapped]
         public bool isDead { get; set; }
+        [NotMapped]
+        public bool isAttack { get; set; }
 
         //ToDo Add factory method to generate Monsters
         //ToDo Add private method to calculate exp provided

@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CopLeft",
+  "imageName": "CopLeft.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAABlUlEQVRIx7WWO27CQBCG/zUcwmksJYgDULJOnQr6XIJHQ1qv27jB5hLpoUrNQ4KCAyCw5CanQE5hNsaPtXc3ZhobSzP/t/+MxxDUhAXP4fcRZi4kIsmJWf55hA8iny+naVQVuS+kGpPRS+G3bL17aM4hym2L4CejZ+YvLhkAf+HVOnLvfv4Qt+euTAdk9YkIoCgO+ItL7RhY+IzLupDCEFZlgqo+aR4gzRePiNgEVX3SPEDa/qTtF+0DyOiXvMTkr31lbZR5AafjDgCAX9XqqOkbzQP8L1T1jQdxsPL5bT6MRwC0uj13Ou6weXAGHVDQAX2YAUYVwD40dQHQ6vbcQ2iCDm3QoZ2ZcVkDuL7WlzgPkBaqB+CRBa9fwUL9zCGy+sIDXE9HpwgjDwAA2+VGCz6vnxpRrCHcx7vvn9gPzskWuG2D/tsTURmj98E61s29no7xPjTBGQDga/VKpEbIguccQjNxcbVjZf8S9UZILix4zj6nT4d2qX67rv0RZq4f9JkOyHa5wVZzPXLnI8xcijXLjmMav9Bd5r1lfEEhAAAAAElFTkSuQmCC"
+}

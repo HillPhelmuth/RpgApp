@@ -1,0 +1,29 @@
+{
+  "frames": [
+
+    {
+      "Index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 1,
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "Index": 2,
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    }
+  ],
+  "name": "CheerDown",
+  "imageName": "CheerDown.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAACXBIWXMAAAsTAAALEwEAmpwYAAACEElEQVRIx9WVsY6bQBCG/7VS4itwmtO9RTpH4nDqSx4krS1B55mNdAWW7JdJqB0fUujyGEllFwf9pIDdA7O2ccIV2caG5dv5mX9mUHiN5Wty3j+QHjqUGlyArwlK2Lkninuf0TO+GlzAhAUA5kGJTeZ19/eshkzAqOtJBc+DEqf2Li3DzoOy9b9fTVwXfzS4AFG8qLO/CEosam4RlFUGB07AaHABtcXNgPZ/n/q/Mv4by4mQmnzpBj1+e1+T7JdQSrXEtPnfzFHIRZ4CADgKUeQpm+a8zPeP33KA4nuGEl7XzTeePmA8fQAArDMPUMIU3590wfB3j7dYZ57l15mHu8fb3vw18a0DSilNyZYpCgEAerXDeFodtMk8UBSCpgBHMz7OnuFFBAAYAOvVDsDLWRSHXLnRi+8dv9MDHM2qbEQh9GpXBa9fCgCaNndENPZegzfaTn4Hnn98FQC4+fizY5VOntiOsROznJKtmGddvLmn4w/q3DcEopz887d3DAA37z8ppwNFnqLIU8h+iaoEYEsAB9IUha1sHi87NQ6kXXxzqjgTYM538LJfWn3OHjAVZH6Nhc0pYeszdgso8pTtRHmrO/yvzeezY5ijWd0nbb5OGjf0XRjFIkLJVuBrgq+Jkq1I3WH/A1/VsqnH+vqvBAzEY8Lt6zMl9NKwjf5ulkKfxavv3R76Bx6iWCdPzmf/AF5outDqXc0gAAAAAElFTkSuQmCC"
+}

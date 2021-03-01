@@ -14,7 +14,7 @@ namespace RpgComponentLibrary.Components
         [Parameter]
         public RenderFragment ChildContent { get; set; }
         [Parameter]
-        public string Text { get; set; }
+        public string Label { get; set; }
         protected override void OnInitialized()
         {
             if (Parent == null)

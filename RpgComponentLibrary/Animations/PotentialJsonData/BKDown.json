@@ -1,0 +1,33 @@
+{
+  "frames": [
+
+    {
+      "index": 0,
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 1,
+      "x": 0,
+      "y": 17,
+      "w": 16,
+      "h": 17
+
+    },
+    {
+      "index": 2,
+      "x": 0,
+      "y": 34,
+      "w": 16,
+      "h": 17
+
+    }
+  ],
+  "name": "BKDown",
+  "imageName": "BKDown.png",
+  "imgUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAzCAYAAACey4j5AAAACXBIWXMAAAsTAAALEwEAmpwYAAACoklEQVRIx+2WTUhUURTHf8+E3AgDY36M2ISQs1FJXIQwiBG4cBEJggsZd0N+MLhokD7GFja1aTbSONUkBA5KA0ErQZKQHrpw5TAZEgYxYVakZdBCBLst9D3ffV7HF7SI8MEw/3Pm3D/v3jn3x4H/7/n1LvPJqu2xvV6zJ3ZWFgWI3N7P3t3v/fjE2QZpTaHd4On1ywBeW9p72BsfMPjxOSfFHcNpAJ7d6lQaFOQ7j/ahFO6qGl49GaZ9KOXc4NK1MQBKq2sB+Pr+jakdGVT4Gmm7mjBjq3ZkMD0yQFVtE9MjA5J2ZJBrTZPL6MwkBslldFm3psnbBz0TYhyNgOttitMvu6XCDxfH2fQFQJB62KV1S28w6ifZMymSaAQANn0BVluS5uLVliSbvgCVs0GMGnkLgqxHDwWNpEcPUbSeNYuK1rN49BDu5TF1I/XPE3+gxU+uNd8HYLvYGwNYa7qnOrdw3rtwZULc1jQiqpV1CS3SP8edf5wHOyuL363aHh95GwGXAQ4hhMsKEiPOazARbgMot6XLHfPg54ZMrc67zwFI32j/cx50DKdxVZxhJjFogsWRgQEPd1UNAN9WV0ztyKC0utaEihUwjg2mYr1U+BqZivVKWvUcaOWEHwHgPddMLqNj131z5Me6CY0X+xSWYDLXeTRQAKxQMWGye/UloBTa7AIAlbNBPl54TMHOFgZgjNxeTbfyED16CICtknoTKgZMtkrqpRqlQclSHICNuhDbxV7ps1EXkmqUWxAQKVuIRL+cj7LeED7wl5UtRBCoYXM8oRxPKMcTyt+YUKxAqZwNHjqhGDU9kyI56iep3IJ7eezQCcUCniCCrKqRwkBsu3i38RQTShjg1FKc3nniyrsw6ufm6z4RVZ24EEQfdWlD1txv9kZrIbrv3e8AAAAASUVORK5CYII="
+
+}

@@ -33,7 +33,7 @@ namespace RpgApp.Shared.Types.PlayerExtensions
                 ClassType = player.ClassType,
                 Experience = player.Experience,
                 Gold = player.Gold,
-                Health = player.MaxHealth,
+                Health = player.Health,
                 MaxHealth = player.MaxHealth,
                 MaxAbilityPoints = player.MaxAbilityPoints,
                 Inventory = player.Inventory,

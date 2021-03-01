@@ -32,6 +32,7 @@ namespace RpgApp.Client.Pages.StyleTests
             _imagesSkillPairs = AddImages(AppState.AllSkills);
             classType = ClassType.Warrior;
             SetCombatAnimationData();
+            currentAnimation = moveAnimation;
             return base.OnInitializedAsync();
         }
         // This is the event handler for the a variety of actions
@@ -148,7 +149,13 @@ namespace RpgApp.Client.Pages.StyleTests
         {
             combatAnimation = new AnimationModel
             {
-                Sprites = classType == ClassType.Mage ? SpriteSets.WizardSprites : SpriteSets.WarriorSprites,
+                Sprites = classType switch
+                {
+                    ClassType.Mage => SpriteSets.WizardSprites,
+                    ClassType.Warrior => SpriteSets.WarriorSprites,
+                    ClassType.Ranger => SpriteSets.ArcherSprites,
+                    _ => SpriteSets.WarriorSprites
+                },
                 Scale = 3
             };
             combatAnimation.CurrentSprite = combatAnimation.Sprites["Idle"];
@@ -168,16 +175,19 @@ namespace RpgApp.Client.Pages.StyleTests
 
         #region RpgGlobalAnimation.razor
 
-        private AnimationModel moveAnimation = new(SpriteSets.OverheadSprites, "Right", 3, 4);
-        private List<CollisionBlock> collitionsBlocks = new()
+        private AnimationModel moveAnimation = new(SpriteSets.BoyleSprites, "Right", 5, 5);
+        private AnimationModel currentAnimation = new();
+        private static List<CollisionBlock> collitionsBlocks = new()
         {
             new CollisionBlock("TargeCollide", "_content/RpgComponentLibrary/img/icons/foreign/x.png", 64, 64, 400, 300),
-            new CollisionBlock("HitHome", "home-48.png", 48, 54, 725, 525)
+            //new CollisionBlock("HitHome", "home-48.png", 48, 54, 725, 525)
         };
+        private AnimationModel moveAnimation2 = new(SpriteSets.PinkSprites, "Right", 5, 5);
+        private List<CollisionBlock> secondBlocks = collitionsBlocks;
         //54x48
-        private CanvasSpecs canvasSpecs = new(600, 800);
+        private CanvasSpecs canvasSpecs = new(600, 600);
         private KeyValuePair<string, string> background = new("village1", "/css/Images/Village1.png");
-        private bool hasCollided;
+        private bool isBoyle;
         private bool stopTimer;
         private void HandleMove((double x, double y) pos)
         {
@@ -185,11 +195,22 @@ namespace RpgApp.Client.Pages.StyleTests
             
         }
 
+        private void ToggleAnimation()
+        {
+            if (isBoyle)
+                currentAnimation = moveAnimation;
+            else
+            {
+                currentAnimation = moveAnimation2;
+            }
+            StateHasChanged();
+        }
         private List<string> collisionList = new();
         private async void HandleCollision(string name)
         {
             if (collisionList.Contains(name)) return;
             collisionList.Add(name);
+            
             var result = await ModalService.ShowMessageBoxAsync("Collision!", $"You collided with a {name} collision Block! Continue Animation?");
             // hasCollided = true;
             if (result == MessageBoxDialogResult.OK || result == MessageBoxDialogResult.None)

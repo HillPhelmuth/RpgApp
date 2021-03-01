@@ -13,38 +13,36 @@ namespace RpgComponentLibrary.Animations
 
         [JsonPropertyName("imgUrl")]
         public string ImgUrl { get; set; }
-        
+        [JsonPropertyName("imageName")]
+        public string ImageName { get; set; }
+
     }
 
     public partial class Frame
     {
         [JsonPropertyName("index")]
-        public long Index { get; set; }
+        public int Index { get; set; }
 
         [JsonPropertyName("x")]
-        public long X { get; set; }
+        public int X { get; set; }
 
         [JsonPropertyName("y")]
-        public long Y { get; set; }
+        public int Y { get; set; }
 
         [JsonPropertyName("w")]
-        public long W { get; set; }
+        public int W { get; set; }
 
         [JsonPropertyName("h")]
-        public long H { get; set; }
+        public int H { get; set; }
     }
-    //public class Specs
-    //{
-    //    [JsonPropertyName("x")]
-    //    public double X { get; set; }
 
-    //    [JsonPropertyName("y")]
-    //    public double Y { get; set; }
-
-    //    [JsonPropertyName("w")]
-    //    public double W { get; set; }
-
-    //    [JsonPropertyName("h")]
-    //    public double H { get; set; }
-    //}
+    public enum TopViewAvatar
+    {
+        Green,
+        Pink,
+        Boyle,
+        Cop,
+        BurgerKing,
+        ChearLeader
+    }
 }
