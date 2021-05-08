@@ -1,9 +1,10 @@
-﻿<div class="text-left">
-    @foreach (var playerEquipment in playerInventory)
-    {
-        <h3>@playerEquipment.Name</h3>
-        <ul>
-            <li>@playerEquipment.Description</li>
-        </ul>
-    }
-</div>
+﻿@using Frame = RpgComponentLibrary.Components.Frame
+
+<RpgItemsMenu ImageMapperFunc="@((eq) => eq.ImageId)" Items="playerInventory" MenuColumns="20" MenuFrame="Frame.FramedGrey" Context="item" TItem="Equipment">
+    <MenuHeader>
+        <h1>Inventory</h1>
+    </MenuHeader>
+    <ToolTipTemplate>
+        @item.AsDisplayString()
+    </ToolTipTemplate>
+</RpgItemsMenu>
