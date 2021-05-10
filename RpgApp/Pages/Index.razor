@@ -4,37 +4,38 @@
 @using RpgApp.Shared
 @using RpgApp.Client.Pages.StyleTests
 @inject HttpClient Http
+@inject AuthenticationStateProvider AuthState
 
 <RpgTabGroup @bind-ActiveIndex="indexTab">
-   
-        <RpgTab Label="Generate Character">
-            <GamePlayPrimary />
-        </RpgTab>
-        <RpgTab Label="Data Query Testing">
-            <TestQueries />
-        </RpgTab>
-        <RpgTab Label="MyLayout">
-            <LayoutMyCss />
-        </RpgTab>
+
+    <RpgTab Label="Generate Character">
+        <GamePlayPrimary />
+    </RpgTab>
+    <RpgTab Label="Data Query Testing">
+        <TestQueries />
+    </RpgTab>
+    <RpgTab Label="MyLayout">
+        <LayoutMyCss />
+    </RpgTab>
     <RpgTab Label="Test Styles">
         @*<div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>*@
-        <CompLibraryTester/>
+        <CompLibraryTester />
     </RpgTab>
-        <RpgTab Label="Test Page">
-            @if (AppState.CurrentPlayer == null)
-            {
-                <MatH3 Style="color:red">Error!</MatH3>
-                <MatH5>Visit Query tester page and Select a default player before returning</MatH5>
-            }
-            else
-            {
-                <TestPage />
-            }
+    <RpgTab Label="Test Page">
+        @if (AppState.CurrentPlayer == null)
+        {
+            <MatH3 Style="color:red">Error!</MatH3>
+            <MatH5>Visit Query tester page and Select a default player before returning</MatH5>
+        }
+        else
+        {
+            <TestPage />
+        }
 
-        </RpgTab>
-        <RpgTab Label="D&D API Dev Tools">
-            @*<CheatCreate/>*@ <MatH3>Moving to it's own project</MatH3>
-        </RpgTab>
+    </RpgTab>
+    <RpgTab Label="D&D API Dev Tools">
+        @*<CheatCreate/>*@ <MatH3>Moving to it's own project</MatH3>
+    </RpgTab>
 </RpgTabGroup>
 @code
 {
@@ -55,8 +56,11 @@
             AppState.AllEquipment = allData.Equipment;
             AppState.AllMonsters = allData.Monsters;
             AppState.AllSkills = allData.Skills;
-            Console.WriteLine($"Equipment: {string.Join(",",AppState.AllEquipment.Select(x => x.Name))}");
+            Console.WriteLine($"Equipment: {string.Join(",", AppState.AllEquipment.Select(x => x.Name))}");
             Console.WriteLine($"Skills: {string.Join(",", AppState.AllSkills.Select(x => x.Name))}");
+            var authState = await AuthState.GetAuthenticationStateAsync();
+            string user = authState.User?.Identity?.Name;
+            AppState.UserId = user;
         }
         await base.OnAfterRenderAsync(firstRender);
     }
