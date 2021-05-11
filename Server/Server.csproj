@@ -32,15 +32,13 @@
     <Content Remove="TypeStoreJson\Inventory\ItemList.json" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RpgApp\Client.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+ 
   <ItemGroup>
     <None Include="Pages\Error.cshtml" />
     <EmbeddedResource Include="TypeStoreJson\ClassSkills\MageSkills.json" />

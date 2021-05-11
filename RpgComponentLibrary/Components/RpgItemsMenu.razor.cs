@@ -65,22 +65,13 @@ namespace RpgComponentLibrary.Components
         {
             _width = $"{(MenuColumns * 64) + 35}px";
             _draggable = IsDraggable ? "rpgui-draggable" : "";
-            var imagesWithIndex = new List<MenuItemTemplate>();
-            var i = 0;
-            foreach (var item in Items)
-            {
-                imagesWithIndex.Add(new MenuItemTemplate(i, ImageMapperFunc(item), false, item));
-            }
-            _indexImageItems = imagesWithIndex;
+            int i = 0;
+            _indexImageItems = Items.ConvertAll(item => new MenuItemTemplate(++i, ImageMapperFunc(item), false, item));
             return base.OnParametersSetAsync();
         }
         private void OpenTemplate(MenuItemTemplate itemTemplate)
         {
-            foreach (var item in _indexImageItems)
-            {
-                item.IsOpen = false;
-            }
-
+            _indexImageItems.ForEach(item => item.IsOpen = false);
             itemTemplate.IsOpen = !itemTemplate.IsOpen;
         }
     }

@@ -122,8 +122,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
-    <PackageReference Include="Excubo.Blazor.Canvas" Version="2.5.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.5" />
+    <PackageReference Include="Excubo.Blazor.Canvas" Version="2.5.23" />
   </ItemGroup>
 
   <ItemGroup>
