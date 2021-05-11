@@ -19,30 +19,29 @@ namespace RpgApp.Client.Pages.DataTests
         private HttpClient HttpClient { get; set; }
 
         #region Player Query Region
-        private List<Player> UserPlayers { get; set; } = new();
+        private UserData UserData { get; set; } = new() {UserName = "admin", Players = new List<Player>()};
         private Player selectedPlayer;
         private string userInput;
         private bool isPlayerQuery = false;
 
         private async Task GetUserPlayers()
         {
-            userInput ??= "admin";
-            UserPlayers = await HttpClient.GetFromJsonAsync<List<Player>>($"{AppConstants.ApiUrl}/GetUserPlayers/{userInput}");
+            userInput ??= string.IsNullOrEmpty(AppState.UserId) ? "admin": AppState.UserId;
+            UserData = await HttpClient.GetFromJsonAsync<UserData>($"{AppConstants.ApiUrl}/GetUserPlayers/{userInput}");
             isPlayerQuery = true;
             StateHasChanged();
         }
 
-        private void SelectPlayer(object row)
+        private void SelectPlayer(Player player)
         {
-            if (row == null) return;
-            selectedPlayer = UserPlayers.Find(x => x.ID == ((Player)row).ID);
+            if (player == null) return;
+            selectedPlayer = UserData.Players.Find(x => x.ID == player.ID);
             if (selectedPlayer != null)
             {
                 selectedPlayer.Health = selectedPlayer.MaxHealth;
                 selectedPlayer.AbilityPoints = selectedPlayer.MaxAbilityPoints;
                 AppState.UpdateCurrentPlayer(selectedPlayer);
-                Console.WriteLine($"Player: {JsonSerializer.Serialize(selectedPlayer)}");
-               
+                Console.WriteLine($"Player: Id: {selectedPlayer.UserId} Name: {selectedPlayer.Name}");
             }
 
             StateHasChanged();

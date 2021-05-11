@@ -14,10 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Layouts\PlayerLocation.razor.cs" />
     <Compile Remove="Pages\Modals\ShopModalBase.razor.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Layouts\PlayerLocation.razor" />
     <Content Remove="Pages\Modals\ShopModalBase.razor" />
     <Content Remove="Pages\_Host.cshtml" />
     <Content Remove="Shared\LoginDisplay.razor" />
@@ -35,14 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="blazor-dragdrop" Version="2.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.5" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.6" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
     <PackageReference Include="BlazorAnimation" Version="2.0.0" />
     <PackageReference Include="LiquidTechnologies.Blazor.ModalDialog" Version="0.9.7" />
-    <PackageReference Include="MatBlazor" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>

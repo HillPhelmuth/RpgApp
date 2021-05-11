@@ -81,6 +81,11 @@ namespace RpgApp.Shared.Types
             Inventory.Add(item);
         }
 
+        public void Refresh()
+        {
+            Health = MaxHealth;
+            AbilityPoints = MaxAbilityPoints;
+        }
         #endregion
 
         #region private methods

@@ -165,6 +165,7 @@ namespace RpgApp.Client.Pages.CombatTests
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "Monsters" && e.PropertyName != "CurrentPlayer") return;
+            Console.WriteLine($"{e.PropertyName} change handled by {nameof(MultiMonster)}");
             AllMonsters = AppState.CombatMonsters;
             CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
@@ -179,12 +180,14 @@ namespace RpgApp.Client.Pages.CombatTests
                 await RunAnimation("Dead");
             int totalExp = AllMonsters.Values.Sum(x => x.ExpProvided);
             int totalGold = AllMonsters.Values.Sum(x => x.GoldProvided);
-            CurrentPlayer = CurrentPlayer.ApplyCombatResults(_combatPlayer);
+            AppState.CurrentPlayer.ApplyCombatResults(_combatPlayer);
+            AppState.CurrentPlayer.Experience += totalExp;
+            AppState.CurrentPlayer.Gold += totalGold;
             string alertTitle = isPlayerDefeated ? "You Lose!" : "You Win!";
             string alertMessage = isPlayerDefeated ? "You get nothing and start over"
                 : $"You've received {totalGold}gp and earned {totalExp}xp";
 
-            AppState.UpdateCurrentPlayer(CurrentPlayer);
+            AppState.UpdateCurrentPlayer(AppState.CurrentPlayer);
             Console.WriteLine($"CurrentPlayer Stats: {_combatPlayer}");
             
             AllMonsters = new Dictionary<string, Monster>(3)

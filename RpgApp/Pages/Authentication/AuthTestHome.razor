@@ -1,8 +1,10 @@
-﻿@page "/"
+﻿@page "/authTest"
+@attribute [Authorize]
 @using System.Net.Http.Json
 @using System.ComponentModel
 @using RpgApp.Shared
 @using RpgApp.Client.Pages.StyleTests
+@using Index = RpgApp.Client.Pages.Index
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthState
 
@@ -11,7 +13,7 @@
     <RpgTab Label="Generate Character">
         <GamePlayPrimary />
         <div class="rpgui-content framedgolden" style="overflow:hidden">
-            <a href="authTest">Test Authentication with "Authorized" navigation route.</a>
+            <h1>You are now in the Authorized route version of the app</h1>
         </div>
     </RpgTab>
     <RpgTab Label="Data Query Testing">
@@ -24,11 +26,7 @@
         @*<div class="text-center" style="font-size:150%"><NavLink href="samples">GoTo Testing Page</NavLink></div>*@
         <CompLibraryTester />
     </RpgTab>
-    <RpgTab Label="Test Page">
-        <h1 Style="color:red">Error!</h1>
-        <h2>We haven't used this page in a long time. I'm commenting all of it so we can fully move from MatBlazor component library to the RpgUI Component Library</h2>
-
-    </RpgTab>
+   
     <RpgTab Label="D &amp; D API Dev Tools">
         @*<CheatCreate/>*@ <h1>Moving to it's own project</h1>
     </RpgTab>

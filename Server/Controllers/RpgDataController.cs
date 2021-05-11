@@ -27,7 +27,7 @@ namespace RpgApp.Server.Controllers
             var playersFromDb = await _context.Players.Where(x => x.UserId == userId).Include(x => x.Inventory).ThenInclude(z => z.Effects).Include(x => x.Skills).ThenInclude(z => z.Effects).ToListAsync();
             players.AddRange(playersFromDb);
             //return players;
-            return new OkObjectResult(players);
+            return new OkObjectResult(new UserData() { UserName = userId, Players = players });
         }
 
         [HttpGet("AllAppData")]
@@ -95,6 +95,8 @@ namespace RpgApp.Server.Controllers
             // Make sure we don't accidently add duplicates to the Db
             var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
+            var exp = player.Experience;
+            var gold = player.Gold;
             if (player.ID == 0)
             {
                 
@@ -104,6 +106,12 @@ namespace RpgApp.Server.Controllers
                 player.Skills.AddRange(skills.Select(x => _context.Skills.FirstOrDefault(y => y.Name == x.Name)));
                 player.Inventory.AddRange(inventory.Select(x => _context.Equipment.FirstOrDefault(y => y.Name == x.Name)));
             }
+
+            var untrackedPlayer = await _context.Players.FindAsync(player.ID);
+            untrackedPlayer.Experience = exp;
+            untrackedPlayer.Gold = gold;
+            untrackedPlayer.Skills = skills;
+            untrackedPlayer.Inventory = inventory;
             //_context.Players.Update(player);
             await _context.SaveChangesAsync();
         }

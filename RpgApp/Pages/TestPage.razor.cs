@@ -128,7 +128,7 @@ namespace RpgApp.Client.Pages
         {
             isPlayerDefeated = isPlayerDead;
             isMonsterDead = !isPlayerDefeated;
-            CurrentPlayer = CurrentPlayer.ApplyCombatResults(_combatPlayer);
+            CurrentPlayer.ApplyCombatResults(_combatPlayer);
             var parameters = new ModalDialogParameters
             {
                 {"CurrentPlayer", CurrentPlayer }

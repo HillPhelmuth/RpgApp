@@ -1,13 +1,35 @@
 ﻿@page "/gamePlayPrimary"
-@inherits GamePlayPrimaryModel
-    <div class="text-center rpgui-content">
-        <div class="rpgui-container framedgolden">
-            <h1 class="text-center">Welcome to Turn-Based RPG!</h1>
-            <RpgApp.Client.Pages.Authentication.AuthLogin/>
-            <h2>Create a character to begin:</h2>
-            <div class="align-middle" style="width: 15em; margin-left:auto;margin-right:auto">
-                @*<MatButton Raised="true" OnClick="CreateNewCharacter">Create Character</MatButton>*@
-                <RpgButton OnClick="CreateNewCharacter" RpgButtonStyle="RpgButtonStyle.Standard">Create Character</RpgButton>
-            </div>
-        </div>
+
+<div class="text-center rpgui-content">
+    <div class="rpgui-container framedgolden">
+        <h1 class="text-center">Welcome to Turn-Based RPG!</h1>
+        <RpgApp.Client.Pages.Authentication.AuthLogin />
+        <AuthorizeView>
+            <Authorized>
+                @if (AppState.CurrentPlayer == null || show)
+                {
+                    <h2>Select a character to begin:</h2>
+                    <div class="align-middle" style="width: 15em; margin-left: auto; margin-right: auto">
+                        <RpgButton OnClick="SelectUserCharacter" RpgButtonStyle="RpgButtonStyle.Standard" Width="80">Select Character</RpgButton>
+                    </div>
+                   
+                    <h2>Or create a new character:</h2>
+                    <div class="align-middle" style="width: 15em; margin-left: auto; margin-right: auto">
+                        <RpgButton OnClick="CreateNewCharacter" RpgButtonStyle="RpgButtonStyle.Standard" Width="80">Create Character</RpgButton>
+                    </div>
+                }
+                @if (AppState.CurrentPlayer != null && !show)
+                {
+                    <div class="align-middle" style="width: 15em; margin-left: auto; margin-right: auto">
+                        <RpgButton OnClick="@(_ => show = true)" RpgButtonStyle="RpgButtonStyle.Silver">Change Character</RpgButton>
+                    </div>
+                }
+
+            </Authorized>
+            <NotAuthorized>
+                <h1>Log-in to select or create a character.</h1>
+            </NotAuthorized>
+        </AuthorizeView>
+        
     </div>
+</div>

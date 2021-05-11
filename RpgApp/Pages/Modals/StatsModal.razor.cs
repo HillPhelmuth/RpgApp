@@ -21,6 +21,8 @@ namespace RpgApp.Client.Pages.Modals
         }
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != nameof(AppState.CurrentPlayer)) return;
+            Console.WriteLine($"{e.PropertyName} change handled by {nameof(StatsModal)}");
             CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
         }
