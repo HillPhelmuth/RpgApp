@@ -5,13 +5,24 @@
 @using RpgApp.Client.Pages.StyleTests
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthState
-
+@inject AuthHttpClient AuthClient
 <RpgTabGroup @bind-ActiveIndex="indexTab">
 
     <RpgTab Label="Generate Character">
         <GamePlayPrimary />
         <div class="rpgui-content framedgolden" style="overflow:hidden">
             <a href="authTest">Test Authentication with "Authorized" navigation route.</a>
+        </div>
+        <hr />
+        <RpgButton OnClick="TestAuthCalls" RpgButtonStyle="RpgButtonStyle.Golden" Width="30" Label="Test Auth Call"/>
+        <div>
+            @if (authCallMessages.Count > 0)
+            {
+                foreach (var message in authCallMessages)
+                {
+                    <p>@message</p>
+                }
+            }
         </div>
     </RpgTab>
     <RpgTab Label="Data Query Testing">
@@ -52,8 +63,8 @@
             AppState.AllEquipment = allData?.Equipment ?? new List<Equipment>();
             AppState.AllMonsters = allData?.Monsters ?? new List<Monster>();
             AppState.AllSkills = allData?.Skills ?? new List<Skill>();
-            Console.WriteLine($"Equipment: {string.Join(",", AppState.AllEquipment.Select(x => x.Name))}");
-            Console.WriteLine($"Skills: {string.Join(",", AppState.AllSkills.Select(x => x.Name))}");
+            //Console.WriteLine($"Equipment: {string.Join(",", AppState.AllEquipment.Select(x => x.Name))}");
+            //Console.WriteLine($"Skills: {string.Join(",", AppState.AllSkills.Select(x => x.Name))}");
             var authState = await AuthState.GetAuthenticationStateAsync();
             if (authState.User?.Identity?.IsAuthenticated == true)
             {
@@ -67,6 +78,18 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
+    private List<string> authCallMessages = new();
+    private async Task TestAuthCalls()
+    {
+        authCallMessages.Add($"Starting Api calls using the named httpclient ({nameof(AuthClient)}) calls to auth controller");
+        await InvokeAsync(StateHasChanged);
+        var addOrUpdate = await AuthClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
+        authCallMessages.Add($"AddOrUpdatePlayer returned {addOrUpdate}");
+        await InvokeAsync(StateHasChanged);
+        var getPlayers = await AuthClient.GetUserPlayers(AppState.UserId ?? "");
+        authCallMessages.Add($"GetUserPlayers call for {getPlayers.UserName}-- {string.Join(';' ,getPlayers.Players.Select(p => p.Name))}");
+        await InvokeAsync(StateHasChanged);
+    }
     protected async void UpdateState(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != nameof(AppState.IndexTab)) return;

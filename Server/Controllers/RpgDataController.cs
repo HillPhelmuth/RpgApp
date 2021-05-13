@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RpgApp.Server.Data;
@@ -12,6 +13,7 @@ namespace RpgApp.Server.Controllers
 {
     [Route("api/rpgData")]
     [ApiController]
+    //[Authorize]
     public class RpgDataController : ControllerBase
     {
         private readonly RpgAppDbContext _context;
@@ -27,7 +29,7 @@ namespace RpgApp.Server.Controllers
             var playersFromDb = await _context.Players.Where(x => x.UserId == userId).Include(x => x.Inventory).ThenInclude(z => z.Effects).Include(x => x.Skills).ThenInclude(z => z.Effects).ToListAsync();
             players.AddRange(playersFromDb);
             //return players;
-            return new OkObjectResult(new UserData() { UserName = userId, Players = players });
+            return new OkObjectResult(new UserData { UserName = userId, Players = players });
         }
 
         [HttpGet("AllAppData")]
@@ -151,6 +153,53 @@ namespace RpgApp.Server.Controllers
             await _context.Monsters.AddAsync(monster);
             await _context.SaveChangesAsync();
             return true;
+        }
+    }
+    [Route("api/rpgAuthData")]
+    [ApiController]
+    [Authorize]
+    public class RpgAuthDataController : ControllerBase
+    {
+        private readonly RpgAppDbContext _context;
+
+        public RpgAuthDataController(RpgAppDbContext context)
+        {
+            _context = context;
+        }
+        [HttpGet("GetUserPlayers/{userId}")]
+        public async Task<IActionResult> GetUserPlayers(string userId)
+        {
+            var players = new List<Player>();
+            var playersFromDb = await _context.Players.Where(x => x.UserId == userId).Include(x => x.Inventory).ThenInclude(z => z.Effects).Include(x => x.Skills).ThenInclude(z => z.Effects).ToListAsync();
+            players.AddRange(playersFromDb);
+            //return players;
+            return new OkObjectResult(new UserData { UserName = userId, Players = players });
+        }
+        [HttpPost("UpdateOrAddPlayer")]
+        public async Task UpdateOrAddPlayer([FromBody] Player player)
+        {
+            // Make sure we don't accidently add duplicates to the Db
+            var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
+            var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
+            int exp = player.Experience;
+            int gold = player.Gold;
+            if (player.ID == 0)
+            {
+
+                player.Skills = new List<Skill>();
+                player.Inventory = new List<Equipment>();
+                await _context.Players.AddAsync(player);
+                player.Skills.AddRange(skills.Select(x => _context.Skills.FirstOrDefault(y => y.Name == x.Name)));
+                player.Inventory.AddRange(inventory.Select(x => _context.Equipment.FirstOrDefault(y => y.Name == x.Name)));
+            }
+
+            var trackedPlayer = await _context.Players.FindAsync(player.ID);
+            trackedPlayer.Experience = exp;
+            trackedPlayer.Gold = gold;
+            trackedPlayer.Skills = skills;
+            trackedPlayer.Inventory = inventory;
+            //_context.Players.Update(player);
+            await _context.SaveChangesAsync();
         }
     }
 }
