@@ -4,10 +4,10 @@
       "type": "secrets.user"
     },
     "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/playlistmanagerdbserver/databases/PlaylistManagerdb",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/playlistmanagerdbserver/databases/RpgDb",
       "type": "mssql.azure",
       "connectionId": "RpgDbConnection",
-      "secretStore": null
+      "secretStore": "LocalSecretsFile"
     }
   }
 }
