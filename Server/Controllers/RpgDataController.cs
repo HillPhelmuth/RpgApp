@@ -99,26 +99,23 @@ namespace RpgApp.Server.Controllers
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
             var exp = player.Experience;
             var gold = player.Gold;
-            if (player.ID == 0)
+            var trackedPlayer = await _context.Players.FindAsync(player.ID);
+            if (trackedPlayer == null)
             {
-                
+
                 player.Skills = new List<Skill>();
                 player.Inventory = new List<Equipment>();
                 await _context.Players.AddAsync(player);
                 player.Skills.AddRange(skills.Select(x => _context.Skills.FirstOrDefault(y => y.Name == x.Name)));
                 player.Inventory.AddRange(inventory.Select(x => _context.Equipment.FirstOrDefault(y => y.Name == x.Name)));
             }
-
-            var untrackedPlayer = await _context.Players.FindAsync(player.ID);
-            if (untrackedPlayer != null)
+            else
             {
-                untrackedPlayer.Experience = exp;
-                untrackedPlayer.Gold = gold;
-                untrackedPlayer.Skills = skills;
-                untrackedPlayer.Inventory = inventory;
+                trackedPlayer.Experience = exp;
+                trackedPlayer.Gold = gold;
+                trackedPlayer.Skills = skills;
+                trackedPlayer.Inventory = inventory;
             }
-            
-            //_context.Players.Update(player);
             await _context.SaveChangesAsync();
         }
         [HttpPost("AddNewEquipment")]
@@ -187,7 +184,8 @@ namespace RpgApp.Server.Controllers
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
             int exp = player.Experience;
             int gold = player.Gold;
-            if (player.ID == 0)
+            var trackedPlayer = await _context.Players.FindAsync(player.ID);
+            if (trackedPlayer == null)
             {
 
                 player.Skills = new List<Skill>();
@@ -196,17 +194,14 @@ namespace RpgApp.Server.Controllers
                 player.Skills.AddRange(skills.Select(x => _context.Skills.FirstOrDefault(y => y.Name == x.Name)));
                 player.Inventory.AddRange(inventory.Select(x => _context.Equipment.FirstOrDefault(y => y.Name == x.Name)));
             }
-
-            var trackedPlayer = await _context.Players.FindAsync(player.ID);
-            if (trackedPlayer != null)
+            else
             {
                 trackedPlayer.Experience = exp;
                 trackedPlayer.Gold = gold;
                 trackedPlayer.Skills = skills;
                 trackedPlayer.Inventory = inventory;
             }
-
-            //_context.Players.Update(player);
+            
             await _context.SaveChangesAsync();
         }
     }
