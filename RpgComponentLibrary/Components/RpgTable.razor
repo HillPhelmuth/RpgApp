@@ -1,0 +1,31 @@
+﻿@typeparam TItem
+    <div class="rpgui-container @Enum.GetName(TableFrame)?.ToLower()">
+        <table class="rpgui-table rpgui-content" style="@Width">
+            <thead>
+                <tr class="rpgui-table-head">
+                    @TableHeader
+                    @if (ShowSelect)
+                    {
+                        <th>Action</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Items)
+                {
+                    <tr class="rpgui-table-body" @ondblclick="@(()=> OnDblClickRow.InvokeAsync(item))">
+                        @RowTemplate(item)
+                        @if (ShowSelect)
+                        {
+                            <td>
+                                <RpgButton OnClick="@(() => OnItemSelected.InvokeAsync(item))" RpgButtonStyle="RpgButtonStyle.Standard" Label="Select" Width="50"></RpgButton>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @code {
+
+    }

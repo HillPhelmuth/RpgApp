@@ -264,7 +264,7 @@ namespace RpgApp.Client.Pages.Layouts
             if (isVictory)
             {
                 await ShowMessageModal("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
-                await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", CurrentPlayer);
+                await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
             }
             else
             {
@@ -292,6 +292,7 @@ namespace RpgApp.Client.Pages.Layouts
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "CurrentPlayer") return;
+            Console.WriteLine($"{e.PropertyName} change handled by {nameof(LayoutMyCss)}");
             CurrentPlayer = AppState.CurrentPlayer;
             InvokeAsync(StateHasChanged);
         }

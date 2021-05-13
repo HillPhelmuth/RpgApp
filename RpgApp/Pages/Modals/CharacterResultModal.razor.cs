@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
@@ -24,6 +25,8 @@ namespace RpgApp.Client.Pages.Modals
         }
         private void UpdateState(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != nameof(AppState.CurrentPlayer)) return;
+            Console.WriteLine($"{e.PropertyName} change handled by {nameof(CharacterResultModal)}");
             CurrentPlayer = AppState.CurrentPlayer;
             StateHasChanged();
 

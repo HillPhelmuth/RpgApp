@@ -352,7 +352,12 @@ inside your html file.
         background-origin: padding-box;
         background-position: center;
     }
-
+.liquid-modal-dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 0 0 0 !important;
+}
 .rpgui-modal {
     border-style: solid;
     box-shadow: 0 2px 2px rgba(0,0,0,.25);
@@ -954,7 +959,30 @@ ul.rpgui-list-imp {
     line-height: 20px;
     display: inline;
 }
-
+.rpgui-table-body td {
+    /* color and border */
+    color: white;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    font-size: 1.0em;
+    line-height: 22px;
+    border: 4px solid #4b2b1b;
+    /* border-style: solid;
+    border-image: url("img/select-border-image.png") 10% repeat repeat;
+    border-width: 5px;*/
+    padding: .3rem .6rem
+}
+.rpgui-table-body:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.rpgui-table-head th {
+    /* color and border */
+    color: white;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    font-size: 1.2em;
+    line-height: 24px;
+    border: 5px solid #4b2b1b;
+    padding: .3rem .6rem
+}
 /* default gui label */
 .rpgui-content li {
     /* color and border */

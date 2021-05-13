@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
-using MatBlazor;
 using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;

@@ -4,13 +4,10 @@ namespace RpgApp.Shared.Types.PlayerExtensions
 {
     public static class ExtensionMethods
     {
-        public static Player ApplyCombatResults(this Player currentPlayer, CombatPlayer combatPlayer)
+        public static void ApplyCombatResults(this Player currentPlayer, CombatPlayer combatPlayer)
         {
             currentPlayer.Health = combatPlayer.Health;
             currentPlayer.AbilityPoints = combatPlayer.AbilityPoints;
-            currentPlayer.Experience += combatPlayer.Experience;
-            currentPlayer.Gold += combatPlayer.Gold;
-            return currentPlayer;
         }
 
         public static Player UpdateDuringCombat(this Player currentPlayer, CombatPlayer combatPlayer)
@@ -19,7 +16,7 @@ namespace RpgApp.Shared.Types.PlayerExtensions
             currentPlayer.AbilityPoints = combatPlayer.AbilityPoints;
             return currentPlayer;
         }
-
+        
         public static CombatPlayer ConvertToCombatMode(this Player player)
         {
             var combatPlayer = new CombatPlayer

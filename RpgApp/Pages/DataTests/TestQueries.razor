@@ -1,28 +1,28 @@
 ﻿<div class="rpgui-content rpgui-container framed">
     <h1>Test Select Player</h1>
-    @*<MatTextField HelperText="use 'admin' for testing" Label="UserName" HelperTextPersistent="true" @bind-Value="userInput"></MatTextField>*@
-    <RpgButton OnClick="GetUserPlayers">Get</RpgButton>
+   
+    <RpgButton OnClick="GetUserPlayers" Width="20" Label="Get Characters"/>
     
-    @if (isPlayerQuery)
+    @if (isPlayerQuery && AppState.UserData != null)
     {
         <div class="mat-layout-grid">
             <div class="mat-layout-grid-inner">
                 <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
-                    <MatH6>Double click to select</MatH6>
-                    <MatTable TableItem="Player" Items="UserPlayers" Class="mat-elevation-z5" OnRowDbClick="SelectPlayer" AllowSelection="true">
-                        <MatTableHeader>
+                    <h2>Double click to select</h2>
+                    <RpgTable TItem="Player" Items="UserData.Players" OnDblClickRow="SelectPlayer" PixelWidth="600">
+                        <TableHeader>
                             <th>Id</th>
                             <th>Name</th>
                             <th>Class</th>
                             <th>Level</th>
-                        </MatTableHeader>
-                        <MatTableRow>
+                        </TableHeader>
+                        <RowTemplate>
                             <td>@context.ID</td>
                             <td>@context.Name</td>
                             <td>@context.ClassType.ToString()</td>
                             <td>@context.Level</td>
-                        </MatTableRow>
-                    </MatTable>
+                        </RowTemplate>
+                    </RpgTable>
                 </div>
                 <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
                     @if (selectedPlayer != null)
@@ -44,39 +44,38 @@
                 <RpgSlider MinValue="0" MaxValue="100" DataValueChanged="@GetEquipFilterByGp"></RpgSlider><hr />
                 @if (isEquipQuery)
                 {
-                    <MatTable TableItem="Equipment" Items="EquipmentQueryResult" Class="mat-elevation-z5">
-                        <MatTableHeader>
+                    <RpgTable TItem="Equipment" Items="EquipmentQueryResult" PercentWidth="90">
+                        <TableHeader>
                             <th>Name</th>
                             <th>Gold Cost</th>
                             <th>Description</th>
-                        </MatTableHeader>
-                        <MatTableRow>
+                        </TableHeader>
+                        <RowTemplate>
                             <td>@context.Name</td>
                             <td>@context.GoldCost</td>
                             <td>@context.Description</td>
-                        </MatTableRow>
-                    </MatTable>
+                        </RowTemplate>
+                    </RpgTable>
                 }
             </div>
             <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
                 <h1>Skills</h1>
                 <h2 class="text-center">filter by @skillGold gp</h2>
-                @*<MatSlider TValue="int" Step="5" EnableStep="true" ValueMin="0" ValueMax="100" ValueChanged="@GetSkillFilterByGp"></MatSlider><hr />*@
                 <RpgSlider MinValue="0" MaxValue="100" DataValueChanged="@GetSkillFilterByGp"></RpgSlider><hr />
                 @if (isSkillQuery)
                 {
-                    <MatTable TableItem="Skill" Items="SkillQueryResult" Class="mat-elevation-z5">
-                        <MatTableHeader>
+                    <RpgTable TItem="Skill" Items="SkillQueryResult" PercentWidth="90">
+                        <TableHeader>
                             <th>Name</th>
                             <th>Gold Cost</th>
                             <th>Description</th>
-                        </MatTableHeader>
-                        <MatTableRow>
+                        </TableHeader>
+                        <RowTemplate>
                             <td>@context.Name</td>
                             <td>@context.GoldCost</td>
                             <td>@context.Description</td>
-                        </MatTableRow>
-                    </MatTable>
+                        </RowTemplate>
+                    </RpgTable>
                 }
             </div>
         </div>

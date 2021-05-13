@@ -1,63 +1,70 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 using RpgApp.Client.Pages.Modals;
 using RpgApp.Client.Shared;
+using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 
 namespace RpgApp.Client.Pages
 {
-    public class GamePlayPrimaryModel : RpgComponentBase, IDisposable
+    public partial class GamePlayPrimary : IDisposable
     {
-        #region TempRegion
-        [CascadingParameter]
-        public string TabDemoParameter { get; set; }
-        protected string altDisplay { get; set; }
-
-        #endregion
+       
         #region Fields/Properties
         [Inject]
         public IModalDialogService ModalService { get; set; }
-        protected string at = "@";
-        protected Player Player { get; set; }
-        protected ClassType CharClass { get; set; }
-        protected string name;
-        protected bool IsPlayerCreated;
-
+        [Inject]
+        public AppStateManager AppState { get; set; }
+       
+        public Player CurrentPlayer { get; set; }
+        private bool show;
+        private string name;
         #endregion
 
         #region Methods
 
         protected override Task OnInitializedAsync()
         {
-            altDisplay = string.IsNullOrEmpty(TabDemoParameter) ? "Navigation style presentation" : TabDemoParameter;
-            //await UpdateState();
-            // Listens for OnChange event from AppStateManager and triggers UpdateState each time
             AppState.PropertyChanged += UpdateState;
             return base.OnInitializedAsync();
         }
-        //public async Task CreateNewPlayer(ClassType classType)
-        //{
-        //    CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType);
-        //    AppState.UpdateCurrentPlayer(CurrentPlayer);
-        //    CurrentPlayer.Name = name;
-        //    IsPlayerCreated = true;
-        //    StateHasChanged();
-        //}
-
         public async Task CreateNewCharacter()
         {
-            var options = new ModalDialogOptions()
+            var options = new ModalDialogOptions
             {
                 Style = ModalStyles.Framed(ModalSize.ExtraLarge)
             };
             var result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character", options);
+            if (result.Success) show = false;
             StateHasChanged();
         }
 
-        // UnSubscribes from the OnChange event when component is not currently in use
+        private void Selected(Player player) => name = player.Name;
+        private async Task SelectUserCharacter()
+        {
+            Console.WriteLine($"UserData: {JsonSerializer.Serialize(AppState.UserData)}");
+            if (AppState.UserData == null) return;
+            var options = new ModalDialogOptions
+            {
+                Style = ModalStyles.Framed(ModalSize.Medium)
+            };
+            var result = await ModalService.ShowDialogAsync<CharacterSelectModal>("Double Click to Select Character", options);
+            if (result.Success) show = false;
+            StateHasChanged();
+        }
+        protected void UpdateState(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(AppState.UserId) && e.PropertyName != nameof(AppState.UserData))
+                return;
+            Console.WriteLine($"{e.PropertyName} change handled by {nameof(GamePlayPrimary)}");
+            InvokeAsync(StateHasChanged);
+        }
+
         public void Dispose() => AppState.PropertyChanged -= UpdateState;
         #endregion
 
