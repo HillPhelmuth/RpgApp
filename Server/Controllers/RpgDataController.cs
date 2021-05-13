@@ -110,10 +110,14 @@ namespace RpgApp.Server.Controllers
             }
 
             var untrackedPlayer = await _context.Players.FindAsync(player.ID);
-            untrackedPlayer.Experience = exp;
-            untrackedPlayer.Gold = gold;
-            untrackedPlayer.Skills = skills;
-            untrackedPlayer.Inventory = inventory;
+            if (untrackedPlayer != null)
+            {
+                untrackedPlayer.Experience = exp;
+                untrackedPlayer.Gold = gold;
+                untrackedPlayer.Skills = skills;
+                untrackedPlayer.Inventory = inventory;
+            }
+            
             //_context.Players.Update(player);
             await _context.SaveChangesAsync();
         }
