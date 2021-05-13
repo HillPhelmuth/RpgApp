@@ -198,10 +198,14 @@ namespace RpgApp.Server.Controllers
             }
 
             var trackedPlayer = await _context.Players.FindAsync(player.ID);
-            trackedPlayer.Experience = exp;
-            trackedPlayer.Gold = gold;
-            trackedPlayer.Skills = skills;
-            trackedPlayer.Inventory = inventory;
+            if (trackedPlayer != null)
+            {
+                trackedPlayer.Experience = exp;
+                trackedPlayer.Gold = gold;
+                trackedPlayer.Skills = skills;
+                trackedPlayer.Inventory = inventory;
+            }
+
             //_context.Players.Update(player);
             await _context.SaveChangesAsync();
         }
