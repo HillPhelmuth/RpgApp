@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>RpgApp.Server</RootNamespace>
+    <UserSecretsId>1bc522fc-fe3d-4a1c-a9a7-336e094a9ad6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
