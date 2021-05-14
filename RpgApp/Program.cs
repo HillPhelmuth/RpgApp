@@ -25,6 +25,7 @@ namespace RpgApp.Client
             {
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);
                 options.ProviderOptions.ResponseType = "code";
+                options.UserOptions.NameClaim = "nickname";
             });
             builder.Services.AddModalDialog();
             builder.Services.AddScoped<CombatService>();
