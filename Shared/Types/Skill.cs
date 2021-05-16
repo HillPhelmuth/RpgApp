@@ -54,6 +54,8 @@ namespace RpgApp.Shared.Types
         [JsonIgnore]
         public ICollection<Player> Players { get; set; }
 
+        #region IEquatable Implementation
+
         public bool Equals(Skill other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -73,5 +75,6 @@ namespace RpgApp.Shared.Types
         {
             return HashCode.Combine(Name, Description, GoldCost, AbilityCost);
         }
+        #endregion
     }
 }

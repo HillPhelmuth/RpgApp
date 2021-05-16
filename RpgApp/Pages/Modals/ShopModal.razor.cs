@@ -22,7 +22,8 @@ namespace RpgApp.Client.Pages.Modals
         public AppStateManager AppState { get; set; }
         [Inject]
         private HttpClient HttpClient { get; set; }
-
+        [Inject]
+        private AuthHttpClient AuthHttpClient { get; set; }
         protected override async Task OnInitializedAsync()
         {
             var apiResponse = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={30}");
@@ -35,7 +36,8 @@ namespace RpgApp.Client.Pages.Modals
         public async Task BuyEquipment(Equipment equipment)
         {
             AppState.CurrentPlayer.Inventory.Add(equipment);
-            await HttpClient.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
+            await AuthHttpClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
+            //await HttpClient.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
         }
     }
 }

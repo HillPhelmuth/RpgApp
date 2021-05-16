@@ -2,12 +2,14 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazor.ModalDialog;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RpgApp.Shared;
 using RpgApp.Shared.Services;
+using RpgApp.Shared.Services.ExtensionMethods;
 
 namespace RpgApp.Client
 {
@@ -28,8 +30,8 @@ namespace RpgApp.Client
                 options.UserOptions.NameClaim = "nickname";
             });
             builder.Services.AddModalDialog();
-            builder.Services.AddScoped<CombatService>();
-            builder.Services.AddSingleton<AppStateManager>();
+            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddRpgServices();
             await builder.Build().RunAsync();
         }
     }

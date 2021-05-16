@@ -29,6 +29,8 @@ namespace RpgApp.Client.Pages.Layouts
         public IModalDialogService ModalService { get; set; }
         [Inject]
         public HttpClient Http { get; set; }
+        [Inject]
+        private AuthHttpClient AuthHttpClient { get; set; }
         [Parameter]
         public (int x, int y) PlayerLoc { get; set; } = (0, 0);
         protected Player CurrentPlayer { get; set; }
@@ -264,7 +266,8 @@ namespace RpgApp.Client.Pages.Layouts
             if (isVictory)
             {
                 await ShowMessageModal("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
-                await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
+                await AuthHttpClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
+                //await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
             }
             else
             {
