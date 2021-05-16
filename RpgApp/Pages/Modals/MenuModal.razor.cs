@@ -27,10 +27,21 @@ namespace RpgApp.Client.Pages.Modals
         public async Task ShowShop()
         {
             ModalDialogResult result = await ModalService.ShowDialogAsync<ShopModal>("Shop", DialogOptions);
+            StateHasChanged();
         }
         public async Task ShowInventory()
         {
             ModalDialogResult result = await ModalService.ShowDialogAsync<InventoryModal>("Inventory", DialogOptions);
+            StateHasChanged();
+        }
+        public async Task ShowSkillShop()
+        {
+            ModalDialogResult result = await ModalService.ShowDialogAsync<SkillsShopModal>("Skills Shop", DialogOptions);
+            StateHasChanged();
+        }
+        public async Task ShowSkills()
+        {
+            ModalDialogResult result = await ModalService.ShowDialogAsync<SkillsModal>("Skills", DialogOptions);
             StateHasChanged();
         }
     }

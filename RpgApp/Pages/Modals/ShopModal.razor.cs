@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Components;
 using RpgApp.Shared;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
-using RpgApp.Shared.Types.PlayerExtensions;
-using RpgComponentLibrary.Services;
 
 namespace RpgApp.Client.Pages.Modals
 {
@@ -26,8 +24,7 @@ namespace RpgApp.Client.Pages.Modals
         private AuthHttpClient AuthHttpClient { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            var apiResponse = await HttpClient.GetFromJsonAsync<List<Equipment>>($"{AppConstants.ApiUrl}/GetSomeEquipment?goldMax={30}");
-            shopInventory = apiResponse;
+            shopInventory = AppState.AllEquipment.Where(f => f.GoldCost <= 30).ToList();
             foreach (var item in shopInventory.Where(item => item.Effects == null))
             {
                 item.Effects = new List<Effect> { new Effect { Type = EffectType.Status, Value = "none" } };
