@@ -182,7 +182,9 @@ namespace RpgApp.Server.Controllers
         public async Task UpdateOrAddPlayer([FromBody] Player player)
         {
             var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
+            var dbSkills = _context.Skills.ToList().Where(x => skills.Any(y => x.ID == y.ID)).ToList();
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
+            var dbInventory = _context.Equipment.ToList().Where(e1 => inventory.Any(e2 => e2.Id == e1.Id)).ToList();
             int exp = player.Experience;
             int gold = player.Gold;
             var trackedPlayer = await _context.Players.Where(p => p.ID == player.ID).Include(x => x.Skills).ThenInclude(x => x.Effects).Include(x => x.Inventory).ThenInclude(x => x.Effects).FirstOrDefaultAsync();
@@ -196,9 +198,9 @@ namespace RpgApp.Server.Controllers
             }
             else
             {
-                var newSkills = skills.Where(s => !trackedPlayer.Skills.Contains(s)).ToList();
+                var newSkills = dbSkills.Where(s => !trackedPlayer.Skills.Contains(s)).ToList();
                 trackedPlayer.Skills.AddRange(newSkills);
-                var newEq = inventory.Where(e => !trackedPlayer.Inventory.Contains(e)).ToList();
+                var newEq = dbInventory.Where(e => !trackedPlayer.Inventory.Contains(e)).ToList();
                 trackedPlayer.Inventory.AddRange(newEq);
                 trackedPlayer.Experience = exp;
                 trackedPlayer.Gold = gold;

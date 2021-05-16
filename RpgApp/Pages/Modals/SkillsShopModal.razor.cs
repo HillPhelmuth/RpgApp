@@ -20,6 +20,8 @@ namespace RpgApp.Client.Pages.Modals
         public AppStateManager AppState { get; set; }
         [Inject]
         private HttpClient HttpClient { get; set; }
+        [Inject]
+        private AuthHttpClient AuthHttpClient { get; set; }
         private string PageTitle;
 
         protected override async Task OnInitializedAsync()
@@ -47,7 +49,7 @@ namespace RpgApp.Client.Pages.Modals
         public async Task BuySkills(Skill skill)
         {
             AppState.CurrentPlayer.Skills.Add(skill);
-            await HttpClient.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
+            await AuthHttpClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
         }
     }
 }

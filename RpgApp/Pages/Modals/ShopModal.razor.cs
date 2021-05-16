@@ -22,19 +22,20 @@ namespace RpgApp.Client.Pages.Modals
         private HttpClient HttpClient { get; set; }
         [Inject]
         private AuthHttpClient AuthHttpClient { get; set; }
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
             shopInventory = AppState.AllEquipment.Where(f => f.GoldCost <= 30).ToList();
             foreach (var item in shopInventory.Where(item => item.Effects == null))
             {
                 item.Effects = new List<Effect> { new Effect { Type = EffectType.Status, Value = "none" } };
             }
+
+            return base.OnInitializedAsync();
         }
         public async Task BuyEquipment(Equipment equipment)
         {
             AppState.CurrentPlayer.Inventory.Add(equipment);
             await AuthHttpClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
-            //await HttpClient.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
         }
     }
 }
