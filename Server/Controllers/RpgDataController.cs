@@ -16,17 +16,24 @@ namespace RpgApp.Server.Controllers
     //[Authorize]
     public class RpgDataController : ControllerBase
     {
-        private readonly RpgAppDbContext _context;
-        public RpgDataController(RpgAppDbContext context)
+        private readonly  RpgAppDbContext _context;
+        public RpgDataController(IDbContextFactory<RpgAppDbContext> contextFactory)
         {
-            _context = context;
+            _context = contextFactory.CreateDbContext();
         }
 
+        [HttpGet("CreateAndSeed")]
+        public async Task<string> CreateAndSeedCosmos()
+        {
+           var dbCreatetext = RpgDbInitializer.Initialize(_context);
+           return dbCreatetext;
+
+        }
         [HttpGet("GetUserPlayers/{userId}")]
         public async Task<IActionResult> GetUserPlayers(string userId)
         {
             var players = new List<Player>();
-            var playersFromDb = await _context.Players.Where(x => x.UserId == userId).Include(x => x.Inventory).ThenInclude(z => z.Effects).Include(x => x.Skills).ThenInclude(z => z.Effects).ToListAsync();
+            var playersFromDb = await _context.Players.Where(x => x.UserId == userId).ToListAsync();
             players.AddRange(playersFromDb);
             //return players;
             return new OkObjectResult(new UserData { UserName = userId, Players = players });
@@ -37,21 +44,21 @@ namespace RpgApp.Server.Controllers
         {
             return new AllAppData
             {
-                Equipment = await _context.Equipment.Include(x => x.Effects).AsSplitQuery().ToListAsync(),
-                Skills = await _context.Skills.Include(x => x.Effects).AsSplitQuery().ToListAsync(),
+                Equipment = await _context.Equipment.ToListAsync(),
+                Skills = await _context.Skills.ToListAsync(),
                 Monsters = await _context.Monsters.ToListAsync()
             };
         }
         [HttpGet("GetEquipment")]
         public async Task<List<Equipment>> GetEquipmentAsync()
         {
-            return await _context.Equipment.Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            return await _context.Equipment.ToListAsync();
         }
         [HttpGet("GetSomeEquipment")]
         public async Task<List<Equipment>> GetSomeEquipmentAsync([FromQuery] int goldMax = 0)
         {
             Expression<Func<Equipment, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
-            return await _context.Equipment.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            return await _context.Equipment.Where(firstEquipExpression).ToListAsync();
         }
         [HttpGet("GetEquipmentById/{equipId}")]
         public async Task<Equipment> GetEquipmentById(int equipId)
@@ -61,13 +68,13 @@ namespace RpgApp.Server.Controllers
         [HttpGet("GetSkills")]
         public async Task<List<Skill>> GetSkillsAsync()
         {
-            return await _context.Skills.Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            return await _context.Skills.ToListAsync();
         }
         [HttpGet("GetSomeSkills")]
         public async Task<List<Skill>> GetSomeSkillsAsync([FromQuery] int goldMax = 0)
         {
             Expression<Func<Skill, bool>> firstEquipExpression = equip => equip.GoldCost < goldMax;
-            return await _context.Skills.Where(firstEquipExpression).Include(x => x.Effects).AsSplitQuery().ToListAsync();
+            return await _context.Skills.Where(firstEquipExpression).ToListAsync();
         }
 
         [HttpGet("GetSkillById/{skillId}")]
@@ -99,7 +106,7 @@ namespace RpgApp.Server.Controllers
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
             var exp = player.Experience;
             var gold = player.Gold;
-            var trackedPlayer = await _context.Players.FindAsync(player.ID);
+            var trackedPlayer = await _context.Players.FindAsync(player.Index);
             if (trackedPlayer == null)
             {
 
@@ -137,7 +144,7 @@ namespace RpgApp.Server.Controllers
         public async Task<bool> AddNewSkill([FromBody] Skill skill)
         {
             var isMatch = await _context.Skills.AnyAsync(s =>
-                s.Name == skill.Name || s.ID == skill.ID);
+                s.Name == skill.Name || s.Index == skill.Index);
             if (isMatch)
                 return false;
             await _context.Skills.AddAsync(skill);
@@ -184,7 +191,7 @@ namespace RpgApp.Server.Controllers
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
             int exp = player.Experience;
             int gold = player.Gold;
-            var trackedPlayer = await _context.Players.FindAsync(player.ID);
+            var trackedPlayer = await _context.Players.FindAsync(player.Index);
             if (trackedPlayer == null)
             {
 

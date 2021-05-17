@@ -17,7 +17,7 @@ namespace RpgApp.Shared.Types
     {
         //[JsonPropertyName("id")]
         [JsonIgnore]
-        public int Id { get; set; }
+        public int Index { get; set; }
         public string ImageId
         {
             get

@@ -114,7 +114,7 @@ namespace RpgApp.Client.Pages.CombatTests
         private async Task BeginCombat()
         {
             _combatPlayer = CurrentPlayer.ConvertToCombatMode();
-            var armor = CurrentPlayer.Inventory.Find(x => x.Id == 1) ?? AppState.AllEquipment.Find(x => x.Id == 1);
+            var armor = CurrentPlayer.Inventory.Find(x => x.Index == 1) ?? AppState.AllEquipment.Find(x => x.Index == 1);
             
             var weapons = _combatPlayer?.Inventory ?? new List<Equipment> { new Equipment { EquipLocation = "TwoHands" } };
             var weapon = weapons.Find(x => x.Effects.Any(e => e.Type == EffectType.Attack));

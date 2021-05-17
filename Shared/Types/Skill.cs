@@ -26,7 +26,7 @@ namespace RpgApp.Shared.Types
     public class Skill : IEquatable<Skill>
     {
         [JsonIgnore]
-        public int ID { get; set; }
+        public int Index { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; }
 

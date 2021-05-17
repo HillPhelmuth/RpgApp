@@ -35,6 +35,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="5.0.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RpgApp\Client.csproj" />

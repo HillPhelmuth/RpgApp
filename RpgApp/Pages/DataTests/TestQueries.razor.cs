@@ -35,7 +35,7 @@ namespace RpgApp.Client.Pages.DataTests
         private void SelectPlayer(Player player)
         {
             if (player == null) return;
-            selectedPlayer = UserData.Players.Find(x => x.ID == player.ID);
+            selectedPlayer = UserData.Players.Find(x => x.Index == player.Index);
             if (selectedPlayer != null)
             {
                 selectedPlayer.Health = selectedPlayer.MaxHealth;

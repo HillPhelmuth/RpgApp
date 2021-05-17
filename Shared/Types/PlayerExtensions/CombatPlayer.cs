@@ -21,7 +21,7 @@ namespace RpgApp.Shared.Types.PlayerExtensions
         private int GetArmorValue()
         {
             var inventory = Inventory;
-            var armor = inventory.Find(x => x.Id == BodyId);
+            var armor = inventory.Find(x => x.Index == BodyId);
 
             var armorValue = armor?.Effects.Where(x => x.Type == EffectType.Defend).Select(x => x.Value).FirstOrDefault();
             int value = 0;

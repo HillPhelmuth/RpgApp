@@ -35,8 +35,10 @@ namespace RpgApp.Server
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<RpgAppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RpgDbConnection"))); // gets the connection string from appsettings.json
+            //services.AddDbContext<RpgAppDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("RpgDbConnection"))); // gets the connection string from appsettings.json
+            services.AddDbContextFactory<RpgAppDbContext>(opts =>
+                opts.UseCosmos(Configuration["Cosmos:Endpoint"], Configuration["Cosmos:Key"], "AppUserDb"));
             services.AddSingleton<AppStateManager>();
             services.AddTransient<CreateCharacter>();
             

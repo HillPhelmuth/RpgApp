@@ -17,6 +17,7 @@ namespace RpgApp.Server.Data
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Monster> Monsters { get; set; }
+       
 
         public RpgAppDbContext(DbContextOptions<RpgAppDbContext> options)
             : base(options)
@@ -24,6 +25,22 @@ namespace RpgApp.Server.Data
 
         }
 
-       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Player>().ToContainer("Players");
+            modelBuilder.Entity<Player>().HasKey(p => new {p.UserId, p.Name});
+            modelBuilder.Entity<Player>().HasPartitionKey(p => p.UserId);
+            modelBuilder.Entity<Player>().HasMany(p => p.Inventory);
+            modelBuilder.Entity<Player>().HasMany(p => p.Skills);
+            
+            modelBuilder.Entity<Equipment>().ToContainer("EquipmentList").HasKey(e => e.Name);
+            modelBuilder.Entity<Equipment>().OwnsMany(x => x.Effects);
+            modelBuilder.Entity<Skill>().ToContainer("PlayerSkills").HasKey(s => s.Name);
+            modelBuilder.Entity<Skill>().OwnsMany(s => s.Effects);
+            modelBuilder.Entity<Monster>().ToContainer("Monsters").HasKey(m => m.Name);
+            modelBuilder.Entity<Monster>().HasMany(m => m.Treasure);
+        }
+
+
     }
 }

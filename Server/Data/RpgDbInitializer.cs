@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,12 +17,14 @@ namespace RpgApp.Server.Data
         /// from Program.cs on app start.
         /// </summary>
         /// <param name="context"></param>
-        public static void Initialize(RpgAppDbContext context)
+        public static string Initialize(RpgAppDbContext context)
         {
             context.Database.EnsureCreated();
-            if (context.Players.Any() || context.Equipment.Any())
-                return;
-            
+            //if (context.Players.Any() || context.Equipment.Any())
+            //    return "NOPE!";
+            var writer = new StringWriter();
+            var currentOut = Console.Out;
+            Console.SetOut(writer);
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
             
@@ -154,6 +157,10 @@ namespace RpgApp.Server.Data
             context.Monsters.AddRange(monster, monster2, monster3);
             //Saving will write all these changes to the db
             context.SaveChanges();
+
+            var outputResult = writer.ToString();
+            Console.SetOut(currentOut);
+            return outputResult;
         }
     }
 }

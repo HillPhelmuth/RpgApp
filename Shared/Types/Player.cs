@@ -10,7 +10,7 @@ namespace RpgApp.Shared.Types
     {
         #region Properties
 
-        public int ID { get; set; }
+        public int Index { get; set; }
         public string UserId { get; set; }
         public int Level { get; set; }
         public int MaxAbilityPoints { get; set; }
@@ -47,11 +47,11 @@ namespace RpgApp.Shared.Types
             switch (item.EquipLocation)
             {
                 case "OneHand":
-                    WeaponHandId = item.Id;
+                    WeaponHandId = item.Index;
                     break;
                 case "TwoHand":
-                    WeaponHandId = item.Id;
-                    OffHandId = item.Id;
+                    WeaponHandId = item.Index;
+                    OffHandId = item.Index;
                     break;
             }
 
@@ -63,7 +63,7 @@ namespace RpgApp.Shared.Types
             if (item.EquipLocation == null || !item.EquipLocation.Contains("OffHand")) return;
             if (item.AllowedClasses.All(x => x != stringClass))
                 return;
-            OffHandId = item.Id;
+            OffHandId = item.Index;
         }
         public void EquipArmor(Equipment item)
         {
@@ -72,7 +72,7 @@ namespace RpgApp.Shared.Types
             if (item.EquipLocation?.Contains("Body") == false) return;
             if (item.AllowedClasses.All(x => x != stringClass))
                 return;
-            BodyId = item.Id;
+            BodyId = item.Index;
         }
 
         public void AddToInventory(Equipment item)
