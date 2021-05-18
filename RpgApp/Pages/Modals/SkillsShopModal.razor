@@ -1,0 +1,14 @@
+﻿@using Frame = RpgComponentLibrary.Components.Frame
+
+<RpgItemsMenu ImageMapperFunc="@((eq) => eq.ImageId)" Items="shopSkills" MenuColumns="20" MenuFrame="Frame.FramedGrey" Context="skill" TItem="Skill">
+    <MenuHeader>
+        <h1>@PageTitle</h1>
+    </MenuHeader>
+    <ToolTipTemplate>
+        @skill.AsDisplayString()
+    </ToolTipTemplate>
+    <ActionTemplate>
+        <label>@skill.Name</label>
+        <RpgButton OnClick="@(() => BuySkills(skill))" Label="Purchase"></RpgButton>
+    </ActionTemplate>
+</RpgItemsMenu>

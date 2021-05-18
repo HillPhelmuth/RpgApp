@@ -52,7 +52,35 @@ namespace RpgApp.Shared.Types
         [JsonPropertyName("effects")]
         public List<Effect> Effects { get; set; }
         [JsonIgnore]
+
+        public string ImageId
+        {
+            get
+            {
+                if (this.Name.Contains("sword", StringComparison.OrdinalIgnoreCase))
+                    return "sword";
+                if (Name.Contains("armor", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/armor";
+                if (Name.Contains("shield", StringComparison.OrdinalIgnoreCase))
+                    return "shield";
+                if (Name.Contains("dagger", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/dagger";
+                if (Name.Contains("potion", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/potionRed";
+                if (Name.Contains("book", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/tome";
+                if (Name.Contains("boots", StringComparison.OrdinalIgnoreCase))
+                    return "shoes-slot";
+                if (Name.Contains("wand", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/wand";
+                if (Name.Contains("bow", StringComparison.OrdinalIgnoreCase))
+                    return "foreign/bow";
+                return "foreign/gemBlue";
+            }
+        }
         public ICollection<Player> Players { get; set; }
+
+        #region IEquatable Implementation
 
         public bool Equals(Skill other)
         {
@@ -73,5 +101,6 @@ namespace RpgApp.Shared.Types
         {
             return HashCode.Combine(Name, Description, GoldCost, AbilityCost);
         }
+        #endregion
     }
 }

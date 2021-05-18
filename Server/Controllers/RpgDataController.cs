@@ -109,7 +109,6 @@ namespace RpgApp.Server.Controllers
             var trackedPlayer = await _context.Players.FindAsync(player.Index);
             if (trackedPlayer == null)
             {
-
                 player.Skills = new List<Skill>();
                 player.Inventory = new List<Equipment>();
                 await _context.Players.AddAsync(player);
@@ -118,11 +117,14 @@ namespace RpgApp.Server.Controllers
             }
             else
             {
+                var newSkills = skills.Where(s => !trackedPlayer.Skills.Contains(s)).ToList();
+                trackedPlayer.Skills.AddRange(newSkills);
+                var newEq = inventory.Where(e => !trackedPlayer.Inventory.Contains(e)).ToList();
+                trackedPlayer.Inventory.AddRange(newEq);
                 trackedPlayer.Experience = exp;
                 trackedPlayer.Gold = gold;
-                trackedPlayer.Skills = skills;
-                trackedPlayer.Inventory = inventory;
             }
+
             await _context.SaveChangesAsync();
         }
         [HttpPost("AddNewEquipment")]
@@ -186,15 +188,15 @@ namespace RpgApp.Server.Controllers
         [HttpPost("UpdateOrAddPlayer")]
         public async Task UpdateOrAddPlayer([FromBody] Player player)
         {
-            // Make sure we don't accidently add duplicates to the Db
             var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
+            var dbSkills = _context.Skills.ToList().Where(x => skills.Any(y => x.ID == y.ID)).ToList();
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
+            var dbInventory = _context.Equipment.ToList().Where(e1 => inventory.Any(e2 => e2.Id == e1.Id)).ToList();
             int exp = player.Experience;
             int gold = player.Gold;
             var trackedPlayer = await _context.Players.FindAsync(player.Index);
             if (trackedPlayer == null)
             {
-
                 player.Skills = new List<Skill>();
                 player.Inventory = new List<Equipment>();
                 await _context.Players.AddAsync(player);
@@ -203,12 +205,14 @@ namespace RpgApp.Server.Controllers
             }
             else
             {
+                var newSkills = dbSkills.Where(s => !trackedPlayer.Skills.Contains(s)).ToList();
+                trackedPlayer.Skills.AddRange(newSkills);
+                var newEq = dbInventory.Where(e => !trackedPlayer.Inventory.Contains(e)).ToList();
+                trackedPlayer.Inventory.AddRange(newEq);
                 trackedPlayer.Experience = exp;
                 trackedPlayer.Gold = gold;
-                trackedPlayer.Skills = skills;
-                trackedPlayer.Inventory = inventory;
             }
-            
+
             await _context.SaveChangesAsync();
         }
     }
