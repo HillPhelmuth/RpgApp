@@ -5,7 +5,7 @@ using RpgApp.Shared.Types.Enums;
 
 namespace RpgApp.Shared.Types
 {
-    public class CreateCharacter
+    public static class CreateCharacter
     {
         public static Task<Player> CreateNewCharacter(ClassType type)
         {

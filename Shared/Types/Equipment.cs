@@ -15,6 +15,7 @@ namespace RpgApp.Shared.Types
     }
     public class Equipment : IEquatable<Equipment>
     {
+        public string id => $"Equipment|{Name}";
         //[JsonPropertyName("id")]
         [JsonIgnore]
         public int Index { get; set; }
@@ -44,7 +45,7 @@ namespace RpgApp.Shared.Types
             }
 
         }
-
+        public string PartitionKey => Name;
         [JsonPropertyName("name")]
         public string Name { get; set; }
 

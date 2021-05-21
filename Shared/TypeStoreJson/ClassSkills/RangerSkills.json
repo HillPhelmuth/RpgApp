@@ -1,0 +1,52 @@
+{
+  "rangerSkills": [
+    {
+      "name": "Double shot",
+      "description": "A popular bar trick practiced by rangers. Fires two arrows at a time with somewhat less precision",
+      "goldCost": 30,
+      "abilityCost": 3,
+      "classTypes": [
+        "Ranger"
+      ],
+      "effects": [
+        {
+          "type": "Attack",
+          "value": "1D4",
+          "areaEffect": 2
+        }
+      ]
+    },
+    {
+      "name": "Set Trap",
+      "description": "Sometimes a ranger doesn't need a bow to punish their enemies",
+      "goldCost": 40,
+      "abilityCost": 4,
+      "classTypes": [
+        "Ranger"
+      ],
+      "effects": [
+        {
+          "type ": "Modify",
+          "value": "1D4",
+          "attribute": "Agility"
+        }
+      ]
+    },
+    {
+      "name": "Camouflage",
+      "description": "Sneaking up on a deer is hard. Sneaking up on a knight? Simple.",
+      "goldCost": 50,
+      "abilityCost": 5,
+      "classTypes": [
+        "Ranger"
+      ],
+      "effects": [
+        {
+          "type": "Status",
+          "value": "Stealth"
+           
+        }
+      ] 
+    }
+  ]
+}

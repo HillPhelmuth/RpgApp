@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using RpgApp.Shared;
 using RpgApp.Shared.Services;
@@ -12,12 +9,12 @@ using RpgApp.Shared.Types;
 
 namespace RpgApp.Client
 {
-    public class AuthHttpClient
+    public class ClientDataService
     {
-        private const string ApiAuthBaseUrl = "api/rpgAuthData";
+        private const string ApiAuthBaseUrl = AppConstants.ApiUrl;//"api/rpgData"; 
         private readonly RpgLocalStorageService _rpgLocalStorage;
         public HttpClient HttpClient { get; }
-        public AuthHttpClient(HttpClient httpClient, RpgLocalStorageService rpgLocalStorage)
+        public ClientDataService(HttpClient httpClient, RpgLocalStorageService rpgLocalStorage)
         {
             HttpClient = httpClient;
             _rpgLocalStorage = rpgLocalStorage;
@@ -29,6 +26,7 @@ namespace RpgApp.Client
             {
                 var result = await HttpClient.PostAsJsonAsync($"{ApiAuthBaseUrl}/UpdateOrAddPlayer", player);
                 await _rpgLocalStorage.UpdateUserData(player);
+                Console.WriteLine($"{player} sent to server");
                 return result.ToString();
             }
             catch (AccessTokenNotAvailableException ex)

@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RpgApp.Server.Data;
 using RpgApp.Shared;
-using RpgApp.Shared.Types; //using RpgApp.Server.Services;
+using RpgApp.Shared.Services;
+
+//using RpgApp.Server.Services;
 
 namespace RpgApp.Server
 {
@@ -33,15 +33,10 @@ namespace RpgApp.Server
                 options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
+            services.AddSingleton<RpgCosmosService>();
+            services.AddSingleton<AppStateManager>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            //services.AddDbContext<RpgAppDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("RpgDbConnection"))); // gets the connection string from appsettings.json
-            services.AddDbContextFactory<RpgAppDbContext>(opts =>
-                opts.UseCosmos(Configuration["Cosmos:Endpoint"], Configuration["Cosmos:Key"], "AppUserDb"));
-            services.AddSingleton<AppStateManager>();
-            services.AddTransient<CreateCharacter>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

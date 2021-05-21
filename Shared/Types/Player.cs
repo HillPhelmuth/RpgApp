@@ -10,6 +10,7 @@ namespace RpgApp.Shared.Types
     {
         #region Properties
 
+        public string id => $"Player|{Name}";
         public int Index { get; set; }
         public string UserId { get; set; }
         public int Level { get; set; }
@@ -18,7 +19,7 @@ namespace RpgApp.Shared.Types
         public int Experience { get; set; }
         public int Gold { get; set; }
         public ClassType ClassType { get; set; }
-        [JsonIgnore]
+       
         public List<Skill> Skills { get; set; }
         public List<Equipment> Inventory { get; set; }
         [JsonIgnore]
@@ -86,6 +87,12 @@ namespace RpgApp.Shared.Types
             Health = MaxHealth;
             AbilityPoints = MaxAbilityPoints;
         }
+
+        public override string ToString()
+        {
+            return $"Player level {Level} {ClassType}\r\nName: {Name}, User: {UserId}, Exp: {Experience}, Gold: {Gold}, Items: {Inventory?.Count} SkillCount: {Skills?.Count} ";
+        }
+
         #endregion
 
         #region private methods

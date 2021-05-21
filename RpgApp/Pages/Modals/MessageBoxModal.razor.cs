@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazor.ModalDialog;
+﻿using Blazor.ModalDialog;
 using Microsoft.AspNetCore.Components;
 
 namespace RpgApp.Client.Pages.Modals

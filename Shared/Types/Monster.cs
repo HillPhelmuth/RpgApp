@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace RpgApp.Shared.Types
 {
     public class Monster : LivingEntity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
+        [JsonPropertyName("id")]
+        public string id => $"Monster|{Name}";
+
+        public string PartitionKey => Name;
         public List<Equipment> Treasure { get; set; }
         public string DamageDice { get; set; }
         public string Description { get; set; }

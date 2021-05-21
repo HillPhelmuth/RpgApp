@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 using RpgApp.Shared.Types.PlayerExtensions;

@@ -25,6 +25,8 @@ namespace RpgApp.Shared.Types
     }
     public class Skill : IEquatable<Skill>
     {
+        public string id => $"Skill|{Name}";
+        public string PartitionKey => Name;
         [JsonIgnore]
         public int Index { get; set; }
         [JsonPropertyName("name")]

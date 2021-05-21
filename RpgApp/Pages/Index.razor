@@ -1,8 +1,4 @@
 ﻿@page "/"
-@using System.Net.Http.Json
-@using System.ComponentModel
-@using RpgApp.Shared
-@using RpgApp.Client.Pages.StyleTests
 
 <RpgTabGroup @bind-ActiveIndex="indexTab">
 
@@ -12,16 +8,7 @@
             <a href="authTest">Test Authentication with "Authorized" navigation route.</a>
         </div>
         <hr />
-        <RpgButton OnClick="TestAuthCalls" RpgButtonStyle="RpgButtonStyle.Golden" Width="30" Label="Test Auth Call" />
-        <div>
-            @if (authCallMessages.Count > 0)
-            {
-                foreach (var message in authCallMessages)
-                {
-                    <p>@message</p>
-                }
-            }
-        </div>
+        
     </RpgTab>
     <RpgTab Label="Data Query Testing">
         <TestQueries />

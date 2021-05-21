@@ -30,7 +30,7 @@ namespace RpgApp.Client.Pages.Layouts
         [Inject]
         public HttpClient Http { get; set; }
         [Inject]
-        private AuthHttpClient AuthHttpClient { get; set; }
+        private ClientDataService ClientDataService { get; set; }
         [Parameter]
         public (int x, int y) PlayerLoc { get; set; } = (0, 0);
         protected Player CurrentPlayer { get; set; }
@@ -266,7 +266,7 @@ namespace RpgApp.Client.Pages.Layouts
             if (isVictory)
             {
                 await ShowMessageModal("Victory!", "It's time get back to the road to continue your fucking quest you goddamn slacker");
-                await AuthHttpClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
+                await ClientDataService.AddOrUpdatePlayer(AppState.CurrentPlayer);
                 //await Http.PostAsJsonAsync($"{AppConstants.ApiUrl}/UpdateOrAddPlayer", AppState.CurrentPlayer);
             }
             else

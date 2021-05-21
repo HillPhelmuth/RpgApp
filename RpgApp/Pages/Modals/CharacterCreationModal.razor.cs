@@ -24,6 +24,7 @@ namespace RpgApp.Client.Pages.Modals
                 Style = ModalStyles.GoldenFramed2(ModalSize.Medium)
             };
             CurrentPlayer = await CreateCharacter.CreateNewCharacter(classType, AppState.AllSkills, AppState.AllEquipment);
+            CurrentPlayer.Name = name;
             if (!string.IsNullOrWhiteSpace(AppState.UserId))
             {
                 CurrentPlayer.UserId = AppState.UserId;
@@ -32,7 +33,7 @@ namespace RpgApp.Client.Pages.Modals
             
             AppState.UpdateCurrentPlayer(CurrentPlayer);
 
-            CurrentPlayer.Name = name;
+            
             ModalDialogResult result = await ModalDialogService.ShowDialogAsync<CharacterResultModal>("Welcome, " + name + "!", options);
             StateHasChanged();
             ModalDialogService.Close(true);

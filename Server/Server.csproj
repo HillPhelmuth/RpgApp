@@ -7,22 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\JsonConverters\**" />
+    <Compile Remove="Data\**" />
     <Compile Remove="DnDApi\**" />
     <Compile Remove="Services\**" />
-    <Content Remove="Data\JsonConverters\**" />
+    <Content Remove="Data\**" />
     <Content Remove="DnDApi\**" />
     <Content Remove="Services\**" />
-    <EmbeddedResource Remove="Data\JsonConverters\**" />
+    <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="DnDApi\**" />
     <EmbeddedResource Remove="Services\**" />
-    <None Remove="Data\JsonConverters\**" />
+    <None Remove="Data\**" />
     <None Remove="DnDApi\**" />
     <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\DnDApiController.cs" />
+    <Compile Remove="Controllers\RpgDataController.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +36,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="5.0.6" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.18.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RpgApp\Client.csproj" />

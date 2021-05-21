@@ -20,6 +20,8 @@ namespace RpgApp.Client.Pages
         public IModalDialogService ModalService { get; set; }
         [Inject]
         public AppStateManager AppState { get; set; }
+        [Inject]
+        private ClientDataService ClientDataService { get; set; }
        
         public Player CurrentPlayer { get; set; }
         private bool show;
@@ -40,7 +42,12 @@ namespace RpgApp.Client.Pages
                 Style = ModalStyles.Framed(ModalSize.ExtraLarge)
             };
             var result = await ModalService.ShowDialogAsync<CharacterCreationModal>("Create Character", options);
-            if (result.Success) show = false;
+            if (result.Success)
+            {
+                show = false;
+                await ClientDataService.AddOrUpdatePlayer(AppState.CurrentPlayer);
+            }
+
             StateHasChanged();
         }
 

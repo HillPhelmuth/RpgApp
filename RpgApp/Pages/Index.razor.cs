@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using RpgApp.Shared;
@@ -21,10 +19,11 @@ namespace RpgApp.Client.Pages
         [Inject]
         private AuthenticationStateProvider AuthState { get; set; }
         [Inject]
-        private AuthHttpClient AuthClient { get; set; }
+        private ClientDataService ClientDataService { get; set; }
         [Inject]
-        private RpgLocalStorageService rpgLocalStorage { get; set; }
-
+        private RpgLocalStorageService RpgLocalStorage { get; set; }
+       
+        private string seedOutput;
 
         protected int indexTab;
         [CascadingParameter(Name = "AppState")]
@@ -39,8 +38,12 @@ namespace RpgApp.Client.Pages
         {
             if (firstRender)
             {
+                seedOutput = await Http.GetStringAsync($"{AppConstants.ApiUrl}/CreateAndSeed");
+                Console.WriteLine(seedOutput);
+                await InvokeAsync(StateHasChanged);
+                
                 var appData = new AllAppData();
-                (bool hasData, var allAppData) = await rpgLocalStorage.GetAllAppData();
+                (bool hasData, var allAppData) = await RpgLocalStorage.GetAllAppData();
                 if (hasData)
                 {
                     appData = allAppData;
@@ -49,7 +52,7 @@ namespace RpgApp.Client.Pages
                 else
                 {
                     appData = await Http.GetFromJsonAsync<AllAppData>($"{AppConstants.ApiUrl}/AllAppData");
-                    await rpgLocalStorage.SetAllAppData(appData);
+                    await RpgLocalStorage.SetAllAppData(appData);
                 }
 
                 AppState.AllEquipment = appData?.Equipment ?? new List<Equipment>();
@@ -61,19 +64,8 @@ namespace RpgApp.Client.Pages
                 {
                     string user = authState.User?.Identity?.Name;
                     AppState.UserId = user;
-                    
-                    //(bool hasUserData, var userData) = await rpgLocalStorage.GetUserData(user);
-                    //if (hasUserData)
-                    //{
-                    //    data = userData;
-                    //    Console.WriteLine("userData retrieved from local storage");
-                    //}
-                    //else
-                    //{
-                    //    data = await Http.GetFromJsonAsync<UserData>($"{AppConstants.ApiUrl}/GetUserPlayers/{user}");
-                    //    await rpgLocalStorage.SetUserData(data ?? new UserData {UserName = user});
-                    //}
-                    AppState.UserData = await AuthClient.GetUserPlayers(user);
+                   
+                    AppState.UserData = await ClientDataService.GetUserPlayers(user);
                     await InvokeAsync(StateHasChanged);
                 }
 
@@ -81,18 +73,6 @@ namespace RpgApp.Client.Pages
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        private List<string> authCallMessages = new();
-        private async Task TestAuthCalls()
-        {
-            authCallMessages.Add($"Starting Api calls using the named httpclient ({nameof(AuthClient)}) calls to auth controller");
-            await InvokeAsync(StateHasChanged);
-            string addOrUpdate = await AuthClient.AddOrUpdatePlayer(AppState.CurrentPlayer);
-            authCallMessages.Add($"AddOrUpdatePlayer returned {addOrUpdate}");
-            await InvokeAsync(StateHasChanged);
-            var getPlayers = await AuthClient.GetUserPlayers(AppState.UserId ?? "");
-            authCallMessages.Add($"GetUserPlayers call for {getPlayers.UserName}-- {string.Join(';', getPlayers.Players.Select(p => p.Name))}");
-            await InvokeAsync(StateHasChanged);
-        }
         protected async void UpdateState(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(AppState.IndexTab)) return;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,11 +7,11 @@ using System.Text.Json.Serialization;
 using RpgApp.Shared.Types;
 using RpgApp.Shared.Types.Enums;
 
-namespace RpgApp.Server.Data
+namespace RpgApp.Shared.Services
 {
-    public class RpgDbInitializer
+    public class CosmosInit
     {
-        private static Player CreatePlayer(string name, Equipment weapon, Equipment armor, Skill skill, ClassType type = ClassType.Warrior)
+        public static Player CreatePlayer(string name, Equipment weapon, Equipment armor, Skill skill, ClassType type = ClassType.Warrior)
         {
             var warrior = CreateCharacter.CreateNewCharacter(type).Result;
             warrior.UserId = "admin";
@@ -23,7 +22,7 @@ namespace RpgApp.Server.Data
             return warrior;
         }
 
-        private static List<Monster> CreateMonsters()
+        public static List<Monster> CreateMonsters()
         {
             return new()
             {
@@ -74,7 +73,7 @@ namespace RpgApp.Server.Data
                 }
             };
         }
-        private static List<Skill> AllSkills()
+        public static List<Skill> AllSkills()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var skillsResourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith("Skills.json"));
@@ -112,7 +111,7 @@ namespace RpgApp.Server.Data
             return allSkills;
         }
 
-        private static EquipmentList EquipmentList()
+        public static EquipmentList EquipmentList()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var options = new JsonSerializerOptions();
@@ -132,27 +131,5 @@ namespace RpgApp.Server.Data
             var equipmentList = JsonSerializer.Deserialize<EquipmentList>(result, options);
             return equipmentList;
         }
-
-        public (List<Player>, AllAppData) InitAppData()
-        {
-            var equipmentList = EquipmentList();
-            var allSkills = AllSkills();
-            var monsters = CreateMonsters();
-            var dagger = equipmentList.Equipments.Find(x => x.Name == "Dagger");
-            var armor = equipmentList.Equipments.Find(x => x.Name == "Leather armor");
-            var enrage = allSkills.Find(x => x.Name == "Enrage");
-            var magicMissile = allSkills.Find(x => x.Name == "Magic missile");
-            var doubleShot = allSkills.Find(x => x.Name == "Double shot");
-            var warrior = CreatePlayer("Seed Warrior", dagger, armor, enrage);
-            var mage = CreatePlayer("Seed Mage", dagger, armor, magicMissile);
-            var ranger = CreatePlayer("Seed Ranger", dagger, armor, doubleShot);
-            var players = new List<Player>() { warrior, mage, ranger };
-            var allAppData = new AllAppData()
-            { Equipment = equipmentList.Equipments, Skills = allSkills, Monsters = monsters };
-            return (players, allAppData);
-        }
-
-
     }
-
 }

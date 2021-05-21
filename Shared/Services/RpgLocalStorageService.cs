@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using RpgApp.Shared.Types;
@@ -38,9 +36,14 @@ namespace RpgApp.Shared.Services
         {
             var userData = await _localStorage.GetItemAsync<UserData>(player.UserId);
             var userPlayers = new List<Player>();
+            if (userData.Players.All(p => p.Name != player.Name))
+            {
+                userPlayers.Add(player);
+            }
+           
             foreach (var userPlayer in userData?.Players ?? new List<Player>())
             {
-                if (userPlayer.ID == player.ID)
+                if (userPlayer.Name == player.Name)
                 {
                     userPlayers.Add(player);
                     continue;

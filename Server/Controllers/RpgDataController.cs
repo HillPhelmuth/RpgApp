@@ -106,7 +106,7 @@ namespace RpgApp.Server.Controllers
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
             var exp = player.Experience;
             var gold = player.Gold;
-            var trackedPlayer = await _context.Players.FindAsync(player.Index);
+            var trackedPlayer = await _context.Players.WithPartitionKey(player.UserId).FirstOrDefaultAsync(x => x.Name == player.Name);
             if (trackedPlayer == null)
             {
                 player.Skills = new List<Skill>();
@@ -189,12 +189,12 @@ namespace RpgApp.Server.Controllers
         public async Task UpdateOrAddPlayer([FromBody] Player player)
         {
             var skills = player.Skills?.Distinct().ToList() ?? new List<Skill>();
-            var dbSkills = _context.Skills.ToList().Where(x => skills.Any(y => x.ID == y.ID)).ToList();
+            var dbSkills = _context.Skills.ToList().Where(x => skills.Any(y => x.Index == y.Index)).ToList();
             var inventory = player.Inventory?.Distinct().ToList() ?? new List<Equipment>();
-            var dbInventory = _context.Equipment.ToList().Where(e1 => inventory.Any(e2 => e2.Id == e1.Id)).ToList();
+            var dbInventory = _context.Equipment.ToList().Where(e1 => inventory.Any(e2 => e2.Index == e1.Index)).ToList();
             int exp = player.Experience;
             int gold = player.Gold;
-            var trackedPlayer = await _context.Players.FindAsync(player.Index);
+            var trackedPlayer = await _context.Players.WithPartitionKey(player.UserId).FirstOrDefaultAsync(x => x.Name == player.Name);
             if (trackedPlayer == null)
             {
                 player.Skills = new List<Skill>();
