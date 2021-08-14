@@ -29,10 +29,11 @@ namespace RpgApp.Shared.Types
         public string PartitionKey => Name;
         [JsonIgnore]
         public int ID { get; set; }
-        public string MageImageID
+        public string ImageID
         {
             get
             {
+                //Mage skills
                 if (this.Description.Contains("basicheal", StringComparison.OrdinalIgnoreCase))
                 {
                     return "basicheal";
@@ -61,13 +62,7 @@ namespace RpgApp.Shared.Types
                 {
                     return "vulnerability";
                 }
-                return "magicmissile";
-            }
-        }
-        public string RangerImageID
-        {
-            get
-            {
+                //Ranger skills
                 if (this.Description.Contains("camouflage", StringComparison.OrdinalIgnoreCase))
                 {
                     return "camouflage";
@@ -80,13 +75,7 @@ namespace RpgApp.Shared.Types
                 {
                     return "settrap";
                 }
-                return "doubleshot";
-            }
-        }
-        public string WarriorImageID
-        {
-            get
-            {
+                //Warrior skills
                 if (this.Description.Contains("cleave", StringComparison.OrdinalIgnoreCase))
                 {
                     return "cleave";
