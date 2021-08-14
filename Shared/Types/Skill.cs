@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
-
+using RpgApp.Shared.Types.Enums;
 //using Newtonsoft.Json;
 
 namespace RpgApp.Shared.Types
@@ -27,6 +27,96 @@ namespace RpgApp.Shared.Types
     {
         [JsonIgnore]
         public int ID { get; set; }
+        public string MageImageID
+        {
+            get
+            {
+                if (this.Description.Contains("basicheal", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "basicheal";
+                }
+                if (this.Description.Contains("enfeeble", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "enfeeble";
+                }
+                if (this.Description.Contains("idiocy", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "idiocy";
+                }
+                if (this.Description.Contains("magicmissile", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "magicmissile";
+                }
+                if (this.Description.Contains("slow", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "slow";
+                }
+                if (this.Description.Contains("vertigo", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "vertigo";
+                }
+                if (this.Description.Contains("vulnerability", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "vulnerability";
+                }
+                return "magicmissile";
+            }
+        }
+        public string RangerImageID
+        {
+            get
+            {
+                if (this.Description.Contains("camouflage", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "camouflage";
+                }
+                if (this.Description.Contains("doubleshot", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "doubleshot";
+                }
+                if (this.Description.Contains("settrap", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "settrap";
+                }
+                return "doubleshot";
+            }
+        }
+        public string WarriorImageID
+        {
+            get
+            {
+                if (this.Description.Contains("cleave", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "cleave";
+                }
+                if (this.Description.Contains("courage", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "courage";
+                }
+                if (this.Description.Contains("devastate", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "devastate";
+                }
+                if (this.Description.Contains("enrage", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "enrage";
+                }
+                if (this.Description.Contains("overpower", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "overpower";
+                }
+                if (this.Description.Contains("rally", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "rally";
+                }
+                if (this.Description.Contains("whirlwind", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "whirlwind";
+                }
+                return "enrage";
+            }
+        }
+
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
