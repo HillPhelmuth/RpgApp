@@ -34,77 +34,77 @@ namespace RpgApp.Shared.Types
             get
             {
                 //Mage skills
-                if (this.Description.Contains("basicheal", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Basic heal", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "basicheal";
+                    return "newSkills/mage/basicheal";
                 }
-                if (this.Description.Contains("enfeeble", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Enfeeble", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "enfeeble";
+                    return "newSkills/mage/enfeeble";
                 }
-                if (this.Description.Contains("idiocy", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Idiocy", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "idiocy";
+                    return "newSkills/mage/idiocy";
                 }
-                if (this.Description.Contains("magicmissile", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Magic missile", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "magicmissile";
+                    return "newSkills/mage/magicmissile";
                 }
-                if (this.Description.Contains("slow", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Slow", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "slow";
+                    return "newSkills/mage/slow";
                 }
-                if (this.Description.Contains("vertigo", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Vertigo", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "vertigo";
+                    return "newSkills/mage/vertigo";
                 }
-                if (this.Description.Contains("vulnerability", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Vulnerability", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "vulnerability";
+                    return "newSkills/mage/vulnerability";
                 }
                 //Ranger skills
-                if (this.Description.Contains("camouflage", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Camouflage", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "camouflage";
+                    return "newSkills/ranger/camouflage";
                 }
-                if (this.Description.Contains("doubleshot", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Double shot", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "doubleshot";
+                    return "newSkills/ranger/doubleshot";
                 }
-                if (this.Description.Contains("settrap", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Set trap", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "settrap";
+                    return "newSkills/ranger/settrap";
                 }
                 //Warrior skills
-                if (this.Description.Contains("cleave", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Cleave", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "cleave";
+                    return "newSkills/warrior/cleave";
                 }
-                if (this.Description.Contains("courage", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Courage", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "courage";
+                    return "newSkills/warrior/courage";
                 }
-                if (this.Description.Contains("devastate", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Devastate", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "devastate";
+                    return "newSkills/warrior/devastate";
                 }
-                if (this.Description.Contains("enrage", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Enrage", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "enrage";
+                    return "newSkills/warrior/enrage";
                 }
-                if (this.Description.Contains("overpower", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Overpower", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "overpower";
+                    return "newSkills/warrior/overpower";
                 }
-                if (this.Description.Contains("rally", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Rally", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "rally";
+                    return "newSkills/warrior/rally";
                 }
-                if (this.Description.Contains("whirlwind", StringComparison.OrdinalIgnoreCase))
+                if (this.Name.Contains("Whirlwind", StringComparison.OrdinalIgnoreCase))
                 {
-                    return "whirlwind";
+                    return "newSkills/warrior/whirlwind";
                 }
-                return "enrage";
+                return "newSkills/warrior/enrage";
             }
         }
 
@@ -134,31 +134,6 @@ namespace RpgApp.Shared.Types
         public List<Effect> Effects { get; set; }
         [JsonIgnore]
 
-        public string ImageId
-        {
-            get
-            {
-                if (this.Name.Contains("sword", StringComparison.OrdinalIgnoreCase))
-                    return "sword";
-                if (Name.Contains("armor", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/armor";
-                if (Name.Contains("shield", StringComparison.OrdinalIgnoreCase))
-                    return "shield";
-                if (Name.Contains("dagger", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/dagger";
-                if (Name.Contains("potion", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/potionRed";
-                if (Name.Contains("book", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/tome";
-                if (Name.Contains("boots", StringComparison.OrdinalIgnoreCase))
-                    return "shoes-slot";
-                if (Name.Contains("wand", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/wand";
-                if (Name.Contains("bow", StringComparison.OrdinalIgnoreCase))
-                    return "foreign/bow";
-                return "foreign/gemBlue";
-            }
-        }
         public ICollection<Player> Players { get; set; }
 
         #region IEquatable Implementation
