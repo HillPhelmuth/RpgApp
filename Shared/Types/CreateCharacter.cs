@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RpgApp.Shared.Services;
 using RpgApp.Shared.Types.Enums;
@@ -12,7 +13,7 @@ namespace RpgApp.Shared.Types
             var newPlayer = new Player();
             DiceRoller diceRoller = new DiceRoller();
             newPlayer.Level = 1;
-
+            newPlayer.Index = new Random().Next(1, 999999);
             switch (type)
             {
                 case ClassType.Mage:
