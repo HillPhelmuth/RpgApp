@@ -1,6 +1,6 @@
 ﻿@using Frame = RpgComponentLibrary.Components.Frame
 
-<RpgItemsMenu ImageMapperFunc="@((eq) => eq.ImageId)" Items="shopSkills" MenuColumns="20" MenuFrame="Frame.FramedGrey" Context="skill" TItem="Skill">
+<RpgItemsMenu ImageMapperFunc="@((skl) => skl.ImageID)" Items="shopSkills" MenuColumns="20" MenuFrame="Frame.FramedGrey" Context="skill" TItem="Skill">
     <MenuHeader>
         <h1>@PageTitle</h1>
     </MenuHeader>
